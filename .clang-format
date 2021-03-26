@@ -1,0 +1,77 @@
+BasedOnStyle: LLVM
+IndentWidth: 4
+---
+Language: Cpp
+ColumnLimit: 120
+UseTab: Never
+
+# Spaces
+SpacesInSquareBrackets: false
+
+# Breaking rules
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortFunctionsOnASingleLine: Empty
+AllowShortBlocksOnASingleLine: Empty
+AllowShortCaseLabelsOnASingleLine: false
+AllowShortLambdasOnASingleLine: All
+AllowShortLoopsOnASingleLine: false
+
+# Constructors
+ConstructorInitializerIndentWidth: 8
+ConstructorInitializerAllOnOneLineOrOnePerLine: false
+
+# Alignment
+AlignAfterOpenBracket: DontAlign
+BinPackArguments: true
+BinPackParameters: true
+
+AlignConsecutiveAssignments: false
+AlignConsecutiveDeclarations: false
+AlignConsecutiveMacros: false
+AlignEscapedNewlines: DontAlign
+AlignTrailingComments: false
+
+DerivePointerAlignment: false
+PointerAlignment: Left
+
+# Break
+AlwaysBreakTemplateDeclarations: Yes
+BreakBeforeTernaryOperators: true
+BreakConstructorInitializers: BeforeColon
+BreakStringLiterals: true
+
+# Namespaces
+CompactNamespaces: false
+FixNamespaceComments: true
+
+# Preprocessor
+IncludeBlocks: Preserve
+SortIncludes: true
+IndentPPDirectives: None
+
+# Comments
+ReflowComments: true
+
+# Brackets
+BreakBeforeBraces: Custom
+BraceWrapping:
+  AfterEnum: false
+  AfterFunction: false
+  AfterClass: false
+  AfterControlStatement: false
+  AfterNamespace: false
+  AfterStruct: false
+  AfterUnion: false
+  AfterExternBlock: false
+  BeforeCatch: false
+  BeforeElse: false
+
+# General indentation
+NamespaceIndentation: None
+ContinuationIndentWidth: 8
+AccessModifierOffset: -4
+IndentCaseLabels: false
+
+SpaceAfterCStyleCast: true
+
+# vim:ft=yaml
