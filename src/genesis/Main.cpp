@@ -10,12 +10,12 @@ int main() {
         return result;
     }
     std::vector<GLfloat> square = {
-        -1.0f, -1.0f, 0.0f,
-        1.0f, -1.0f, 0.0f,
-        -1.0f,  1.0f, 0.0f,
-        -1.0f,  1.0f, 0.0f,
-        1.0f, -1.0f, 0.0f,
-        1.0f,  1.0f, 0.0f,
+        -0.5f, 0.5f, 0.0,
+        -0.5f, -0.5f, 0.0,
+        0.5f, -0.5f, 0.0,
+        0.5f, -0.5f, 0.0,
+        0.5f, 0.5f, 0.0,
+        -0.5f, 0.5f, 0.0
     };
     std::vector<GLfloat> uvCoords = {
         0, 0,

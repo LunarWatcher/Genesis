@@ -9,5 +9,5 @@ out vec4 color;
 void main() {
     //color.xyz = texture(textureSampler, UV).rgb;
     //color.w = 1.0; // Alpha
-    color = vec4(1, 0, 0, 1);
+    color = vec4(1.0, 0.0, 0.0, 1.0);
 }

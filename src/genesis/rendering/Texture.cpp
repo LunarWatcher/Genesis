@@ -5,7 +5,7 @@
 
 namespace genesis {
 
-Texture::Texture(const std::string& file) : AttribArray() {
+Texture::Texture(const std::string& file) {
     unsigned char* source = stbi_load(file.c_str(), &width, &height, &comp, STBI_rgb_alpha);
 
     glGenTextures(1, &this->textureId);

@@ -4,53 +4,46 @@
 
 namespace genesis {
 
-RenderObject::RenderObject(const std::vector<GLfloat>& vertices) {
+RenderObject::RenderObject(const VertexArray& vertices) {
     this->vertices = vertices.size();
-    generateVao();
-    registerAttribute(vertices, 3, 0);
-
+    createVAO();
+    createVBO(0, 3, vertices);
+    glBindVertexArray(0);
 }
 
-RenderObject::RenderObject(const VertexArray& vertices, const VertexArray& uvCoords, std::shared_ptr<Texture> texture) {
-    this->vertices = vertices.size();
-    generateVao();
-    registerAttribute(vertices, 3, 0);
-    registerAttribute(uvCoords, 2, 1);
+RenderObject::~RenderObject() {
+    glDeleteVertexArrays(1, &vaoID);
+    glDeleteBuffers(this->vbos.size(), &vbos[0]);
 }
 
-GLuint RenderObject::generateBuffer(const std::vector<GLfloat>& vertices) {
-    GLuint vertexArrayId;
-    GLuint buffIdx;
-    glGenVertexArrays(1, &vertexArrayId);
-    glBindVertexArray(vertexArrayId);
-    glGenBuffers(1, &buffIdx);
-    glBindBuffer(GL_ARRAY_BUFFER, buffIdx);
-    
-    glBufferData(GL_ARRAY_BUFFER, vertices.size(),
-                 &vertices[0], GL_STATIC_DRAW);
-    return buffIdx;
-}
-
-void RenderObject::generateVao() {
+void RenderObject::createVAO() {
     glGenVertexArrays(1, &vaoID);
     glBindVertexArray(vaoID);
 }
 
-void RenderObject::render() {
-    if (attribs.size() == 0) {
-        throw std::runtime_error("Can't have 0 attributes");
-    }
-    for (auto& attribute : attribs) {
-        attribute->enable();
-    }
-    glDrawArrays(GL_TRIANGLES, 0, this->vertices);
-    for (long long i = attribs.size() - 1; i >= 0; --i) {
-        attribs.at(i)->disable();
-    }
+void RenderObject::createVBO(int attribNumber, int size, const VertexArray& data) {
+    GLuint vboID;
+    glGenBuffers(1, &vboID);
+    this->vbos.push_back(vboID);
+    glBindBuffer(GL_ARRAY_BUFFER, vboID);
+
+    glBufferData(GL_ARRAY_BUFFER, data.size() * sizeof(GLfloat), &data[0], GL_STATIC_DRAW);
+    glVertexAttribPointer(attribNumber, size, GL_FLOAT, false, 0, (void*) 0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void RenderObject::registerAttribute(const std::vector<GLfloat>& attribute, GLint dataSize, GLint shaderAttribIdx) {
-    this->attribs.push_back(std::make_shared<FloatAttribArray>(generateBuffer(attribute), dataSize, shaderAttribIdx));
+void RenderObject::render() {
+    glBindVertexArray(this->vaoID);
+    for (size_t i = 0; i < vbos.size(); ++i) {
+        glEnableVertexAttribArray(0);
+    }
+    glDrawArrays(GL_TRIANGLES, 0, this->vertices);
+    glDisableVertexAttribArray(0);
+    //for (long long i = vbos.size() - 1; i >= 0; --i) {
+        //glDisableVertexAttribArray(i);
+    //}
+    glBindVertexArray(0);
 }
+
 
 }
