@@ -35,13 +35,12 @@ void RenderObject::createVBO(int attribNumber, int size, const VertexArray& data
 void RenderObject::render() {
     glBindVertexArray(this->vaoID);
     for (size_t i = 0; i < vbos.size(); ++i) {
-        glEnableVertexAttribArray(0);
+        glEnableVertexAttribArray(i);
     }
     glDrawArrays(GL_TRIANGLES, 0, this->vertices);
-    glDisableVertexAttribArray(0);
-    //for (long long i = vbos.size() - 1; i >= 0; --i) {
-        //glDisableVertexAttribArray(i);
-    //}
+    for (long long i = vbos.size() - 1; i >= 0; --i) {
+        glDisableVertexAttribArray(i);
+    }
     glBindVertexArray(0);
 }
 
