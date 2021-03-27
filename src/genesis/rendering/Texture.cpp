@@ -14,12 +14,22 @@ Texture::Texture(const std::string& file) {
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, source);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-
     stbi_image_free(source);
+
+    glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 Texture::~Texture() {
     glDeleteTextures(1, &textureId);
+}
+
+void Texture::bind() {
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, this->textureId);
+}
+
+void Texture::unbind() {
+    glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 }

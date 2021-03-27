@@ -16,10 +16,10 @@ int main() {
         0.5f , 0.5f , 0.0f 
     };
     std::vector<GLfloat> uvCoords = {
-        0, 0,
-        0, 1,
-        1, 1,
-        1, 0
+        0.0f, 0.0f,
+        0.0f, 1.0f,
+        1.0f, 1.0f,
+        1.0f, 0.0f
     };
     std::vector<GLint> indices = {0, 1, 3, 3, 1, 2};
     auto texture = std::make_shared<genesis::Texture>("images/test.png");

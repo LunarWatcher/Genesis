@@ -65,9 +65,9 @@ void Model::render() {
 }
 
 void TexturedModel::render() {
-    //glActiveTexture(GL_TEXTURE0);
-    //glBindTexture(GL_TEXTURE_2D, this->texture->getID());
+    this->texture->bind();
     this->model->render();
+    this->texture->unbind();
 }
 
 }

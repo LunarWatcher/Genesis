@@ -16,6 +16,9 @@ public:
     Texture(const std::string& image);
     ~Texture();
 
+    void bind();
+    void unbind();
+
     int getWidth() { return width; }
     int getHeight() { return height; }
     GLuint getID() { return textureId; }
