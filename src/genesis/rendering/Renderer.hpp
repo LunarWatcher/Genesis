@@ -2,7 +2,8 @@
 
 #include "GL/glew.h"
 #include "GLFW/glfw3.h"
-#include "RenderObject.hpp"
+#include "Model.hpp"
+#include "Renderable.hpp"
 #include <vector>
 #include <memory>
 
@@ -12,7 +13,7 @@ class Renderer {
 private:
     GLFWwindow* window;
 public:
-    std::vector<std::shared_ptr<RenderObject>> objects;
+    std::vector<std::shared_ptr<Renderable>> objects;
     Renderer();
     void renderBlocking();
     int initializeWindow();

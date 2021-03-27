@@ -1,7 +1,7 @@
 
 set (SOURCE_FILES genesis/Main.cpp
                     # Rendering
-                    genesis/rendering/RenderObject.cpp genesis/rendering/Shader.cpp
+                    genesis/rendering/Model.cpp genesis/rendering/Shader.cpp
                     genesis/rendering/Renderer.cpp
                     # Textures
                     genesis/rendering/Texture.cpp
