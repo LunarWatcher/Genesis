@@ -72,4 +72,8 @@ void Shader::createProgram(int vertexID, int fragmentID) {
     glDeleteShader(fragmentID);
 }
 
+GLint Shader::getUniformLocation(const std::string& name) {
+    return glGetUniformLocation(this->programID, name.c_str());
+}
+
 } // namespace genesis

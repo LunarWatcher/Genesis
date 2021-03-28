@@ -16,6 +16,7 @@ class Model : public Renderable {
 protected:
 
     int vertices;
+    size_t attribArrays = 0;
     GLuint vaoID;
     std::vector<GLuint> vbos;
 
@@ -27,7 +28,7 @@ public:
     Model(const VertexArray& vertices, const IndexArray& indexBuffer, const VertexArray& uvCoords);
     virtual ~Model();
 
-    virtual void render() override;
+    virtual void render(DefaultShader&) override;
 };
 
 
@@ -39,7 +40,7 @@ public:
     TexturedModel(std::shared_ptr<Model> model, std::shared_ptr<Texture> texture)
         : model(model), texture(texture) {}
 
-    void render() override;
+    void render(DefaultShader&) override;
 };
 
 }

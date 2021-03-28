@@ -10,7 +10,6 @@
 namespace genesis {
 
 Renderer::Renderer() {
-    
 }
 
 int Renderer::initializeWindow() {
@@ -31,7 +30,7 @@ int Renderer::initializeWindow() {
 
     glfwSwapInterval(1);
 
-    this->window = glfwCreateWindow(1024, 768, "Genesis", nullptr, nullptr);
+    this->window = glfwCreateWindow(1024, 576, "Genesis", nullptr, nullptr);
     if (!window) {
         std::cerr << "Failed to open GLFW window." << std::endl;
         glfwTerminate();
@@ -63,8 +62,9 @@ void Renderer::renderBlocking() {
         glClearColor(1, 0, 1, 1);
 
         shader.apply();
+        camera.applyCamera(shader);
         for (auto& object : objects) {
-            object->render();
+            object->render(shader);
         }
         shader.stop();
 

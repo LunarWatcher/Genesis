@@ -2,9 +2,13 @@
 set (SOURCE_FILES genesis/Main.cpp
                     # Rendering
                     genesis/rendering/Model.cpp genesis/rendering/Shader.cpp
-                    genesis/rendering/Renderer.cpp
+                    genesis/rendering/Renderer.cpp genesis/rendering/shaders/DefaultShader.cpp
                     # Textures
                     genesis/rendering/Texture.cpp
+                    # Camera
+                    genesis/rendering/view/Camera.cpp
+                    # Entities
+                    genesis/rendering/Entity.cpp
                     )
 
 add_executable(genesis ${SOURCE_FILES})

@@ -5,9 +5,12 @@ layout(location = 1) in vec2 inTextureCoords;
 
 out vec2 textureCoords;
 
+uniform mat4 transMatrix;
+uniform mat4 viewMatrix;
+uniform mat4 projectionMatrix;
+
 void main() {
-    gl_Position.xyz = position;
-    gl_Position.w = 1.0;
+    gl_Position = projectionMatrix * viewMatrix * transMatrix * vec4(position, 1.0);
 
     textureCoords = inTextureCoords;
 }

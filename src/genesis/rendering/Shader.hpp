@@ -8,6 +8,8 @@ namespace genesis {
 class Shader {
 private:
     GLuint programID;
+protected:
+    GLint getUniformLocation(const std::string& uniformName);
 public:
     Shader(const std::string& shaderName);
     virtual ~Shader() = default;

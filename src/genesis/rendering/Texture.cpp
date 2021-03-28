@@ -32,4 +32,21 @@ void Texture::unbind() {
     glBindTexture(GL_TEXTURE_2D, 0);
 }
 
+std::vector<GLfloat> Texture::generateFromPosition(unsigned int x, unsigned int y, int width, int height) {
+    if (width == -1) width = this->width;
+    if (height == -1) height = this->height;
+
+    double reX  = ((double) x) / this->width;
+    double reY  = ((double) y) / this->height;
+    double newX = ((double) x + width) / this->width;
+    double newY = ((double) y + height) / this->height;
+
+    return {
+        reX, reY,
+        reX, newY,
+        newX, newY,
+        newX, reY
+    };
+}
+
 }

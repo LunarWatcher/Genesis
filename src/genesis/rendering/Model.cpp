@@ -44,6 +44,7 @@ void Model::createVAO() {
 void Model::createVBO(int attribNumber, int coordSize, const VertexArray& data) {
     GLuint vboID;
     glGenBuffers(1, &vboID);
+    attribArrays += 1;
     this->vbos.push_back(vboID);
     glBindBuffer(GL_ARRAY_BUFFER, vboID);
 
@@ -52,21 +53,21 @@ void Model::createVBO(int attribNumber, int coordSize, const VertexArray& data) 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void Model::render() {
+void Model::render(DefaultShader&) {
     glBindVertexArray(this->vaoID);
-    for (size_t i = 0; i < vbos.size(); ++i) {
+    for (size_t i = 0; i < attribArrays; ++i) {
         glEnableVertexAttribArray(i);
     }
     glDrawElements(GL_TRIANGLES, vertices, GL_UNSIGNED_INT, 0);
-    for (size_t i = 0; i < vbos.size(); ++i) {
+    for (size_t i = 0; i < attribArrays; ++i) {
         glDisableVertexAttribArray(i);
     }
     glBindVertexArray(0);
 }
 
-void TexturedModel::render() {
+void TexturedModel::render(DefaultShader& shader) {
     this->texture->bind();
-    this->model->render();
+    this->model->render(shader);
     this->texture->unbind();
 }
 

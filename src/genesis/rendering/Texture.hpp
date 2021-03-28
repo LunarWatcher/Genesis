@@ -2,6 +2,7 @@
 
 #include "GL/glew.h"
 #include <string>
+#include <vector>
 
 namespace genesis {
 
@@ -22,6 +23,11 @@ public:
     int getWidth() { return width; }
     int getHeight() { return height; }
     GLuint getID() { return textureId; }
+
+    // Texture atlas helper
+    // Generates UV coordinates from the given image x and image y.
+    // If a width and height is supplied
+    std::vector<GLfloat> generateFromPosition(unsigned int x = 0, unsigned int y = 0, int width = -1, int height = -1);
 };
 
 }
