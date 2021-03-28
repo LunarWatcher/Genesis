@@ -9,6 +9,8 @@ set (SOURCE_FILES genesis/Main.cpp
                     genesis/rendering/view/Camera.cpp
                     # Entities
                     genesis/rendering/Entity.cpp
+                    # Core
+                    genesis/core/Runner.cpp
                     )
 
 add_executable(genesis ${SOURCE_FILES})

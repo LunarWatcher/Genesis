@@ -20,6 +20,8 @@ public:
     void renderBlocking();
     int initializeWindow();
 
+    GLFWwindow* getWindow() { return window; }
+
 };
 
 }
