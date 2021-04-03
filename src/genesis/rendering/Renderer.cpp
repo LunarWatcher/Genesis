@@ -42,42 +42,30 @@ int Renderer::initializeWindow() {
         std::cerr << "Failed to initialize GLEW." << std::endl;
         return -1;
     }
-    //glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
+
+    this->textureShader = std::make_shared<DefaultShader>();
+
     return 0;
 }
 
-void Renderer::renderBlocking() {
-    if (this->window == nullptr) {
-        throw std::runtime_error("Window is a nullptr");
+void Renderer::tick() {
+
+}
+
+void Renderer::render() {
+
+    glClear(GL_COLOR_BUFFER_BIT);
+    glClearColor(1, 0, 1, 1);
+
+    textureShader->apply();
+    camera.applyCamera(*textureShader);
+    for (auto& object : objects) {
+        object->render(*textureShader);
     }
-    DefaultShader shader;
-    auto targetTime = std::chrono::duration<double, std::milli>(8.3);
+    textureShader->stop();
 
-    auto lastTime = std::chrono::high_resolution_clock::now();
-    do {
-        auto now = std::chrono::high_resolution_clock::now();
-        double delta = (now - lastTime).count();
-
-        glClear(GL_COLOR_BUFFER_BIT);
-        glClearColor(1, 0, 1, 1);
-
-        shader.apply();
-        camera.applyCamera(shader);
-        for (auto& object : objects) {
-            object->render(shader);
-        }
-        shader.stop();
-
-        glfwSwapBuffers(window);
-        glfwPollEvents();
-        auto end = std::chrono::high_resolution_clock::now();
-        lastTime = end;
-        auto sleepFor = targetTime - (end - now);
-        if (sleepFor > std::chrono::milliseconds(0))
-            std::this_thread::sleep_for(sleepFor);
-    } while (glfwWindowShouldClose(this->window) == 0);
-
-    glfwTerminate();
+    glfwSwapBuffers(window);
+    glfwPollEvents();
 }
 
 }

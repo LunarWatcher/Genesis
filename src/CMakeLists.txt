@@ -11,6 +11,8 @@ set (SOURCE_FILES genesis/Main.cpp
                     genesis/rendering/Entity.cpp
                     # Core
                     genesis/core/Runner.cpp
+                    # Controls
+                    genesis/controls/InputManager.cpp
                     )
 
 add_executable(genesis ${SOURCE_FILES})

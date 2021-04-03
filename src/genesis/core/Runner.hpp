@@ -7,12 +7,23 @@ namespace genesis {
 
 class Runner {
 private:
+    static inline Runner* INSTANCE;
     Renderer renderer;
+    InputManager inputManager;
+
+    double delta;
 public:
     Runner();
-    void onKeyPressed(GLFWwindow* window, int key, int scancode, int action, int mods);
     
+    /**
+     * Manages the game loop
+     */
     void runGame();
+    
+    double getDelta() { return delta; }
+    static Runner* getRunner() {
+        return Runner::INSTANCE;
+    }
 };
 
 }

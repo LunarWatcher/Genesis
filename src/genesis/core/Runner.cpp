@@ -8,10 +8,12 @@
 
 #include <functional>
 #include <iostream>
+#include <thread>
+#include <chrono>
 
 namespace genesis {
 
-Runner::Runner() {
+Runner::Runner() : inputManager(*this) {
     int result = renderer.initializeWindow();
     if (result != 0) {
         throw std::runtime_error("Initializing the window failed");
@@ -24,19 +26,37 @@ Runner::Runner() {
     auto entity = std::make_shared<genesis::Entity>(object, glm::vec3{0, -1, -3});
     renderer.objects.push_back(entity);
 
-    glfwSetWindowUserPointer(renderer.getWindow(), this);
+    glfwSetWindowUserPointer(renderer.getWindow(), &inputManager);
     glfwSetKeyCallback(renderer.getWindow(), [](GLFWwindow* win, int key, int scanCode, int action, int mods) {
-        ((Runner*) glfwGetWindowUserPointer(win))->onKeyPressed(win, key, scanCode, action, mods);
+        ((InputManager*) glfwGetWindowUserPointer(win))->onKeyPressed(win, key, scanCode, action, mods);
     });
-}
 
-void Runner::onKeyPressed(GLFWwindow *window, int key, int scancode, int action, int mods) {
-    std::cout << key << std::endl;
+    Runner::INSTANCE = this;
 }
 
 void Runner::runGame() {
     // TODO: make this function useful
-    this->renderer.renderBlocking();
+    this->renderer.render();
+    auto targetTime = std::chrono::duration<double, std::milli>(8.3);
+
+    auto lastTime = std::chrono::high_resolution_clock::now();
+    do {
+        auto now = std::chrono::high_resolution_clock::now();
+        delta = (now - lastTime).count();
+
+        // TODO: figure out how to best design a loop that makes TPS
+        // and FPS separate (... at least partially)
+        renderer.tick();
+        renderer.render();
+
+        auto end = std::chrono::high_resolution_clock::now();
+        lastTime = end;
+        auto sleepFor = targetTime - (end - now);
+        if (sleepFor > std::chrono::milliseconds(0))
+            std::this_thread::sleep_for(sleepFor);
+    } while (glfwWindowShouldClose(renderer.getWindow()) == 0);
+
+    glfwTerminate();
 }
 
 }

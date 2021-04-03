@@ -14,11 +14,16 @@ class Renderer {
 private:
     GLFWwindow* window;
     Camera camera;
+    std::shared_ptr<DefaultShader> textureShader;
+
 public:
     std::vector<std::shared_ptr<Renderable>> objects;
     Renderer();
-    void renderBlocking();
+
     int initializeWindow();
+
+    void tick();
+    void render();
 
     GLFWwindow* getWindow() { return window; }
 
