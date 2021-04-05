@@ -13,7 +13,7 @@
 
 namespace genesis {
 
-Runner::Runner() : inputManager(*this) {
+Runner::Runner() : inputManager(*this), renderer(*this) {
     int result = renderer.initializeWindow();
     if (result != 0) {
         throw std::runtime_error("Initializing the window failed");
@@ -35,7 +35,6 @@ Runner::Runner() : inputManager(*this) {
 }
 
 void Runner::runGame() {
-    // TODO: make this function useful
     this->renderer.render();
     auto targetTime = std::chrono::duration<double, std::milli>(8.3);
 
@@ -46,6 +45,9 @@ void Runner::runGame() {
 
         // TODO: figure out how to best design a loop that makes TPS
         // and FPS separate (... at least partially)
+        // At least to the point where FPS != TPS by loop definition
+        // Though might never be a problem. A certain degree of async
+        // processing might avoid that being necessesary.
         renderer.tick();
         renderer.render();
 

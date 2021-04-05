@@ -1,4 +1,5 @@
 #pragma once
+#include "genesis/controls/InputManager.hpp"
 #include "genesis/rendering/Shader.hpp"
 #include "genesis/rendering/shaders/DefaultShader.hpp"
 #include "glm/ext/vector_float3.hpp"
@@ -15,9 +16,12 @@ private:
      */
     glm::vec3 position = {1, 1, 1};
     glm::mat4 matrix;
+
+    InputManager& inputManager;
     
     void regenerateCameraMatrix();
 public:
+    Camera(InputManager& input);
     void applyCamera(DefaultShader& shader);
 };
 

@@ -6,10 +6,11 @@
 #include "shaders/DefaultShader.hpp"
 #include <chrono>
 #include <thread>
+#include "genesis/core/Runner.hpp"
 
 namespace genesis {
 
-Renderer::Renderer() {
+Renderer::Renderer(Runner& runner) : camera(runner.getInputManager()), runner(runner) {
 }
 
 int Renderer::initializeWindow() {

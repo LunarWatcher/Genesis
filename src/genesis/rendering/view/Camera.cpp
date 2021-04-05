@@ -1,8 +1,19 @@
 #include "Camera.hpp"
 #include "glm/ext/matrix_transform.hpp"
 #include "glm/ext/vector_float3.hpp"
+#include <iostream>
 
 namespace genesis {
+
+Camera::Camera(InputManager& input) : inputManager(input) {
+    inputManager.registerKeyCallback(
+        GLFW_KEY_A, // Map A
+        0, // no modifiers
+        [](InputManager&, int action) {
+            std::cout << action << std::endl;
+        }
+    );
+}
 
 void Camera::applyCamera(DefaultShader& shader) {
     regenerateCameraMatrix();

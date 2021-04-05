@@ -8,8 +8,8 @@ namespace genesis {
 class Runner {
 private:
     static inline Runner* INSTANCE;
-    Renderer renderer;
     InputManager inputManager;
+    Renderer renderer;
 
     double delta;
 public:
@@ -24,6 +24,9 @@ public:
     static Runner* getRunner() {
         return Runner::INSTANCE;
     }
+
+    Renderer& getRenderer() { return renderer; }
+    InputManager& getInputManager() { return inputManager; }
 };
 
 }

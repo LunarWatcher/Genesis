@@ -3,6 +3,9 @@
 # Remove if you add a real pic called test (unlikely to happen tho)
 src/res/images/test.png
 
+.cache
+.ccls-cache
+
 # Custom
 build/
 .sconsign.dblite
