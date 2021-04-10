@@ -1,17 +1,16 @@
 #include "Renderer.hpp"
 #include "GLFW/glfw3.h"
 #include "Shader.hpp"
-#include <iostream>
+#include "genesis/core/Runner.hpp"
 #include "genesis/rendering/Texture.hpp"
 #include "shaders/DefaultShader.hpp"
 #include <chrono>
+#include <iostream>
 #include <thread>
-#include "genesis/core/Runner.hpp"
 
 namespace genesis {
 
-Renderer::Renderer(Runner& runner) : camera(runner.getInputManager()), runner(runner) {
-}
+Renderer::Renderer(Runner& runner) : camera(runner.getInputManager()), runner(runner) {}
 
 int Renderer::initializeWindow() {
     glewExperimental = true;
@@ -49,9 +48,7 @@ int Renderer::initializeWindow() {
     return 0;
 }
 
-void Renderer::tick() {
-
-}
+void Renderer::tick() {}
 
 void Renderer::render() {
 
@@ -69,4 +66,4 @@ void Renderer::render() {
     glfwPollEvents();
 }
 
-}
+} // namespace genesis

@@ -44,7 +44,7 @@ endif()
 
 add_subdirectory(src)
 
-add_custom_target(run 
+add_custom_target(run
     COMMAND bin/genesis
     DEPENDS genesis
     COMMENT "Runs the program")

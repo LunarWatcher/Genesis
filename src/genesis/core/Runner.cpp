@@ -6,10 +6,10 @@
 #include "genesis/rendering/Renderer.hpp"
 #include "genesis/rendering/Texture.hpp"
 
+#include <chrono>
 #include <functional>
 #include <iostream>
 #include <thread>
-#include <chrono>
 
 namespace genesis {
 
@@ -21,7 +21,8 @@ Runner::Runner() : inputManager(*this), renderer(*this) {
 
     std::vector<GLint> indices = {0, 1, 3, 3, 1, 2};
     auto texture = std::make_shared<genesis::Texture>("images/programmer.png");
-    auto rawObject = std::make_shared<genesis::Model>(genesis::Constants::square, indices, texture->generateFromPosition(0, 0, 32, 32));
+    auto rawObject = std::make_shared<genesis::Model>(
+            genesis::Constants::square, indices, texture->generateFromPosition(0, 0, 32, 32));
     auto object = std::make_shared<genesis::TexturedModel>(rawObject, texture);
     auto entity = std::make_shared<genesis::Entity>(object, glm::vec3{0, -1, -3});
     renderer.objects.push_back(entity);
@@ -67,4 +68,4 @@ void Runner::runGame() {
     glfwTerminate();
 }
 
-}
+} // namespace genesis

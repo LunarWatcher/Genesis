@@ -18,6 +18,4 @@ void Entity::regenerateTransMatrix() {
     transMatrix = glm::rotate(this->transMatrix, this->rotation.z, glm::vec3{0, 0, 1});
 }
 
-
-
-}
+} // namespace genesis

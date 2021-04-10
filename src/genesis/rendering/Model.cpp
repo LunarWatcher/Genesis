@@ -1,7 +1,7 @@
 #include "Model.hpp"
+#include <iostream>
 #include <stdexcept>
 #include <vector>
-#include <iostream> 
 namespace genesis {
 
 Model::Model(const VertexArray& vertices, const IndexArray& indexBuffer) {
@@ -33,7 +33,6 @@ void Model::bindIndexBuffer(const IndexArray& indexBuffer) {
     this->vbos.push_back(vboId);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vboId);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexBuffer.size() * sizeof(GLint), &indexBuffer[0], GL_STATIC_DRAW);
-
 }
 
 void Model::createVAO() {
@@ -71,4 +70,4 @@ void TexturedModel::render(DefaultShader& shader) {
     this->texture->unbind();
 }
 
-}
+} // namespace genesis

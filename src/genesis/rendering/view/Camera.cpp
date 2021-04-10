@@ -6,38 +6,24 @@
 namespace genesis {
 
 Camera::Camera(InputManager& input) : inputManager(input) {
-    inputManager.registerKeyCallback(
-        GLFW_KEY_W, // Map W
-        0, // no modifiers
-        [this](InputManager&, int action) {
-            if (action != 0) 
-                this->position.y++;
-        }
-    );
-    inputManager.registerKeyCallback(
-        GLFW_KEY_A, 
-        0, 
-        [this](InputManager&, int action) {
-            if (action != 0) 
-                this->position.x--;
-        }
-    );
-    inputManager.registerKeyCallback(
-        GLFW_KEY_S, 
-        0, 
-        [this](InputManager&, int action) {
-            if (action != 0) 
-                this->position.y--;
-        }
-    );
-    inputManager.registerKeyCallback(
-        GLFW_KEY_D, 
-        0, 
-        [this](InputManager&, int action) {
-            if (action != 0) 
-                this->position.x++;
-        }
-    );
+    inputManager.registerKeyCallback(GLFW_KEY_W, // Map W
+            0, // no modifiers
+            [this](InputManager&, int action) {
+                if (action != 0)
+                    this->position.y++;
+            });
+    inputManager.registerKeyCallback(GLFW_KEY_A, 0, [this](InputManager&, int action) {
+        if (action != 0)
+            this->position.x--;
+    });
+    inputManager.registerKeyCallback(GLFW_KEY_S, 0, [this](InputManager&, int action) {
+        if (action != 0)
+            this->position.y--;
+    });
+    inputManager.registerKeyCallback(GLFW_KEY_D, 0, [this](InputManager&, int action) {
+        if (action != 0)
+            this->position.x++;
+    });
 }
 
 void Camera::applyCamera(DefaultShader& shader) {
@@ -46,7 +32,8 @@ void Camera::applyCamera(DefaultShader& shader) {
 }
 
 void Camera::regenerateCameraMatrix() {
-    this->matrix = glm::lookAt(this->position, glm::vec3{this->position.x, this->position.y, 0}, glm::vec3{0.0f, 1.0f, 0.0f});
+    this->matrix =
+            glm::lookAt(this->position, glm::vec3{this->position.x, this->position.y, 0}, glm::vec3{0.0f, 1.0f, 0.0f});
 }
 
-}
+} // namespace genesis

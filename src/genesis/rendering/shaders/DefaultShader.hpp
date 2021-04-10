@@ -1,7 +1,7 @@
 #pragma once
 #include "genesis/rendering/Shader.hpp"
-#include "glm/ext/matrix_float4x4.hpp"
 #include "glm/common.hpp"
+#include "glm/ext/matrix_float4x4.hpp"
 
 namespace genesis {
 
@@ -15,6 +15,7 @@ private:
     static constexpr inline float FAR_PLANE = 1000.0f;
     // Matrix locations
     GLint transform, view, projection;
+
 public:
     DefaultShader();
 
@@ -23,4 +24,4 @@ public:
     void loadProjectionMatrix(glm::mat4 matrix);
 };
 
-}
+} // namespace genesis

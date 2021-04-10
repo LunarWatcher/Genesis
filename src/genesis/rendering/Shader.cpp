@@ -1,9 +1,9 @@
 #include "Shader.hpp"
 #include <fstream>
+#include <iostream>
 #include <sstream>
 #include <stdexcept>
 #include <vector>
-#include <iostream>
 
 namespace genesis {
 

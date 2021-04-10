@@ -18,11 +18,12 @@ private:
     glm::mat4 matrix;
 
     InputManager& inputManager;
-    
+
     void regenerateCameraMatrix();
+
 public:
     Camera(InputManager& input);
     void applyCamera(DefaultShader& shader);
 };
 
-}
+} // namespace genesis

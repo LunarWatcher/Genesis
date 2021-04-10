@@ -24,7 +24,7 @@ target_link_libraries(genesis ${CONAN_LIBS})
 
 set (resources shaders/default.frag shaders/default.vert "images/programmer.png")
 
-foreach(resource IN LISTS resources) 
+foreach(resource IN LISTS resources)
     configure_file(./res/${resource}
         ${CMAKE_BINARY_DIR}/${resource} COPYONLY)
 endforeach()

@@ -43,7 +43,6 @@ void InputManager::onMousePressed(int button, int action, int mods) {
     glfwGetCursorPos(this->runner.getRenderer().getWindow(), &x, &y);
     // And use the position here for something:tm:
     // TODO: for when tiling is done
-
 }
 
 void InputManager::onMouseMoved(double x, double y) {

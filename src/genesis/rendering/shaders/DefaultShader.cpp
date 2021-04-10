@@ -13,12 +13,7 @@ DefaultShader::DefaultShader() : Shader("default") {
 
     apply();
     // we only need to load the projection matrix once
-    loadProjectionMatrix(glm::perspective(
-        glm::radians(FOV),
-        16.0f / 9.0f,
-        NEAR_PLANE,
-        FAR_PLANE
-    ));
+    loadProjectionMatrix(glm::perspective(glm::radians(FOV), 16.0f / 9.0f, NEAR_PLANE, FAR_PLANE));
     stop();
 }
 
@@ -34,4 +29,4 @@ void DefaultShader::loadViewMatrix(glm::mat4 matrix) {
     glUniformMatrix4fv(this->view, 1, GL_FALSE, glm::value_ptr(matrix));
 }
 
-}
+} // namespace genesis

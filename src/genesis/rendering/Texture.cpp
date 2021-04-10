@@ -34,20 +34,17 @@ void Texture::unbind() {
 }
 
 std::vector<GLfloat> Texture::generateFromPosition(unsigned int x, unsigned int y, int width, int height) {
-    if (width == -1) width = this->width;
-    if (height == -1) height = this->height;
+    if (width == -1)
+        width = this->width;
+    if (height == -1)
+        height = this->height;
 
-    double reX  = ((double) x) / this->width;
-    double reY  = ((double) y) / this->height;
+    double reX = ((double) x) / this->width;
+    double reY = ((double) y) / this->height;
     double newX = ((double) x + width) / this->width;
     double newY = ((double) y + height) / this->height;
 
-    return {
-        reX, reY,
-        reX, newY,
-        newX, newY,
-        newX, reY
-    };
+    return {reX, reY, reX, newY, newX, newY, newX, reY};
 }
 
-}
+} // namespace genesis

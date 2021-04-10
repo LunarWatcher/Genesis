@@ -4,9 +4,9 @@
 #include "GLFW/glfw3.h"
 #include "Model.hpp"
 #include "Renderable.hpp"
-#include <vector>
-#include <memory>
 #include "genesis/rendering/view/Camera.hpp"
+#include <memory>
+#include <vector>
 
 namespace genesis {
 
@@ -18,6 +18,7 @@ private:
     std::shared_ptr<DefaultShader> textureShader;
 
     Runner& runner;
+
 public:
     std::vector<std::shared_ptr<Renderable>> objects;
     Renderer(Runner& runner);
@@ -27,8 +28,9 @@ public:
     void tick();
     void render();
 
-    GLFWwindow* getWindow() { return window; }
-
+    GLFWwindow* getWindow() {
+        return window;
+    }
 };
 
-}
+} // namespace genesis

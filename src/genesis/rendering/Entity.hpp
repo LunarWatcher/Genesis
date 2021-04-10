@@ -18,16 +18,15 @@ private:
 
 protected:
     void regenerateTransMatrix();
+
 public:
     Entity(std::shared_ptr<TexturedModel> model, glm::vec3 position, glm::vec3 rotation, float scale)
-        : model(model), position(position), rotation(rotation), scale(scale) {
+            : model(model), position(position), rotation(rotation), scale(scale) {
         regenerateTransMatrix();
     }
-    Entity(std::shared_ptr<TexturedModel> model, glm::vec3 position)
-        : Entity(model, position, glm::vec3{0,0,0}, 0) {
-    }
+    Entity(std::shared_ptr<TexturedModel> model, glm::vec3 position) : Entity(model, position, glm::vec3{0, 0, 0}, 0) {}
 
     void render(DefaultShader& shader) override;
 };
 
-}
+} // namespace genesis
