@@ -22,7 +22,7 @@ target_include_directories(genesis PUBLIC ../stb/)
 
 target_link_libraries(genesis ${CONAN_LIBS})
 
-set (resources shaders/default.frag shaders/default.vert "images/test.png")
+set (resources shaders/default.frag shaders/default.vert "images/programmer.png")
 
 foreach(resource IN LISTS resources) 
     configure_file(./res/${resource}

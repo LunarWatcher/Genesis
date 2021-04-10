@@ -20,15 +20,21 @@ Runner::Runner() : inputManager(*this), renderer(*this) {
     }
 
     std::vector<GLint> indices = {0, 1, 3, 3, 1, 2};
-    auto texture = std::make_shared<genesis::Texture>("images/test.png");
-    auto rawObject = std::make_shared<genesis::Model>(genesis::Constants::square, indices, texture->generateFromPosition(0, 0, 128, 128));
+    auto texture = std::make_shared<genesis::Texture>("images/programmer.png");
+    auto rawObject = std::make_shared<genesis::Model>(genesis::Constants::square, indices, texture->generateFromPosition(0, 0, 32, 32));
     auto object = std::make_shared<genesis::TexturedModel>(rawObject, texture);
     auto entity = std::make_shared<genesis::Entity>(object, glm::vec3{0, -1, -3});
     renderer.objects.push_back(entity);
 
     glfwSetWindowUserPointer(renderer.getWindow(), &inputManager);
     glfwSetKeyCallback(renderer.getWindow(), [](GLFWwindow* win, int key, int scanCode, int action, int mods) {
-        ((InputManager*) glfwGetWindowUserPointer(win))->onKeyPressed(win, key, scanCode, action, mods);
+        ((InputManager*) glfwGetWindowUserPointer(win))->onKeyPressed(key, scanCode, action, mods);
+    });
+    glfwSetMouseButtonCallback(renderer.getWindow(), [](GLFWwindow* win, int button, int action, int mods) {
+        ((InputManager*) glfwGetWindowUserPointer(win))->onMousePressed(button, action, mods);
+    });
+    glfwSetCursorPosCallback(renderer.getWindow(), [](GLFWwindow* win, double x, double y) {
+        ((InputManager*) glfwGetWindowUserPointer(win))->onMouseMoved(x, y);
     });
 
     Runner::INSTANCE = this;
