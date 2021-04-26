@@ -28,7 +28,7 @@ int Renderer::initializeWindow() {
 #endif
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    glfwSwapInterval(1);
+    // glfwSwapInterval(1);
 
     this->window = glfwCreateWindow(1024, 576, "Genesis", nullptr, nullptr);
     if (!window) {
@@ -44,6 +44,8 @@ int Renderer::initializeWindow() {
     }
 
     this->textureShader = std::make_shared<DefaultShader>();
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     return 0;
 }
