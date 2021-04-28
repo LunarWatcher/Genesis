@@ -3,6 +3,7 @@
 #include "GL/glew.h"
 #include "Renderable.hpp"
 #include "genesis/rendering/Texture.hpp"
+#include <functional>
 #include <memory>
 #include <stdexcept>
 #include <vector>
@@ -11,6 +12,8 @@ namespace genesis {
 
 typedef std::vector<GLfloat> VertexArray;
 typedef std::vector<GLint> IndexArray;
+class Model;
+typedef std::function<void(Model*)> AttributeInit;
 
 class Model : public Renderable {
 protected:
@@ -20,15 +23,16 @@ protected:
     std::vector<GLuint> vbos;
 
     void createVAO();
-    void createVBO(int attribNumber, int size, const VertexArray& data);
-    void bindIndexBuffer(const IndexArray& indexBuffer);
 
 public:
-    Model(const VertexArray& vertices, const IndexArray& indexBuffer);
-    Model(const VertexArray& vertices, const IndexArray& indexBuffer, const VertexArray& uvCoords);
+    Model(VertexArray vertices, AttributeInit attribInitFunc);
+
     virtual ~Model();
 
     virtual void render(DefaultShader&) override;
+
+    void bindIndexBuffer(const IndexArray& indexBuffer);
+    void createVBO(int attribNumber, int size, const VertexArray& data);
 };
 
 class TexturedModel : public Renderable {

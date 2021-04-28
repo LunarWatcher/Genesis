@@ -4,21 +4,11 @@
 #include <vector>
 namespace genesis {
 
-Model::Model(const VertexArray& vertices, const IndexArray& indexBuffer) {
+Model::Model(VertexArray vertices, std::function<void(Model*)> attribInitFunc) {
     this->vertices = vertices.size();
     createVAO();
-    bindIndexBuffer(indexBuffer);
     createVBO(0, 3, vertices);
-    glBindVertexArray(0);
-}
-
-Model::Model(const VertexArray& vertices, const IndexArray& indexBuffer, const VertexArray& uvCoords) {
-    this->vertices = vertices.size();
-    // TODO: refactor to avoid copy-pasta between the two (and any future) constructors
-    createVAO();
-    bindIndexBuffer(indexBuffer);
-    createVBO(0, 3, vertices);
-    createVBO(1, 2, uvCoords);
+    attribInitFunc(this);
     glBindVertexArray(0);
 }
 

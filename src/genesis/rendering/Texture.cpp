@@ -6,7 +6,7 @@
 
 namespace genesis {
 
-Texture::Texture(const std::string& file) {
+Texture::Texture(const std::string& file, int atlasWidth, int atlasHeight) {
     unsigned char* source = stbi_load(file.c_str(), &width, &height, &comp, STBI_rgb_alpha);
 
     glGenTextures(1, &this->textureId);
@@ -19,6 +19,9 @@ Texture::Texture(const std::string& file) {
     stbi_image_free(source);
 
     glBindTexture(GL_TEXTURE_2D, 0);
+
+    this->atlasWidth = atlasWidth == -1 ? this->width : atlasWidth;
+    this->atlasHeight = atlasHeight == -1 ? this->height : atlasHeight;
 }
 
 Texture::~Texture() {
@@ -36,14 +39,14 @@ void Texture::unbind() {
 
 std::vector<GLfloat> Texture::generateFromPosition(unsigned int x, unsigned int y, int width, int height) {
     if (width == -1)
-        width = this->width;
+        width = this->atlasWidth;
     if (height == -1)
-        height = this->height;
+        height = this->atlasHeight;
 
-    double reX = ((double) x * width) / this->width;
-    double reY = ((double) y * height) / this->height;
-    double newX = ((double) x * width + width) / this->width;
-    double newY = ((double) y * height + height) / this->height;
+    double reX = ((double) x * this->atlasWidth) / this->width;
+    double reY = ((double) y * this->atlasHeight) / this->height;
+    double newX = ((double) x * this->atlasWidth + width) / this->width;
+    double newY = ((double) y * this->atlasHeight + height) / this->height;
     reX += 1.0 / this->width;
     reY += 1.0 / this->height;
     newX -= 1.0 / this->width;
