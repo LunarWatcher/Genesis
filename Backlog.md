@@ -1,0 +1,3 @@
+## Rendering
+
+* Optimize chunks

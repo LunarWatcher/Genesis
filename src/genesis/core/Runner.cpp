@@ -5,6 +5,7 @@
 #include "genesis/rendering/Model.hpp"
 #include "genesis/rendering/Renderer.hpp"
 #include "genesis/rendering/Texture.hpp"
+#include "genesis/rendering/environment/Chunk.hpp"
 
 #include <chrono>
 #include <functional>
@@ -19,14 +20,9 @@ Runner::Runner() : inputManager(*this), renderer(*this) {
         throw std::runtime_error("Initializing the window failed");
     }
 
-    auto texture = std::make_shared<genesis::Texture>("images/programmer.png");
-    auto rawObject = std::make_shared<genesis::Model>(genesis::Constants::square, [&](Model* model) {
-        model->bindIndexBuffer(genesis::Constants::squareIndices);
-        model->createVBO(1, 2, texture->generateFromPosition(0, 12, 64, 64));
-    });
-    auto object = std::make_shared<genesis::TexturedModel>(rawObject, texture);
-    auto entity = std::make_shared<genesis::Entity>(object, glm::vec3{0, -1, -3});
-    renderer.objects.push_back(entity);
+    this->texturePack = std::make_shared<genesis::Texture>("images/programmer.png");
+    auto chunk = std::make_shared<Chunk>(*this, -1, 0);
+    renderer.objects.push_back(chunk);
 
     glfwSetWindowUserPointer(renderer.getWindow(), &inputManager);
     glfwSetKeyCallback(renderer.getWindow(), [](GLFWwindow* win, int key, int scanCode, int action, int mods) {

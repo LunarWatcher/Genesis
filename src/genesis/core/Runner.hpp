@@ -13,6 +13,8 @@ private:
 
     double delta;
 
+    std::shared_ptr<genesis::Texture> texturePack;
+
 public:
     Runner();
 
@@ -33,6 +35,13 @@ public:
     }
     InputManager& getInputManager() {
         return inputManager;
+    }
+
+    auto getTextureAtlas() {
+        return texturePack;
+    }
+    void setTextureAtlas(decltype(texturePack) newTexturePack) {
+        this->texturePack = newTexturePack;
     }
 };
 

@@ -54,10 +54,4 @@ void Model::render(DefaultShader&) {
     glBindVertexArray(0);
 }
 
-void TexturedModel::render(DefaultShader& shader) {
-    this->texture->bind();
-    this->model->render(shader);
-    this->texture->unbind();
-}
-
 } // namespace genesis

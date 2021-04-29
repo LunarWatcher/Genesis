@@ -9,6 +9,8 @@ set (SOURCE_FILES genesis/Main.cpp
                     genesis/rendering/view/Camera.cpp
                     # Entities
                     genesis/rendering/Entity.cpp
+                    # Environment
+                    genesis/rendering/environment/Chunk.cpp
                     # Core
                     genesis/core/Runner.cpp
                     # Controls

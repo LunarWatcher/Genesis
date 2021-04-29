@@ -58,10 +58,12 @@ void Renderer::render() {
     glClearColor(1, 0, 1, 1);
 
     textureShader->apply();
+    runner.getTextureAtlas()->bind();
     camera.applyCamera(*textureShader);
     for (auto& object : objects) {
         object->render(*textureShader);
     }
+    runner.getTextureAtlas()->unbind();
     textureShader->stop();
 
     glfwSwapBuffers(window);

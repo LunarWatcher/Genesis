@@ -35,15 +35,4 @@ public:
     void createVBO(int attribNumber, int size, const VertexArray& data);
 };
 
-class TexturedModel : public Renderable {
-private:
-    std::shared_ptr<Model> model;
-    std::shared_ptr<Texture> texture;
-
-public:
-    TexturedModel(std::shared_ptr<Model> model, std::shared_ptr<Texture> texture) : model(model), texture(texture) {}
-
-    void render(DefaultShader&) override;
-};
-
 } // namespace genesis
