@@ -45,19 +45,21 @@ void Runner::runGame() {
     auto lastTime = std::chrono::high_resolution_clock::now();
     do {
         auto now = std::chrono::high_resolution_clock::now();
-        delta = (now - lastTime).count();
+        delta = std::chrono::duration<double, std::ratio<1>>(now - lastTime).count();
 
         // TODO: figure out how to best design a loop that makes TPS
         // and FPS separate (... at least partially)
         // At least to the point where FPS != TPS by loop definition
         // Though might never be a problem. A certain degree of async
         // processing might avoid that being necessesary.
+        inputManager.tick();
+
         renderer.tick();
         renderer.render();
 
         auto end = std::chrono::high_resolution_clock::now();
         lastTime = end;
-        auto sleepFor = targetTime - (end - now);
+        auto sleepFor = targetTime - (now - end);
         if (sleepFor > std::chrono::milliseconds(0))
             std::this_thread::sleep_for(sleepFor);
     } while (glfwWindowShouldClose(renderer.getWindow()) == 0);

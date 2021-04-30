@@ -7,11 +7,12 @@
 namespace genesis {
 
 void InputManager::onKeyPressed(int key, int, int action, int mods) {
-    std::string fwd = std::to_string(key) + std::to_string(mods);
-    auto it = registeredKeys.find(fwd);
-    if (it != registeredKeys.end()) {
-        (*it).second(*this, action);
+    if (action == GLFW_REPEAT) {
+        return;
     }
+
+    std::string fwd = std::to_string(key) + std::to_string(mods);
+    keys[fwd] = action == GLFW_PRESS;
 }
 
 bool InputManager::registerKeyCallback(int key, int mods, InputCallback callback) {
@@ -48,6 +49,20 @@ void InputManager::onMousePressed(int button, int action, int mods) {
 void InputManager::onMouseMoved(double x, double y) {
     // TODO: drag or whatever
     // I guess
+}
+
+void InputManager::tick() {
+    for (auto& [key, callback] : registeredKeys) {
+        auto it = keys.find(key);
+        if (it != keys.end()) {
+            auto& pair = *it;
+            if (pair.second >= 0) {
+                callback(*this, pair.second);
+                if (pair.second == 0)
+                    pair.second = -1;
+            }
+        }
+    }
 }
 
 } // namespace genesis

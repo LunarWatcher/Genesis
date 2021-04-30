@@ -29,6 +29,8 @@ private:
      * to create unique maps for different keys.
      */
     std::map<std::string, InputCallback> registeredKeys;
+    std::map<std::string, int> keys;
+
     Runner& runner;
 
     bool isMouse1Pressed = false;
@@ -41,6 +43,8 @@ public:
 
     void onMousePressed(int button, int action, int mods);
     void onMouseMoved(double x, double y);
+
+    void tick();
 
     /**
      * @returns             Whether or not the callback was added
