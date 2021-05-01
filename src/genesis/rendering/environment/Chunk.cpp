@@ -15,7 +15,7 @@ Chunk::Chunk(Runner& runner, int chunkX, int chunkY) : chunkX(chunkX), chunkY(ch
         auto& vec = chunkMap.at(y);
         for (int x = 0; x < CHUNK_SIZE; ++x) {
             auto entity = std::make_shared<genesis::Entity>(
-                    rawObject, glm::vec3{chunkX * CHUNK_SIZE + x * 2, chunkY * CHUNK_SIZE + y * 2, -3});
+                    rawObject, glm::vec3{chunkX * CHUNK_SIZE + x, chunkY * CHUNK_SIZE + y, -3});
             vec.push_back(entity);
         }
     }
