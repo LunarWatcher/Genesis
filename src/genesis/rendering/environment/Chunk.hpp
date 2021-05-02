@@ -1,4 +1,4 @@
-#include "genesis/core/Runner.hpp"
+#include "genesis/core/WorldController.hpp"
 #include "genesis/rendering/Entity.hpp"
 #include <GL/gl.h>
 #include <memory>
@@ -16,7 +16,7 @@ private:
     int chunkX, chunkY;
 
 public:
-    Chunk(Runner& runner, int chunkX, int chunkY);
+    Chunk(WorldController& runner, int chunkX, int chunkY);
     void render(DefaultShader& shader);
 };
 

@@ -1,6 +1,6 @@
 #include "InputManager.hpp"
 #include "GLFW/glfw3.h"
-#include "genesis/core/Runner.hpp"
+#include "genesis/core/WorldController.hpp"
 #include <iostream>
 #include <stdexcept>
 

@@ -10,18 +10,18 @@
 
 namespace genesis {
 
-class Runner;
+class WorldController;
 class Renderer {
 private:
     GLFWwindow* window;
     Camera camera;
     std::shared_ptr<DefaultShader> textureShader;
 
-    Runner& runner;
+    WorldController& runner;
 
 public:
     std::vector<std::shared_ptr<Renderable>> objects;
-    Renderer(Runner& runner);
+    Renderer(WorldController& runner);
 
     int initializeWindow();
 

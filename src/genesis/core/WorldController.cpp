@@ -1,4 +1,4 @@
-#include "Runner.hpp"
+#include "WorldController.hpp"
 
 #include "genesis/rendering/Constants.hpp"
 #include "genesis/rendering/Entity.hpp"
@@ -14,7 +14,7 @@
 
 namespace genesis {
 
-Runner::Runner() : inputManager(*this), renderer(*this) {
+WorldController::WorldController() : inputManager(*this), renderer(*this) {
     int result = renderer.initializeWindow();
     if (result != 0) {
         throw std::runtime_error("Initializing the window failed");
@@ -35,10 +35,10 @@ Runner::Runner() : inputManager(*this), renderer(*this) {
         ((InputManager*) glfwGetWindowUserPointer(win))->onMouseMoved(x, y);
     });
 
-    Runner::INSTANCE = this;
+    WorldController::INSTANCE = this;
 }
 
-void Runner::runGame() {
+void WorldController::runGame() {
     this->renderer.render();
     auto targetTime = std::chrono::duration<double, std::milli>(8.3);
 

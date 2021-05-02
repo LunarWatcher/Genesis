@@ -1,7 +1,7 @@
 #include "Renderer.hpp"
 #include "GLFW/glfw3.h"
 #include "Shader.hpp"
-#include "genesis/core/Runner.hpp"
+#include "genesis/core/WorldController.hpp"
 #include "genesis/rendering/Texture.hpp"
 #include "shaders/DefaultShader.hpp"
 #include <chrono>
@@ -10,7 +10,7 @@
 
 namespace genesis {
 
-Renderer::Renderer(Runner& runner) : camera(runner.getInputManager()), runner(runner) {}
+Renderer::Renderer(WorldController& runner) : camera(runner.getInputManager()), runner(runner) {}
 
 int Renderer::initializeWindow() {
     glewExperimental = true;

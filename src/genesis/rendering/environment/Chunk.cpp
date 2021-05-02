@@ -4,7 +4,7 @@
 
 namespace genesis {
 
-Chunk::Chunk(Runner& runner, int chunkX, int chunkY) : chunkX(chunkX), chunkY(chunkY) {
+Chunk::Chunk(WorldController& runner, int chunkX, int chunkY) : chunkX(chunkX), chunkY(chunkY) {
     chunkMap.resize(CHUNK_SIZE);
 
     auto rawObject = std::make_shared<genesis::Model>(genesis::Constants::square, [&](Model* model) {

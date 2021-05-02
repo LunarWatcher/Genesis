@@ -12,9 +12,12 @@ set (SOURCE_FILES genesis/Main.cpp
                     # Environment
                     genesis/rendering/environment/Chunk.cpp
                     # Core
-                    genesis/core/Runner.cpp
+                    genesis/core/WorldController.cpp
                     # Controls
                     genesis/controls/InputManager.cpp
+                    # Game
+                    genesis/world/EntityController.cpp
+                    genesis/world/PlayerCamp.cpp
                     )
 
 add_executable(genesis ${SOURCE_FILES})

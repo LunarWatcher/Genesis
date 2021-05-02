@@ -1,5 +1,5 @@
 #include "Camera.hpp"
-#include "genesis/core/Runner.hpp"
+#include "genesis/core/WorldController.hpp"
 #include "glm/ext/matrix_transform.hpp"
 #include "glm/ext/vector_float3.hpp"
 #include <iostream>
@@ -11,19 +11,19 @@ Camera::Camera(InputManager& input) : inputManager(input) {
             0, // no modifiers
             [this](InputManager&, int action) {
                 if (action != 0)
-                    this->position.y += 2.0 * Runner::getRunner()->getDelta();
+                    this->position.y += 2.0 * WorldController::getWorld()->getDelta();
             });
     inputManager.registerKeyCallback(GLFW_KEY_A, 0, [this](InputManager&, int action) {
         if (action != 0)
-            this->position.x -= 2.0 * Runner::getRunner()->getDelta();
+            this->position.x -= 2.0 * WorldController::getWorld()->getDelta();
     });
     inputManager.registerKeyCallback(GLFW_KEY_S, 0, [this](InputManager&, int action) {
         if (action != 0)
-            this->position.y -= 2.0 * Runner::getRunner()->getDelta();
+            this->position.y -= 2.0 * WorldController::getWorld()->getDelta();
     });
     inputManager.registerKeyCallback(GLFW_KEY_D, 0, [this](InputManager&, int action) {
         if (action != 0)
-            this->position.x += 2.0 * Runner::getRunner()->getDelta();
+            this->position.x += 2.0 * WorldController::getWorld()->getDelta();
     });
 }
 

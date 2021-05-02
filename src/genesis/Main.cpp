@@ -1,7 +1,7 @@
-#include "genesis/core/Runner.hpp"
+#include "genesis/core/WorldController.hpp"
 #include <iostream>
 
 int main() {
-    genesis::Runner runner;
+    genesis::WorldController runner;
     runner.runGame();
 }

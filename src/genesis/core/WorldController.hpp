@@ -5,9 +5,9 @@
 
 namespace genesis {
 
-class Runner {
+class WorldController {
 private:
-    static inline Runner* INSTANCE;
+    static inline WorldController* INSTANCE;
     InputManager inputManager;
     Renderer renderer;
 
@@ -16,7 +16,7 @@ private:
     std::shared_ptr<genesis::Texture> texturePack;
 
 public:
-    Runner();
+    WorldController();
 
     /**
      * Manages the game loop
@@ -26,8 +26,8 @@ public:
     double getDelta() {
         return delta;
     }
-    static Runner* getRunner() {
-        return Runner::INSTANCE;
+    static WorldController* getWorld() {
+        return WorldController::INSTANCE;
     }
 
     Renderer& getRenderer() {
