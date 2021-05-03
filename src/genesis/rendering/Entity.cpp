@@ -1,12 +1,13 @@
 #include "Entity.hpp"
+#include "genesis/rendering/Renderer.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 
 namespace genesis {
 
-void Entity::render(DefaultShader& shader) {
+void Entity::render() {
     regenerateTransMatrix();
-    shader.loadTransMatrix(this->transMatrix);
-    model->render(shader);
+    Renderer::getInstance().getTextureShader()->loadTransMatrix(this->transMatrix);
+    model->render();
 }
 
 void Entity::regenerateTransMatrix() {

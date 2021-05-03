@@ -13,23 +13,49 @@ namespace genesis {
 class WorldController;
 class Renderer {
 private:
-    GLFWwindow* window;
-    Camera camera;
-    std::shared_ptr<DefaultShader> textureShader;
+    static inline Renderer* INSTANCE;
 
-    WorldController& runner;
+    GLFWwindow* window;
+    std::shared_ptr<Camera> camera;
+    std::shared_ptr<DefaultShader> textureShader;
+    std::shared_ptr<Texture> texturePack;
+
+    std::shared_ptr<WorldController> controller;
+    std::shared_ptr<InputManager> inputManager;
+    double delta;
+
+    void initializeGame();
 
 public:
-    std::vector<std::shared_ptr<Renderable>> objects;
-    Renderer(WorldController& runner);
-
-    int initializeWindow();
+    Renderer();
 
     void tick();
     void render();
 
+    void run();
+
     GLFWwindow* getWindow() {
         return window;
+    }
+
+    double getDelta() {
+        return delta;
+    }
+
+    auto getTextureShader() -> decltype(textureShader) {
+        return textureShader;
+    }
+
+    auto getTexturePack() -> decltype(texturePack) {
+        return texturePack;
+    }
+
+    auto getInputManager() -> decltype(inputManager) {
+        return inputManager;
+    }
+
+    static Renderer getInstance() {
+        return *INSTANCE;
     }
 };
 

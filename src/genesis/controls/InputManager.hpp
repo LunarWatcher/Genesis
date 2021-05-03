@@ -8,7 +8,6 @@
 
 namespace genesis {
 
-class WorldController;
 class InputManager {
 public:
     /**
@@ -31,13 +30,9 @@ private:
     std::map<std::string, InputCallback> registeredKeys;
     std::map<std::string, int> keys;
 
-    WorldController& runner;
-
     bool isMouse1Pressed = false;
 
 public:
-    InputManager(WorldController& runner) : runner(runner) {}
-
     // TODO: figure out how to get GLFW to also register altgr as a modifier
     void onKeyPressed(int key, int scancode, int action, int mods);
 
@@ -55,7 +50,6 @@ public:
      *                      won't use it effectively - ever.
      */
     bool registerKeyCallback(int key, int mods, InputCallback callback);
-    WorldController& getRunner();
 };
 
 } // namespace genesis

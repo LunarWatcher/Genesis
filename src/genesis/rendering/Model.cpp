@@ -42,7 +42,7 @@ void Model::createVBO(int attribNumber, int coordSize, const VertexArray& data) 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void Model::render(DefaultShader&) {
+void Model::render() {
     glBindVertexArray(this->vaoID);
     for (size_t i = 0; i < attribArrays; ++i) {
         glEnableVertexAttribArray(i);

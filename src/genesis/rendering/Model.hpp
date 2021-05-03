@@ -29,7 +29,7 @@ public:
 
     virtual ~Model();
 
-    virtual void render(DefaultShader&) override;
+    virtual void render() override;
 
     void bindIndexBuffer(const IndexArray& indexBuffer);
     void createVBO(int attribNumber, int size, const VertexArray& data);

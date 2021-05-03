@@ -1,6 +1,6 @@
 #include "InputManager.hpp"
 #include "GLFW/glfw3.h"
-#include "genesis/core/WorldController.hpp"
+#include "genesis/rendering/Renderer.hpp"
 #include <iostream>
 #include <stdexcept>
 
@@ -41,7 +41,7 @@ void InputManager::onMousePressed(int button, int action, int mods) {
     if (button == GLFW_MOUSE_BUTTON_1)
         this->isMouse1Pressed = action;
     double x, y;
-    glfwGetCursorPos(this->runner.getRenderer().getWindow(), &x, &y);
+    glfwGetCursorPos(Renderer::getInstance().getWindow(), &x, &y);
     // And use the position here for something:tm:
     // TODO: for when tiling is done
 }

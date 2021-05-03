@@ -1,7 +1,7 @@
-#include "genesis/core/WorldController.hpp"
+#include "genesis/rendering/Renderer.hpp"
 #include <iostream>
 
 int main() {
-    genesis::WorldController runner;
-    runner.runGame();
+    genesis::Renderer renderer;
+    renderer.run();
 }

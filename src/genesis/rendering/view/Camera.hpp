@@ -17,12 +17,10 @@ private:
     glm::vec3 position = {1, 1, 1};
     glm::mat4 matrix;
 
-    InputManager& inputManager;
-
     void regenerateCameraMatrix();
 
 public:
-    Camera(InputManager& input);
+    Camera();
     void applyCamera(DefaultShader& shader);
 };
 

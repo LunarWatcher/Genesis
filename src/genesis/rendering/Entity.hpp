@@ -34,7 +34,7 @@ public:
     }
     Entity(std::shared_ptr<Model> model, glm::vec3 position) : Entity(model, position, glm::vec3{0, 0, 0}, 0) {}
 
-    void render(DefaultShader& shader) override;
+    void render() override;
 };
 
 } // namespace genesis

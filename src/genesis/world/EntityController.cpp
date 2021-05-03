@@ -2,9 +2,9 @@
 
 namespace genesis {
 
-void EntityController::render(DefaultShader& shader) {
+void EntityController::render() {
     for (auto& entity : this->controlled) {
-        entity->render(shader);
+        entity->render();
     }
 }
 
