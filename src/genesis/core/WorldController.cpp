@@ -47,7 +47,7 @@ void WorldController::runGame() {
         auto now = std::chrono::high_resolution_clock::now();
         delta = std::chrono::duration<double, std::ratio<1>>(now - lastTime).count();
 
-        // TODO: figure out how to best design a loop that makes TPS
+        // TODO: figure out how to best design a loop that makes TPS \
         // and FPS separate (... at least partially)
         // At least to the point where FPS != TPS by loop definition
         // Though might never be a problem. A certain degree of async

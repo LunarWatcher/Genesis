@@ -11,19 +11,19 @@ Camera::Camera(InputManager& input) : inputManager(input) {
             0, // no modifiers
             [this](InputManager&, int action) {
                 if (action != 0)
-                    this->position.y += 2.0 * WorldController::getWorld()->getDelta();
+                    this->position.y += 4.0 * WorldController::getWorld()->getDelta();
             });
     inputManager.registerKeyCallback(GLFW_KEY_A, 0, [this](InputManager&, int action) {
         if (action != 0)
-            this->position.x -= 2.0 * WorldController::getWorld()->getDelta();
+            this->position.x -= 4.0 * WorldController::getWorld()->getDelta();
     });
     inputManager.registerKeyCallback(GLFW_KEY_S, 0, [this](InputManager&, int action) {
         if (action != 0)
-            this->position.y -= 2.0 * WorldController::getWorld()->getDelta();
+            this->position.y -= 4.0 * WorldController::getWorld()->getDelta();
     });
     inputManager.registerKeyCallback(GLFW_KEY_D, 0, [this](InputManager&, int action) {
         if (action != 0)
-            this->position.x += 2.0 * WorldController::getWorld()->getDelta();
+            this->position.x += 4.0 * WorldController::getWorld()->getDelta();
     });
 }
 

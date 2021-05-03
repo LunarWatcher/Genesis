@@ -1,3 +1,5 @@
+#pragma once
+
 #include "genesis/rendering/Entity.hpp"
 #include "genesis/rendering/shaders/DefaultShader.hpp"
 #include <map>

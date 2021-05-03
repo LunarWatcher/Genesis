@@ -28,7 +28,7 @@ int Renderer::initializeWindow() {
 #endif
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    // glfwSwapInterval(1);
+    glfwSwapInterval(1);
 
     this->window = glfwCreateWindow(1024, 576, "Genesis", nullptr, nullptr);
     if (!window) {

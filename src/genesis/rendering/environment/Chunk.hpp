@@ -1,3 +1,5 @@
+#pragma once
+
 #include "genesis/core/WorldController.hpp"
 #include "genesis/rendering/Entity.hpp"
 #include <GL/gl.h>
