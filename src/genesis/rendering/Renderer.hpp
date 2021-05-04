@@ -42,16 +42,20 @@ public:
         return delta;
     }
 
-    auto getTextureShader() -> decltype(textureShader) {
+    auto getTextureShader() {
         return textureShader;
     }
 
-    auto getTexturePack() -> decltype(texturePack) {
+    auto getTexturePack() {
         return texturePack;
     }
 
-    auto getInputManager() -> decltype(inputManager) {
+    auto getInputManager() {
         return inputManager;
+    }
+
+    auto getCamera() {
+        return camera;
     }
 
     static Renderer getInstance() {

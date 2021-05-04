@@ -14,14 +14,21 @@ private:
      * Changing the up vector should affect camera rotation, but that's probably an unnecessary
      * feature.
      */
-    glm::vec3 position = {1, 1, 1};
+    glm::vec3 position = {1, 1, 5};
     glm::mat4 matrix;
+
+    int activeYLayer = 0;
 
     void regenerateCameraMatrix();
 
 public:
     Camera();
     void applyCamera(DefaultShader& shader);
+
+    void setYLayer(int newLayer);
+    int getActiveY() {
+        return activeYLayer;
+    }
 };
 
 } // namespace genesis
