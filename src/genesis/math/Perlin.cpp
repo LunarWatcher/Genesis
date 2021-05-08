@@ -1,4 +1,8 @@
 #include "Perlin.hpp"
+#include "genesis/rendering/Constants.hpp"
+#include "genesis/rendering/Entity.hpp"
+#include "genesis/rendering/Renderer.hpp"
+#include <iostream>
 
 namespace perlin {
 
@@ -7,6 +11,9 @@ NoiseGenerator::NoiseGenerator() {
     gen = std::mt19937(seed);
 }
 
+/**
+ * Interpolation using smoothing.
+ */
 double Perlin2DNoiseGenerator::interpolate(double a0, double a1, double w) {
     return (a1 - a0) * w + a0;
 }
@@ -20,6 +27,69 @@ std::pair<double, double> Perlin2DNoiseGenerator::randomVector() {
     // clang-format on
 }
 
-void Perlin2DNoiseGenerator::generateChunk(genesis::ChunkMap& ref, int chunkX, int chunkY) {}
+double Perlin2DNoiseGenerator::dotGridGradient(int ix, int iy, double x, double y) {
+    auto vec = randomVector();
+
+    double deltaX = x - (double) ix;
+    double deltaY = y - (double) iy;
+
+    return deltaX * vec.first + deltaY * vec.second;
+}
+
+double Perlin2DNoiseGenerator::perlin(double x, double y) {
+    int x0 = std::floor(x);
+    int x1 = x0 + 1;
+
+    int y0 = std::floor(y);
+    int y1 = y0 + 1;
+
+    double sx = x - (double) x0;
+    double sy = y - (double) y0;
+
+    double n0 = dotGridGradient(x0, y0, x, y);
+    double n1 = dotGridGradient(x1, y0, x, y);
+    double ix0 = interpolate(n0, n1, sx);
+
+    n0 = dotGridGradient(x0, y1, x, y);
+    n1 = dotGridGradient(x1, y1, x, y);
+    double ix1 = interpolate(n0, n1, sx);
+
+    return interpolate(ix0, ix1, sy);
+}
+
+void Perlin2DNoiseGenerator::generateChunk(genesis::ChunkMap& ref, int chunkX, int chunkY) {
+    constexpr double STEP_DISTANCE = 1.0 / genesis::Chunk::CHUNK_SIZE;
+
+    auto rawObject = std::make_shared<genesis::Model>(genesis::Constants::square, [&](genesis::Model* model) {
+        model->bindIndexBuffer(genesis::Constants::squareIndices);
+        model->createVBO(1, 2, genesis::Renderer::getInstance().getTexturePack()->generateFromPosition(0, 12, 64, 64));
+    });
+
+    for (size_t y = 0; y < genesis::Constants::MAX_OVERWORLD_HEIGHT; ++y) {
+        auto& cLevel = ref[y];
+        cLevel.resize(genesis::Chunk::CHUNK_SIZE);
+
+        for (size_t z = 0; z < genesis::Chunk::CHUNK_SIZE; ++z) {
+            auto& vec = cLevel.at(z);
+            for (int x = 0; x < genesis::Chunk::CHUNK_SIZE; ++x) {
+                vec.resize(genesis::Chunk::CHUNK_SIZE);
+            }
+        }
+    }
+
+    int rx = 0, rz = 0;
+    for (double z = chunkY + STEP_DISTANCE; z <= chunkY + (1.0 - STEP_DISTANCE); z += STEP_DISTANCE) {
+        for (double x = chunkX + STEP_DISTANCE; x <= chunkX + (1.0 - STEP_DISTANCE); x += STEP_DISTANCE) {
+            int y = std::floor((perlin(x, z) + 1) / 2 * genesis::Constants::MAX_OVERWORLD_HEIGHT);
+            std::cout << y << std::endl;
+            ref[y][rz].assign(rx, std::make_shared<genesis::Entity>(
+                                          rawObject, glm::vec3{chunkX * genesis::Chunk::CHUNK_SIZE + rx,
+                                                             chunkY * genesis::Chunk::CHUNK_SIZE + rz, -3}));
+            rx++;
+        }
+        rx = 0;
+        rz++;
+    }
+}
 
 } // namespace perlin
