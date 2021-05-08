@@ -11,5 +11,5 @@ Colony sim, because why not?
 
 ### Runtime requirements
 
-* GPU/AGPU supporting OpenGL 4.0
+* GPU supporting OpenGL 4.0
 * Operating system: Theoretically all, support guaranteed on Ubuntu 20.04 and derivatives
