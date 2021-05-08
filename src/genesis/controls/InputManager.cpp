@@ -6,14 +6,11 @@
 
 namespace genesis {
 
-void InputManager::onKeyPressed(int key, int scanCode, int action, int mods) {
+void InputManager::onKeyPressed(int key, int, int action, int mods) {
     if (action == GLFW_REPEAT) {
         return;
     }
-    auto cKey = glfwGetKeyName(key, scanCode);
-    std::string cache = cKey == nullptr ? std::to_string(key) : cKey;
-
-    std::string fwd = cache + std::to_string(mods);
+    std::string fwd = std::to_string(key) + std::to_string(mods);
     keys[fwd] = action == GLFW_PRESS;
 }
 
@@ -59,8 +56,9 @@ void InputManager::tick() {
         if (it != keys.end()) {
             auto& pair = *it;
             if (pair.second >= 0) {
-                callback(*this, pair.second);
-                if (pair.second == 0)
+                bool result = callback(*this, pair.second);
+
+                if (pair.second == 0 || result)
                     pair.second = -1;
             }
         }

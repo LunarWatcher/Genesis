@@ -66,8 +66,6 @@ void Renderer::initializeGame() {
     glfwSetCursorPosCallback(window, [](GLFWwindow* win, double x, double y) {
         ((InputManager*) glfwGetWindowUserPointer(win))->onMouseMoved(x, y);
     });
-    glfwSetCharModsCallback(window,
-            [](GLFWwindow*, unsigned int cp, int mods) { std::cout << ((char) cp) << ", " << mods << std::endl; });
 }
 
 void Renderer::tick() {

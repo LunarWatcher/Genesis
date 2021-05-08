@@ -18,7 +18,7 @@ public:
      * Or, to be specific, these aren't general callbacks, but have been explicitly
      * registered for one specific string.
      */
-    typedef std::function<void(InputManager&, int action)> InputCallback;
+    typedef std::function<bool(InputManager&, int action)> InputCallback;
 
 private:
     // Might make sense to make this a List<Function<...>>

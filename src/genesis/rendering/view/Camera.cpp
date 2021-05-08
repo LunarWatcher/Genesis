@@ -15,30 +15,34 @@ Camera::Camera() {
             [this](InputManager&, int action) {
                 if (action != 0)
                     this->position.y += 10.0 * Renderer::getInstance().getDelta();
+                return false;
             });
     inputManager->registerKeyCallback(GLFW_KEY_A, 0, [this](InputManager&, int action) {
         if (action != 0)
             this->position.x -= 10.0 * Renderer::getInstance().getDelta();
+        return false;
     });
     inputManager->registerKeyCallback(GLFW_KEY_S, 0, [this](InputManager&, int action) {
         if (action != 0)
             this->position.y -= 10.0 * Renderer::getInstance().getDelta();
+        return false;
     });
     inputManager->registerKeyCallback(GLFW_KEY_D, 0, [this](InputManager&, int action) {
         if (action != 0)
             this->position.x += 10.0 * Renderer::getInstance().getDelta();
+        return false;
     });
-    inputManager->registerKeyCallback(GLFW_KEY_EQUAL, GLFW_MOD_SHIFT, [this](InputManager&, int action) {
-        if (action != 0) {
+    inputManager->registerKeyCallback(GLFW_KEY_K, 0, [this](InputManager&, int action) {
+        if (action == 1) {
             this->activeYLayer += 1;
         }
-        std::cout << "Plus" << std::endl;
+        return true;
     });
-    inputManager->registerKeyCallback(GLFW_KEY_MINUS, GLFW_MOD_SHIFT, [this](InputManager&, int action) {
-        if (action != 0) {
+    inputManager->registerKeyCallback(GLFW_KEY_J, 0, [this](InputManager&, int action) {
+        if (action == 1) {
             this->activeYLayer -= 1;
         }
-        std::cout << "Minus" << std::endl;
+        return true;
     });
 }
 
