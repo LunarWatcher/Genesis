@@ -22,6 +22,7 @@ private:
 
 public:
     Chunk(int chunkX, int chunkY);
+
     void render();
 
     auto getX() {

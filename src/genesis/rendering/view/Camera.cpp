@@ -8,23 +8,37 @@
 namespace genesis {
 
 Camera::Camera() {
-    Renderer::getInstance().getInputManager()->registerKeyCallback(GLFW_KEY_W, // Map W
+
+    auto inputManager = Renderer::getInstance().getInputManager();
+    inputManager->registerKeyCallback(GLFW_KEY_W, // Map W
             0, // no modifiers
             [this](InputManager&, int action) {
                 if (action != 0)
                     this->position.y += 10.0 * Renderer::getInstance().getDelta();
             });
-    Renderer::getInstance().getInputManager()->registerKeyCallback(GLFW_KEY_A, 0, [this](InputManager&, int action) {
+    inputManager->registerKeyCallback(GLFW_KEY_A, 0, [this](InputManager&, int action) {
         if (action != 0)
             this->position.x -= 10.0 * Renderer::getInstance().getDelta();
     });
-    Renderer::getInstance().getInputManager()->registerKeyCallback(GLFW_KEY_S, 0, [this](InputManager&, int action) {
+    inputManager->registerKeyCallback(GLFW_KEY_S, 0, [this](InputManager&, int action) {
         if (action != 0)
             this->position.y -= 10.0 * Renderer::getInstance().getDelta();
     });
-    Renderer::getInstance().getInputManager()->registerKeyCallback(GLFW_KEY_D, 0, [this](InputManager&, int action) {
+    inputManager->registerKeyCallback(GLFW_KEY_D, 0, [this](InputManager&, int action) {
         if (action != 0)
             this->position.x += 10.0 * Renderer::getInstance().getDelta();
+    });
+    inputManager->registerKeyCallback(GLFW_KEY_EQUAL, GLFW_MOD_SHIFT, [this](InputManager&, int action) {
+        if (action != 0) {
+            this->activeYLayer += 1;
+        }
+        std::cout << "Plus" << std::endl;
+    });
+    inputManager->registerKeyCallback(GLFW_KEY_MINUS, GLFW_MOD_SHIFT, [this](InputManager&, int action) {
+        if (action != 0) {
+            this->activeYLayer -= 1;
+        }
+        std::cout << "Minus" << std::endl;
     });
 }
 

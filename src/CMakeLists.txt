@@ -18,6 +18,8 @@ set (SOURCE_FILES genesis/Main.cpp
                     # Game
                     genesis/world/EntityController.cpp
                     genesis/world/PlayerCamp.cpp
+                    # Math
+                    genesis/math/Perlin.cpp
                     )
 
 add_executable(genesis ${SOURCE_FILES})

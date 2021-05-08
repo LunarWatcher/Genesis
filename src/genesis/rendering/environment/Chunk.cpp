@@ -25,6 +25,8 @@ Chunk::Chunk(int chunkX, int chunkY) : chunkX(chunkX), chunkY(chunkY) {
 }
 
 void Chunk::render() {
+    if (!chunkMap.contains(Renderer::getInstance().getCamera()->getActiveY()))
+        return;
     auto& currLevel = chunkMap.at(Renderer::getInstance().getCamera()->getActiveY());
 
     for (auto& vec : currLevel) {

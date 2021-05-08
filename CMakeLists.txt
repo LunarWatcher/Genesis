@@ -10,8 +10,6 @@ if (NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Release)
 endif()
 
-# TODO: figure out how to also support C++20 where supported
-# Probably need to configure shit or something.
 set (CMAKE_CXX_STANDARD 20)
 
 if(NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")

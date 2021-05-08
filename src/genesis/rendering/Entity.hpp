@@ -35,6 +35,16 @@ public:
     Entity(std::shared_ptr<Model> model, glm::vec3 position) : Entity(model, position, glm::vec3{0, 0, 0}, 0) {}
 
     void render() override;
+
+    const glm::vec3& getPosition() {
+        return position;
+    }
+    const glm::vec3& getRotation() {
+        return rotation;
+    }
+    const float& getScale() {
+        return scale;
+    }
 };
 
 } // namespace genesis
