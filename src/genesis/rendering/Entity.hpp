@@ -32,7 +32,6 @@ public:
     Entity(std::shared_ptr<Model> model, glm::vec3 position, glm::vec3 rotation, float scale)
             : model(model), position(position), rotation(rotation), scale(scale) {
         regenerateTransMatrix();
-        std::cout << position.x << ", " << position.y << ", " << position.z << std::endl;
     }
     Entity(std::shared_ptr<Model> model, glm::vec3 position) : Entity(model, position, glm::vec3{0, 0, 0}, 0) {}
 
