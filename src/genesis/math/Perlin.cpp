@@ -93,6 +93,7 @@ void Perlin2DNoiseGenerator::generateChunk(genesis::ChunkMap& ref, int chunkX, i
         }
     }
 
+    // Coordinates relative to the chunk border: used for coordinate generation and accessing the map
     int rx = 0, rz = 0;
     for (double z = chunkY + STEP_DISTANCE; z <= chunkY + 16 * STEP_DISTANCE; z += STEP_DISTANCE) {
         for (double x = chunkX + STEP_DISTANCE; x <= chunkX + 16 * STEP_DISTANCE; x += STEP_DISTANCE) {
