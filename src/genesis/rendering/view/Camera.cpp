@@ -35,6 +35,7 @@ Camera::Camera() {
     inputManager->registerKeyCallback(GLFW_KEY_K, 0, [this](InputManager&, int action) {
         if (action == 1) {
             this->activeYLayer += 1;
+            std::cout << this->activeYLayer << std::endl;
         }
         return true;
     });

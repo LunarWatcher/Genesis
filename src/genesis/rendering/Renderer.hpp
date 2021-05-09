@@ -20,7 +20,7 @@ private:
     std::shared_ptr<DefaultShader> textureShader;
     std::shared_ptr<Texture> texturePack;
 
-    std::shared_ptr<WorldController> controller;
+    std::shared_ptr<WorldController> worldController;
     std::shared_ptr<InputManager> inputManager;
     double delta;
 
@@ -52,6 +52,10 @@ public:
 
     auto getInputManager() {
         return inputManager;
+    }
+
+    auto getWorld() {
+        return worldController;
     }
 
     auto getCamera() {

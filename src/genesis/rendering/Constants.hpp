@@ -11,6 +11,7 @@ inline const std::vector<GLint> squareIndices = {0, 1, 3, 3, 1, 2};
 
 inline constexpr int MAX_OVERWORLD_HEIGHT = 32;
 inline constexpr int MAX_UNDERGROUND_HEIGHT = 32;
+inline constexpr int FLAT_COMPENSATION_FACTOR = 15;
 
 } // namespace Constants
 } // namespace genesis

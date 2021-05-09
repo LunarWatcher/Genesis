@@ -57,6 +57,22 @@ double Perlin2DNoiseGenerator::perlin(double x, double y) {
     return interpolate(ix0, ix1, sy);
 }
 
+int Perlin2DNoiseGenerator::clampPerlin(double perlinInput) {
+    // Get the noise in [0, 1]
+    auto clampedPerlin = (perlinInput + 1) / 2;
+    // Generate the range
+    auto normalizedPerlin = std::floor(
+            clampedPerlin * (genesis::Constants::MAX_OVERWORLD_HEIGHT + genesis::Constants::FLAT_COMPENSATION_FACTOR));
+
+    // This is potentially possible to modify with biomes, but that's a problem for later
+    if (normalizedPerlin >= 10 && normalizedPerlin <= 10 + genesis::Constants::FLAT_COMPENSATION_FACTOR) {
+        normalizedPerlin = 10;
+    } else if (normalizedPerlin > 10 + genesis::Constants::FLAT_COMPENSATION_FACTOR) {
+        normalizedPerlin -= genesis::Constants::FLAT_COMPENSATION_FACTOR;
+    }
+    return normalizedPerlin;
+}
+
 void Perlin2DNoiseGenerator::generateChunk(genesis::ChunkMap& ref, int chunkX, int chunkY) {
     constexpr double STEP_DISTANCE = 1.0 / genesis::Chunk::CHUNK_SIZE;
 
@@ -78,13 +94,11 @@ void Perlin2DNoiseGenerator::generateChunk(genesis::ChunkMap& ref, int chunkX, i
     }
 
     int rx = 0, rz = 0;
-    for (double z = chunkY + STEP_DISTANCE; z <= chunkY + (1.0 - STEP_DISTANCE); z += STEP_DISTANCE) {
-        for (double x = chunkX + STEP_DISTANCE; x <= chunkX + (1.0 - STEP_DISTANCE); x += STEP_DISTANCE) {
-            int y = std::floor((perlin(x, z) + 1) / 2 * genesis::Constants::MAX_OVERWORLD_HEIGHT);
-            std::cout << y << std::endl;
-            ref[y][rz].assign(rx, std::make_shared<genesis::Entity>(
-                                          rawObject, glm::vec3{chunkX * genesis::Chunk::CHUNK_SIZE + rx,
-                                                             chunkY * genesis::Chunk::CHUNK_SIZE + rz, -3}));
+    for (double z = chunkY + STEP_DISTANCE; z <= chunkY + 16 * STEP_DISTANCE; z += STEP_DISTANCE) {
+        for (double x = chunkX + STEP_DISTANCE; x <= chunkX + 16 * STEP_DISTANCE; x += STEP_DISTANCE) {
+            int y = clampPerlin(perlin(x, z));
+            ref[y][rz][rx] = std::make_shared<genesis::Entity>(rawObject,
+                    glm::vec3{chunkX * genesis::Chunk::CHUNK_SIZE + rx, chunkY * genesis::Chunk::CHUNK_SIZE + rz, -3});
             rx++;
         }
         rx = 0;

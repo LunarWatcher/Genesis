@@ -4,6 +4,8 @@
 #include "genesis/rendering/environment/Chunk.hpp"
 #include "genesis/world/EntityController.hpp"
 
+#include "genesis/math/Perlin.hpp"
+
 namespace genesis {
 
 class Chunk;
@@ -16,12 +18,19 @@ private:
 
     std::vector<std::shared_ptr<Chunk>> chunks;
     std::vector<EntityController> controllers;
+    perlin::Perlin2DNoiseGenerator generator;
 
 public:
     WorldController();
 
+    void generate();
+
     void render();
     void tick();
+
+    perlin::Perlin2DNoiseGenerator& getNoiseGenerator() {
+        return generator;
+    }
 };
 
 } // namespace genesis

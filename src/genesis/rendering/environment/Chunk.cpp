@@ -1,4 +1,5 @@
 #include "Chunk.hpp"
+#include "genesis/core/WorldController.hpp"
 #include "genesis/math/Perlin.hpp"
 #include "genesis/rendering/Constants.hpp"
 #include "genesis/rendering/Renderer.hpp"
@@ -7,7 +8,7 @@
 namespace genesis {
 
 Chunk::Chunk(int chunkX, int chunkY) : chunkX(chunkX), chunkY(chunkY) {
-    perlin::Perlin2DNoiseGenerator{0}.generateChunk(this->chunkMap, chunkX, chunkY);
+    Renderer::getInstance().getWorld()->getNoiseGenerator().generateChunk(this->chunkMap, chunkX, chunkY);
 }
 
 void Chunk::render() {

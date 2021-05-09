@@ -52,7 +52,8 @@ void Renderer::initializeGame() {
 
     this->texturePack = std::make_shared<genesis::Texture>("images/programmer.png");
 
-    this->controller = std::make_shared<WorldController>();
+    this->worldController = std::make_shared<WorldController>();
+    this->worldController->generate();
     this->textureShader = std::make_shared<DefaultShader>();
 
     // Input
@@ -69,7 +70,7 @@ void Renderer::initializeGame() {
 }
 
 void Renderer::tick() {
-    controller->tick();
+    worldController->tick();
 }
 
 void Renderer::render() {
@@ -81,7 +82,7 @@ void Renderer::render() {
     texturePack->bind();
     camera->applyCamera(*textureShader);
 
-    controller->render();
+    worldController->render();
 
     texturePack->unbind();
     textureShader->stop();

@@ -15,10 +15,14 @@
 namespace genesis {
 
 WorldController::WorldController() {
+    WorldController::INSTANCE = this;
+}
 
+void WorldController::generate() {
     auto chunk = std::make_shared<Chunk>(-1, 0);
     this->chunks.push_back(chunk);
-    WorldController::INSTANCE = this;
+    auto chunk2 = std::make_shared<Chunk>(0, 0);
+    this->chunks.push_back(chunk2);
 }
 
 void WorldController::tick() {}
