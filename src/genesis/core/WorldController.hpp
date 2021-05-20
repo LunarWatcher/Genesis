@@ -18,7 +18,7 @@ private:
 
     std::vector<std::shared_ptr<Chunk>> chunks;
     std::vector<EntityController> controllers;
-    perlin::Perlin2DNoiseGenerator generator;
+    std::shared_ptr<perlin::NoiseGenerator> generator;
 
 public:
     WorldController();
@@ -28,7 +28,7 @@ public:
     void render();
     void tick();
 
-    perlin::Perlin2DNoiseGenerator& getNoiseGenerator() {
+    std::shared_ptr<perlin::NoiseGenerator> getNoiseGenerator() {
         return generator;
     }
 };

@@ -5,6 +5,7 @@ set (SOURCE_FILES genesis/Main.cpp
                     genesis/rendering/Renderer.cpp genesis/rendering/shaders/DefaultShader.cpp
                     # Textures
                     genesis/rendering/Texture.cpp
+                    genesis/rendering/atlases/WorldTexture.cpp
                     # Camera
                     genesis/rendering/view/Camera.cpp
                     # Entities

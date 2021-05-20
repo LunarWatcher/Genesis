@@ -11,6 +11,7 @@ NoiseGenerator::NoiseGenerator() {
     gen = std::mt19937(seed);
 }
 
+// 2D perlin noise {{{
 /**
  * Interpolation using smoothing.
  */
@@ -106,5 +107,25 @@ void Perlin2DNoiseGenerator::generateChunk(genesis::ChunkMap& ref, int chunkX, i
         rz++;
     }
 }
+// }}}
+// DumbGenerator {{{
+void DumbGenerator::generateChunk(genesis::ChunkMap& ref, int chunkX, int chunkY) {
+    auto tile = genesis::Renderer::getInstance().getTexturePack()->getModel(genesis::WorldTile::GRASS);
+    // We pick 0 as the primary level
+    auto& activeLevel = ref[0];
+    // resize y to match the chunk size
+    activeLevel.resize(genesis::Chunk::CHUNK_SIZE);
+    for (int z = 0; z < genesis::Chunk::CHUNK_SIZE; ++z) {
+        // and resize the x coords for a given y
+        activeLevel[z].resize(genesis::Chunk::CHUNK_SIZE);
+
+        for (int x = 0; x < genesis::Chunk::CHUNK_SIZE; ++x) {
+
+            activeLevel[z][x] = std::make_shared<genesis::Entity>(tile,
+                    glm::vec3{chunkX * genesis::Chunk::CHUNK_SIZE + x, chunkY * genesis::Chunk::CHUNK_SIZE + z, -3});
+        }
+    }
+}
+// }}}
 
 } // namespace perlin

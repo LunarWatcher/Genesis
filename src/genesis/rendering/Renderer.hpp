@@ -4,6 +4,7 @@
 #include "GLFW/glfw3.h"
 #include "Model.hpp"
 #include "Renderable.hpp"
+#include "genesis/rendering/atlases/WorldTexture.hpp"
 #include "genesis/rendering/view/Camera.hpp"
 #include <memory>
 #include <vector>
@@ -18,7 +19,7 @@ private:
     GLFWwindow* window;
     std::shared_ptr<Camera> camera;
     std::shared_ptr<DefaultShader> textureShader;
-    std::shared_ptr<Texture> texturePack;
+    std::shared_ptr<WorldTexture> texturePack;
 
     std::shared_ptr<WorldController> worldController;
     std::shared_ptr<InputManager> inputManager;

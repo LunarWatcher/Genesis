@@ -32,6 +32,22 @@ public:
     }
 };
 
+/**
+ * This is a noise generator that doesn't generate noise.
+ *
+ * I can't be arsed to make the perlin implementation work, and I'd like to
+ * move on with the more interesting parts of the game.
+ * Adding this class means I can drop-in replace Perlin now, and drop-in replace
+ * the dumb generator later, if I ever figure out perlin.
+ *
+ * Also means there's no major refactoring involved when I plonk that back in
+ */
+class DumbGenerator : public NoiseGenerator {
+public:
+    DumbGenerator() : NoiseGenerator(0) {}
+    void generateChunk(genesis::ChunkMap& ref, int chunkX, int chunkY) override;
+};
+
 class Perlin2DNoiseGenerator : public NoiseGenerator {
 public:
     Perlin2DNoiseGenerator() : NoiseGenerator() {}

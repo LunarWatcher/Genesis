@@ -10,7 +10,10 @@
 
 namespace genesis {
 
-typedef std::map<int, std::vector<std::vector<std::shared_ptr<Entity>>>> ChunkMap;
+// Typedefs for the underlying map {{{
+typedef std::vector<std::vector<std::shared_ptr<Entity>>> FlatMap;
+typedef std::map<int, FlatMap> ChunkMap;
+// }}}
 
 class Chunk : public Renderable {
 public:

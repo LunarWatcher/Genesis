@@ -50,7 +50,7 @@ void Renderer::initializeGame() {
     this->inputManager = std::make_shared<InputManager>();
     this->camera = std::make_shared<Camera>();
 
-    this->texturePack = std::make_shared<genesis::Texture>("images/programmer.png");
+    this->texturePack = std::make_shared<genesis::WorldTexture>("images/programmer.png");
 
     this->worldController = std::make_shared<WorldController>();
     this->worldController->generate();

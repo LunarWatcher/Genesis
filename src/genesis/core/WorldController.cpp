@@ -14,7 +14,7 @@
 
 namespace genesis {
 
-WorldController::WorldController() {
+WorldController::WorldController() : generator(std::make_shared<perlin::DumbGenerator>()) {
     WorldController::INSTANCE = this;
 }
 

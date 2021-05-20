@@ -32,6 +32,11 @@ Camera::Camera() {
             this->position.x += 10.0 * Renderer::getInstance().getDelta();
         return false;
     });
+    /*
+    // This changes which map level is currently active.
+    // This code is not gonna be used until I figure out perlin, so I'm commenting it out.
+    // I'd like to get the game going, not spend hours and hours on figuring out noise
+    // this early. At least give me a chance to work on some AI first :dontfeelsoblob:
     inputManager->registerKeyCallback(GLFW_KEY_K, 0, [this](InputManager&, int action) {
         if (action == 1) {
             this->activeYLayer += 1;
@@ -45,6 +50,7 @@ Camera::Camera() {
         }
         return true;
     });
+    */
 }
 
 void Camera::applyCamera(DefaultShader& shader) {
