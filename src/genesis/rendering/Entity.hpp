@@ -37,13 +37,24 @@ public:
 
     void render() override;
 
-    const glm::vec3& getPosition() {
+    /**
+     * Glorified with (python) alternative.
+     * Calls regenerateTransMatrix() when the block is done iff the callback
+     * returns true
+     */
+    void modify(std::function<bool()> callback) {
+        if (callback()) {
+            regenerateTransMatrix();
+        }
+    }
+
+    glm::vec3& getPosition() {
         return position;
     }
-    const glm::vec3& getRotation() {
+    glm::vec3& getRotation() {
         return rotation;
     }
-    const float& getScale() {
+    float& getScale() {
         return scale;
     }
 };

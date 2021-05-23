@@ -122,7 +122,7 @@ void DumbGenerator::generateChunk(genesis::ChunkMap& ref, int chunkX, int chunkY
         for (int x = 0; x < genesis::Chunk::CHUNK_SIZE; ++x) {
 
             activeLevel[z][x] = std::make_shared<genesis::Entity>(tile,
-                    glm::vec3{chunkX * genesis::Chunk::CHUNK_SIZE + x, chunkY * genesis::Chunk::CHUNK_SIZE + z, -3});
+                    glm::vec3{chunkX * genesis::Chunk::CHUNK_SIZE + x, chunkY * genesis::Chunk::CHUNK_SIZE + z, 0});
         }
     }
 }

@@ -6,6 +6,7 @@
 #include "genesis/rendering/Renderer.hpp"
 #include "genesis/rendering/Texture.hpp"
 #include "genesis/rendering/environment/Chunk.hpp"
+#include "genesis/world/PlayerCamp.hpp"
 
 #include <chrono>
 #include <functional>
@@ -16,6 +17,11 @@ namespace genesis {
 
 WorldController::WorldController() : generator(std::make_shared<perlin::DumbGenerator>()) {
     WorldController::INSTANCE = this;
+
+    controllers.push_back(std::make_shared<PlayerCamp>());
+    controllers[0]->addEntity(
+            std::make_shared<Entity>(Renderer::getInstance().getTexturePack()->getModel(WorldTile::STONE),
+                    glm::vec3{1, 0, 0}, glm::vec3{0, 0, 0}, 1));
 }
 
 void WorldController::generate() {
@@ -25,11 +31,19 @@ void WorldController::generate() {
     this->chunks.push_back(chunk2);
 }
 
-void WorldController::tick() {}
+void WorldController::tick() {
+    for (auto& controller : this->controllers) {
+        controller->tick();
+    }
+}
 
 void WorldController::render() {
     for (auto& chunk : this->chunks)
         chunk->render();
+
+    for (auto& controller : this->controllers) {
+        controller->render();
+    }
 }
 
 } // namespace genesis

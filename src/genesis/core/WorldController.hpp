@@ -17,7 +17,7 @@ private:
     int timeOfDay;
 
     std::vector<std::shared_ptr<Chunk>> chunks;
-    std::vector<EntityController> controllers;
+    std::vector<std::shared_ptr<EntityController>> controllers;
     std::shared_ptr<perlin::NoiseGenerator> generator;
 
 public:
