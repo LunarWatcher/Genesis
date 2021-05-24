@@ -4,6 +4,7 @@ IndentWidth: 4
 Language: Cpp
 ColumnLimit: 120
 UseTab: Never
+Standard: c++20
 
 # Spaces
 SpacesInSquareBrackets: false
@@ -17,8 +18,8 @@ AllowShortLambdasOnASingleLine: All
 AllowShortLoopsOnASingleLine: false
 
 # Constructors
-ConstructorInitializerIndentWidth: 8
-ConstructorInitializerAllOnOneLineOrOnePerLine: false
+ConstructorInitializerIndentWidth: 4
+ConstructorInitializerAllOnOneLineOrOnePerLine: true
 
 # Alignment
 AlignAfterOpenBracket: DontAlign
@@ -30,6 +31,10 @@ AlignConsecutiveDeclarations: false
 AlignConsecutiveMacros: false
 AlignEscapedNewlines: DontAlign
 AlignTrailingComments: false
+
+# AlignOperands: Align
+BreakBeforeBinaryOperators: All
+BreakBeforeTernaryOperators: true
 
 DerivePointerAlignment: false
 PointerAlignment: Left
@@ -68,7 +73,7 @@ BraceWrapping:
 
 # General indentation
 NamespaceIndentation: None
-ContinuationIndentWidth: 8
+ContinuationIndentWidth: 4
 AccessModifierOffset: -4
 IndentCaseLabels: false
 

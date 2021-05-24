@@ -11,12 +11,12 @@ Camera::Camera() {
 
     auto inputManager = Renderer::getInstance().getInputManager();
     inputManager->registerKeyCallback(GLFW_KEY_W, // Map W
-            0, // no modifiers
-            [this](InputManager&, int action) {
-                if (action != 0)
-                    this->position.y += 10.0 * Renderer::getInstance().getDelta();
-                return false;
-            });
+        0, // no modifiers
+        [this](InputManager&, int action) {
+            if (action != 0)
+                this->position.y += 10.0 * Renderer::getInstance().getDelta();
+            return false;
+        });
     inputManager->registerKeyCallback(GLFW_KEY_A, 0, [this](InputManager&, int action) {
         if (action != 0)
             this->position.x -= 10.0 * Renderer::getInstance().getDelta();
@@ -59,8 +59,8 @@ void Camera::applyCamera(DefaultShader& shader) {
 }
 
 void Camera::regenerateCameraMatrix() {
-    this->matrix =
-            glm::lookAt(this->position, glm::vec3{this->position.x, this->position.y, 0}, glm::vec3{0.0f, 1.0f, 0.0f});
+    this->matrix
+        = glm::lookAt(this->position, glm::vec3{this->position.x, this->position.y, 0}, glm::vec3{0.0f, 1.0f, 0.0f});
 }
 
 void Camera::setYLayer(int newLayer) {

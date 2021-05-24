@@ -20,8 +20,8 @@ WorldController::WorldController() : generator(std::make_shared<perlin::DumbGene
 
     controllers.push_back(std::make_shared<PlayerCamp>());
     controllers[0]->addEntity(
-            std::make_shared<Entity>(Renderer::getInstance().getTexturePack()->getModel(WorldTile::STONE),
-                    glm::vec3{1, 0, 0}, glm::vec3{0, 0, 0}, 1));
+        std::make_shared<Entity>(Renderer::getInstance().getTexturePack()->getModel(WorldTile::STONE),
+            glm::vec3{1, 0, 0}, glm::vec3{0, 0, 0}, 1));
 }
 
 void WorldController::generate() {

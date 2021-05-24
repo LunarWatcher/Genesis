@@ -13,12 +13,13 @@ namespace genesis {
 // clang-format on
 
 WorldTexture::WorldTexture(const std::string& sourceFile)
-        : Texture(sourceFile, 64, 64), models{
-                                               // clang-format off
+    : Texture(sourceFile, 64, 64),
+      models{
+          // clang-format off
           STANDARD_ENTRY(GRASS, 0, 0),
           STANDARD_ENTRY(STONE, 1, 0),
           STANDARD_ENTRY(COLONIST_A, 0, 8)
-                                               // clang-format on
-                                       } {}
+          // clang-format on
+      } {}
 
 } // namespace genesis

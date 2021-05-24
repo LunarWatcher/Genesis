@@ -63,7 +63,7 @@ int Perlin2DNoiseGenerator::clampPerlin(double perlinInput) {
     auto clampedPerlin = (perlinInput + 1) / 2;
     // Generate the range
     auto normalizedPerlin = std::floor(
-            clampedPerlin * (genesis::Constants::MAX_OVERWORLD_HEIGHT + genesis::Constants::FLAT_COMPENSATION_FACTOR));
+        clampedPerlin * (genesis::Constants::MAX_OVERWORLD_HEIGHT + genesis::Constants::FLAT_COMPENSATION_FACTOR));
 
     // This is potentially possible to modify with biomes, but that's a problem for later
     if (normalizedPerlin >= 10 && normalizedPerlin <= 10 + genesis::Constants::FLAT_COMPENSATION_FACTOR) {
@@ -100,7 +100,7 @@ void Perlin2DNoiseGenerator::generateChunk(genesis::ChunkMap& ref, int chunkX, i
         for (double x = chunkX + STEP_DISTANCE; x <= chunkX + 16 * STEP_DISTANCE; x += STEP_DISTANCE) {
             int y = clampPerlin(perlin(x, z));
             ref[y][rz][rx] = std::make_shared<genesis::Entity>(rawObject,
-                    glm::vec3{chunkX * genesis::Chunk::CHUNK_SIZE + rx, chunkY * genesis::Chunk::CHUNK_SIZE + rz, -3});
+                glm::vec3{chunkX * genesis::Chunk::CHUNK_SIZE + rx, chunkY * genesis::Chunk::CHUNK_SIZE + rz, -3});
             rx++;
         }
         rx = 0;
@@ -121,8 +121,8 @@ void DumbGenerator::generateChunk(genesis::ChunkMap& ref, int chunkX, int chunkY
 
         for (int x = 0; x < genesis::Chunk::CHUNK_SIZE; ++x) {
 
-            activeLevel[z][x] = std::make_shared<genesis::Entity>(tile,
-                    glm::vec3{chunkX * genesis::Chunk::CHUNK_SIZE + x, chunkY * genesis::Chunk::CHUNK_SIZE + z, 0});
+            activeLevel[z][x] = std::make_shared<genesis::Entity>(
+                tile, glm::vec3{chunkX * genesis::Chunk::CHUNK_SIZE + x, chunkY * genesis::Chunk::CHUNK_SIZE + z, 0});
         }
     }
 }
