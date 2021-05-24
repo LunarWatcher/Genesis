@@ -18,7 +18,7 @@ WorldTexture::WorldTexture(const std::string& sourceFile)
               // clang-format off
               STANDARD_ENTRY(GRASS, 0, 0),
               STANDARD_ENTRY(STONE, 1, 0),
-              STANDARD_ENTRY(COLONIST_A, 0, 8)
+              STANDARD_ENTRY(COLONIST_A, 0, 12)
               // clang-format on
           } {}
 
