@@ -12,6 +12,9 @@ enum class WorldTile {
     GRASS, //
     STONE, //
     // }}}
+    // Entities {{{
+    COLONIST_A,
+    // }}}
 };
 
 class WorldTexture : public Texture {
