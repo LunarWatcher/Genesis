@@ -14,11 +14,11 @@ AllowShortIfStatementsOnASingleLine: Never
 AllowShortFunctionsOnASingleLine: Empty
 AllowShortBlocksOnASingleLine: Empty
 AllowShortCaseLabelsOnASingleLine: false
-AllowShortLambdasOnASingleLine: All
+AllowShortLambdasOnASingleLine: None
 AllowShortLoopsOnASingleLine: false
 
 # Constructors
-ConstructorInitializerIndentWidth: 4
+ConstructorInitializerIndentWidth: 8
 ConstructorInitializerAllOnOneLineOrOnePerLine: true
 
 # Alignment
