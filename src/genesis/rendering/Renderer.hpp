@@ -4,7 +4,9 @@
 #include "GLFW/glfw3.h"
 #include "Model.hpp"
 #include "Renderable.hpp"
+#include "freetype/freetype.h"
 #include "genesis/rendering/atlases/WorldTexture.hpp"
+#include "genesis/rendering/shaders/TextShader.hpp"
 #include "genesis/rendering/view/Camera.hpp"
 #include <memory>
 #include <vector>
@@ -18,14 +20,22 @@ private:
 
     GLFWwindow* window;
     std::shared_ptr<Camera> camera;
+
     std::shared_ptr<DefaultShader> textureShader;
+    std::shared_ptr<TextShader> textShader;
+
     std::shared_ptr<WorldTexture> texturePack;
 
     std::shared_ptr<WorldController> worldController;
     std::shared_ptr<InputManager> inputManager;
     double delta;
 
-    void initializeGame();
+    // Fonts {{{
+    FT_Library fontLibrary;
+    // }}}
+
+    void initGame();
+    void initFonts();
 
 public:
     Renderer();
@@ -65,6 +75,10 @@ public:
 
     static Renderer getInstance() {
         return *INSTANCE;
+    }
+
+    FT_Library& getFontLibrary() {
+        return this->fontLibrary;
     }
 };
 

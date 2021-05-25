@@ -3,6 +3,8 @@ set (SOURCE_FILES genesis/Main.cpp
                     # Rendering
                     genesis/rendering/Model.cpp genesis/rendering/Shader.cpp
                     genesis/rendering/Renderer.cpp genesis/rendering/shaders/DefaultShader.cpp
+                    # UI
+                    genesis/rendering/ui/Text.hpp
                     # Textures
                     genesis/rendering/Texture.cpp
                     genesis/rendering/atlases/WorldTexture.cpp
@@ -30,7 +32,12 @@ target_include_directories(genesis PUBLIC ../stb/)
 
 target_link_libraries(genesis ${CONAN_LIBS})
 
-set (resources shaders/default.frag shaders/default.vert "images/programmer.png")
+set (resources
+    # Shaders {{{
+    shaders/default.frag shaders/default.vert
+    shaders/text.frag shaders/text.vert
+    # }}}
+    images/programmer.png)
 
 foreach(resource IN LISTS resources)
     configure_file(./res/${resource}

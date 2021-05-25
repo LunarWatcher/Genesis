@@ -1,9 +1,13 @@
 #include "Renderer.hpp"
+
 #include "GLFW/glfw3.h"
+
 #include "Shader.hpp"
 #include "genesis/core/WorldController.hpp"
 #include "genesis/rendering/Texture.hpp"
 #include "shaders/DefaultShader.hpp"
+#include FT_FREETYPE_H
+
 #include <chrono>
 #include <iostream>
 #include <thread>
@@ -43,10 +47,11 @@ Renderer::Renderer() {
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    initializeGame();
+    initGame();
+    initFonts();
 }
 
-void Renderer::initializeGame() {
+void Renderer::initGame() {
     this->inputManager = std::make_shared<InputManager>();
     this->camera = std::make_shared<Camera>();
 
@@ -54,7 +59,9 @@ void Renderer::initializeGame() {
 
     this->worldController = std::make_shared<WorldController>();
     this->worldController->generate();
+
     this->textureShader = std::make_shared<DefaultShader>();
+    this->textShader = std::make_shared<TextShader>();
 
     // Input
     glfwSetWindowUserPointer(window, inputManager.get());
@@ -67,6 +74,18 @@ void Renderer::initializeGame() {
     glfwSetCursorPosCallback(window, [](GLFWwindow* win, double x, double y) {
         ((InputManager*) glfwGetWindowUserPointer(win))->onMouseMoved(x, y);
     });
+}
+
+void Renderer::initFonts() {
+    auto error = FT_Init_FreeType(&this->fontLibrary);
+    // I'll never understand what it is with these libraries and their shitty error handling.
+    // Just give me some useful error that actually explains what went wrong :rolling_eyes:
+    // Doesn't have to include a fix, but a string already beats a whatever the fuck
+    // error is here, and whatever the fuck error is in GLFW.
+    if (error) {
+        std::cerr << "An error occured when initializing the font library" << std::endl;
+        throw std::runtime_error("Font initialization failed");
+    }
 }
 
 void Renderer::tick() {
