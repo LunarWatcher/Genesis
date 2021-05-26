@@ -6,7 +6,6 @@
 #include "genesis/core/WorldController.hpp"
 #include "genesis/rendering/Texture.hpp"
 #include "shaders/DefaultShader.hpp"
-#include FT_FREETYPE_H
 
 #include <chrono>
 #include <iostream>
@@ -48,7 +47,6 @@ Renderer::Renderer() {
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     initGame();
-    initFonts();
 }
 
 void Renderer::initGame() {
@@ -74,18 +72,6 @@ void Renderer::initGame() {
     glfwSetCursorPosCallback(window, [](GLFWwindow* win, double x, double y) {
         ((InputManager*) glfwGetWindowUserPointer(win))->onMouseMoved(x, y);
     });
-}
-
-void Renderer::initFonts() {
-    auto error = FT_Init_FreeType(&this->fontLibrary);
-    // I'll never understand what it is with these libraries and their shitty error handling.
-    // Just give me some useful error that actually explains what went wrong :rolling_eyes:
-    // Doesn't have to include a fix, but a string already beats a whatever the fuck
-    // error is here, and whatever the fuck error is in GLFW.
-    if (error) {
-        std::cerr << "An error occured when initializing the font library" << std::endl;
-        throw std::runtime_error("Font initialization failed");
-    }
 }
 
 void Renderer::tick() {

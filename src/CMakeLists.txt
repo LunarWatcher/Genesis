@@ -2,7 +2,9 @@
 set (SOURCE_FILES genesis/Main.cpp
                     # Rendering
                     genesis/rendering/Model.cpp genesis/rendering/Shader.cpp
-                    genesis/rendering/Renderer.cpp genesis/rendering/shaders/DefaultShader.cpp
+                    genesis/rendering/Renderer.cpp
+                    genesis/rendering/shaders/DefaultShader.cpp
+                    genesis/rendering/shaders/TextShader.cpp
                     # UI
                     genesis/rendering/ui/Text.hpp
                     # Textures

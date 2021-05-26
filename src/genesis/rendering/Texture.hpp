@@ -7,7 +7,7 @@
 namespace genesis {
 
 class Texture {
-private:
+protected:
     GLuint textureId;
     int width, height;
     int atlasWidth, atlasHeight;

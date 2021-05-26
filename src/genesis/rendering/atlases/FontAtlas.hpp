@@ -1,14 +1,13 @@
 #pragma once
 
-#include "freetype/freetype.h"
+#include "GL/gl.h"
 #include "genesis/rendering/Texture.hpp"
+#include <map>
 
 namespace genesis {
 
 class FontAtlas : public Texture {
 private:
-    FT_Face face;
-
 public:
     FontAtlas(const std::string& font = "/usr/share/fonts/truetype/ubuntu/Ubuntu-R.ttf");
 };

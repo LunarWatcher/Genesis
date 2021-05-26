@@ -4,7 +4,6 @@
 #include "GLFW/glfw3.h"
 #include "Model.hpp"
 #include "Renderable.hpp"
-#include "freetype/freetype.h"
 #include "genesis/rendering/atlases/WorldTexture.hpp"
 #include "genesis/rendering/shaders/TextShader.hpp"
 #include "genesis/rendering/view/Camera.hpp"
@@ -30,12 +29,7 @@ private:
     std::shared_ptr<InputManager> inputManager;
     double delta;
 
-    // Fonts {{{
-    FT_Library fontLibrary;
-    // }}}
-
     void initGame();
-    void initFonts();
 
 public:
     Renderer();
@@ -75,10 +69,6 @@ public:
 
     static Renderer getInstance() {
         return *INSTANCE;
-    }
-
-    FT_Library& getFontLibrary() {
-        return this->fontLibrary;
     }
 };
 
