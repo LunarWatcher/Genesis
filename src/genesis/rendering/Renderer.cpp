@@ -47,6 +47,7 @@ Renderer::Renderer() {
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     initGame();
+    initFonts();
 }
 
 void Renderer::initGame() {
@@ -74,6 +75,14 @@ void Renderer::initGame() {
     });
 }
 
+void Renderer::initFonts() {
+    if (FT_Init_FreeType(&this->fontLibrary)) {
+        std::cerr << "Failed to initialize freetype" << std::endl;
+        throw std::runtime_error("Freetype died");
+    }
+    this->fontAtlas = std::make_shared<FontAtlas>();
+}
+
 void Renderer::tick() {
     worldController->tick();
 }
@@ -81,10 +90,11 @@ void Renderer::tick() {
 void Renderer::render() {
 
     glClear(GL_COLOR_BUFFER_BIT);
-    glClearColor(1, 0, 1, 1);
+    glClearColor(0.529, 0.8078, 0.922, 1);
 
     textureShader->apply();
     texturePack->bind();
+    // fontAtlas->bind();
     camera->applyCamera(*textureShader);
 
     worldController->render();

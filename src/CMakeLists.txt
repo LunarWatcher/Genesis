@@ -10,6 +10,7 @@ set (SOURCE_FILES genesis/Main.cpp
                     # Textures
                     genesis/rendering/Texture.cpp
                     genesis/rendering/atlases/WorldTexture.cpp
+                    genesis/rendering/atlases/FontAtlas.cpp
                     # Camera
                     genesis/rendering/view/Camera.cpp
                     # Entities
@@ -25,7 +26,7 @@ set (SOURCE_FILES genesis/Main.cpp
                     genesis/world/PlayerCamp.cpp
                     # Math
                     genesis/math/Perlin.cpp
-                    )
+)
 
 add_executable(genesis ${SOURCE_FILES})
 target_include_directories(genesis PUBLIC ${CONAN_INCLUDE_DIRS})
@@ -39,7 +40,8 @@ set (resources
     shaders/default.frag shaders/default.vert
     shaders/text.frag shaders/text.vert
     # }}}
-    images/programmer.png)
+    images/programmer.png
+)
 
 foreach(resource IN LISTS resources)
     configure_file(./res/${resource}
