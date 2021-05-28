@@ -21,9 +21,6 @@ FontAtlas::FontAtlas(const std::string& font) {
     glBindTexture(GL_TEXTURE_2D, this->textureId);
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
-    constexpr int DIMENSIONS = 512;
-    constexpr int CHARACTERS = 128;
-
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, DIMENSIONS, DIMENSIONS, //
         0, GL_RED, GL_UNSIGNED_BYTE, 0);
     // std::string x = "\uFDFD";
@@ -35,7 +32,7 @@ FontAtlas::FontAtlas(const std::string& font) {
 
     // 32 is the first printable character in the ASCII set.
     for (int i = 32; i < CHARACTERS; ++i) {
-        if (FT_Load_Char(face, i, FT_LOAD_RENDER)) {
+        if (FT_Load_Char(face, i, FT_LOAD_RENDER) || face->glyph->bitmap.width == 0 || face->glyph->bitmap.rows == 0) {
             // No glyph found
             continue;
         }
@@ -49,7 +46,8 @@ FontAtlas::FontAtlas(const std::string& font) {
             GL_UNSIGNED_BYTE, face->glyph->bitmap.buffer);
 
         wchar_t mChar = wchar_t(i);
-        this->characterMap[mChar] = Character{face->glyph->advance.x, //
+        this->characterMap[mChar] = Character{//
+            face->glyph->advance.x, //
             face->glyph->advance.y, //
             face->glyph->bitmap.width, //
             face->glyph->bitmap.rows, //
@@ -59,6 +57,30 @@ FontAtlas::FontAtlas(const std::string& font) {
         x += face->glyph->bitmap.width;
         currRowHeight = std::max(currRowHeight, face->glyph->bitmap.rows);
     }
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+    unbind();
+}
+
+std::vector<float> FontAtlas::generateUVCoords(const Character& chr) {
+    return {
+        double(chr.textureX) / DIMENSIONS,
+        double(chr.textureY + chr.bitmapHeight) / DIMENSIONS,
+        double(chr.textureX) / DIMENSIONS,
+        double(chr.textureY) / DIMENSIONS,
+        double(chr.textureX + chr.bitmapWidth) / DIMENSIONS,
+        double(chr.textureY) / DIMENSIONS,
+        double(chr.textureX) / DIMENSIONS,
+        double(chr.textureY + chr.bitmapHeight) / DIMENSIONS,
+        double(chr.textureX + chr.bitmapWidth) / DIMENSIONS,
+        double(chr.textureY) / DIMENSIONS,
+        double(chr.textureX + chr.bitmapWidth) / DIMENSIONS,
+        double(chr.textureY + chr.bitmapHeight) / DIMENSIONS,
+    };
 }
 
 } // namespace genesis

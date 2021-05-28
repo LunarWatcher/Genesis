@@ -1,6 +1,7 @@
 #include "Camera.hpp"
 #include "genesis/rendering/Constants.hpp"
 #include "genesis/rendering/Renderer.hpp"
+#include "glm/ext/matrix_clip_space.hpp"
 #include "glm/ext/matrix_transform.hpp"
 #include "glm/ext/vector_float3.hpp"
 #include <iostream>
@@ -8,6 +9,10 @@
 namespace genesis {
 
 Camera::Camera() {
+
+    this->perspectiveMatrix = glm::perspective(glm::radians(FOV), 16.0f / 9.0f, NEAR_PLANE, FAR_PLANE);
+    // this->orthoMatrix = glm::ortho(0.0f, 1280.0f, 0.0f, 720.0f);
+    this->orthoMatrix = glm::ortho(0.0f, 800.0f, 0.0f, 600.0f);
 
     auto inputManager = Renderer::getInstance().getInputManager();
     inputManager->registerKeyCallback(GLFW_KEY_W, // Map W

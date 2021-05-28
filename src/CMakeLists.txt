@@ -5,8 +5,6 @@ set (SOURCE_FILES genesis/Main.cpp
                     genesis/rendering/Renderer.cpp
                     genesis/rendering/shaders/DefaultShader.cpp
                     genesis/rendering/shaders/TextShader.cpp
-                    # UI
-                    genesis/rendering/ui/Text.hpp
                     # Textures
                     genesis/rendering/Texture.cpp
                     genesis/rendering/atlases/WorldTexture.cpp

@@ -5,10 +5,13 @@
 #include "Shader.hpp"
 #include "genesis/core/WorldController.hpp"
 #include "genesis/rendering/Texture.hpp"
+#include "genesis/rendering/atlases/FontAtlas.hpp"
 #include "shaders/DefaultShader.hpp"
 
 #include <chrono>
+#include <codecvt>
 #include <iostream>
+#include <locale>
 #include <thread>
 
 namespace genesis {
@@ -81,6 +84,23 @@ void Renderer::initFonts() {
         throw std::runtime_error("Freetype died");
     }
     this->fontAtlas = std::make_shared<FontAtlas>();
+
+    glGenVertexArrays(1, &textController.vao);
+    glBindVertexArray(textController.vao);
+
+    glGenBuffers(1, &textController.vertices);
+    glGenBuffers(1, &textController.textureCoords);
+
+    glBindBuffer(GL_ARRAY_BUFFER, textController.vertices);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 12, nullptr, GL_DYNAMIC_DRAW);
+    glVertexAttribPointer(0, 2, GL_FLOAT, false, 0, nullptr);
+
+    glBindBuffer(GL_ARRAY_BUFFER, textController.textureCoords);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 12, nullptr, GL_DYNAMIC_DRAW);
+    glVertexAttribPointer(1, 2, GL_FLOAT, false, 0, nullptr);
+
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
 }
 
 void Renderer::tick() {
@@ -94,7 +114,6 @@ void Renderer::render() {
 
     textureShader->apply();
     texturePack->bind();
-    // fontAtlas->bind();
     camera->applyCamera(*textureShader);
 
     worldController->render();
@@ -102,8 +121,67 @@ void Renderer::render() {
     texturePack->unbind();
     textureShader->stop();
 
+    textShader->apply();
+    fontAtlas->bind();
+    renderText("LET'S GOOOOOOOOOOOOO!", 0, 0, 1.0);
+
+    fontAtlas->unbind();
+    textShader->stop();
+
     glfwSwapBuffers(window);
     glfwPollEvents();
+}
+
+void Renderer::renderText(const std::string& text, float x, float y, float scale, const glm::vec4& color) {
+    textShader->loadTextColor(color);
+
+    std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
+    std::wstring wide = converter.from_bytes(text);
+
+    glBindVertexArray(textController.vao);
+
+    this->fontAtlas->bind();
+    for (auto& character : wide) {
+        auto characterData = this->fontAtlas->getCharacter(character);
+        if (!characterData) {
+            continue;
+        }
+
+        float xPos = x + characterData->bitmapLeft * scale;
+        float yPos = y - (characterData->bitmapHeight - characterData->bitmapTop) * scale;
+
+        float width = characterData->bitmapWidth * scale;
+        float height = characterData->bitmapHeight * scale;
+
+        // clang-format off
+        std::vector<float> points {
+            xPos        , yPos + height,
+            xPos        , yPos,
+            xPos + width, yPos,
+            xPos        , yPos + height,
+            xPos + width, yPos,
+            xPos + width, yPos + height
+        };
+        // clang-format on
+        x += (characterData->advanceX >> 6) * scale;
+
+        glBindBuffer(GL_ARRAY_BUFFER, textController.vertices);
+        glBufferSubData(GL_ARRAY_BUFFER, 0, points.size() * sizeof(float), &points[0]);
+
+        glBindBuffer(GL_ARRAY_BUFFER, textController.textureCoords);
+        auto uvCoords = fontAtlas->generateUVCoords(*characterData);
+        glBufferSubData(GL_ARRAY_BUFFER, 0, uvCoords.size() * sizeof(float), &uvCoords[0]);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+        glEnableVertexAttribArray(0);
+        glEnableVertexAttribArray(1);
+        glDrawArrays(GL_TRIANGLES, 0, 6);
+        glDisableVertexAttribArray(1);
+        glDisableVertexAttribArray(0);
+    }
+    glBindVertexArray(0);
+
+    this->fontAtlas->unbind();
 }
 
 void Renderer::run() {

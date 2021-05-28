@@ -1,9 +1,15 @@
 #include "DefaultShader.hpp"
+
 #include "GL/glew.h"
+
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
+
+#include "genesis/rendering/Renderer.hpp"
+
 #include <iostream>
+
 namespace genesis {
 
 DefaultShader::DefaultShader() : Shader("default") {
@@ -13,7 +19,7 @@ DefaultShader::DefaultShader() : Shader("default") {
 
     apply();
     // we only need to load the projection matrix once
-    loadProjectionMatrix(glm::perspective(glm::radians(FOV), 16.0f / 9.0f, NEAR_PLANE, FAR_PLANE));
+    loadProjectionMatrix(Renderer::getInstance().getCamera()->getPerspectiveMatrix());
     stop();
 }
 

@@ -35,6 +35,9 @@ private:
     double delta;
 
     FT_Library fontLibrary;
+    struct TextController {
+        GLuint vao, vertices, textureCoords;
+    } textController;
 
     void initGame();
     void initFonts();
@@ -44,6 +47,9 @@ public:
 
     void tick();
     void render();
+
+    void renderText(
+        const std::string& text, float x, float y, float scale, const glm::vec4& color = {1.0, 0.0, 0.0, 1.0});
 
     void run();
 
