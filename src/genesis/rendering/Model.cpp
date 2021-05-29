@@ -4,7 +4,7 @@
 #include <vector>
 namespace genesis {
 
-Model::Model(VertexArray vertices, std::function<void(Model*)> attribInitFunc) {
+Model::Model(VertexArray vertices, std::function<void(Model*)> attribInitFunc, GLenum mode) : mode(mode) {
     this->vertices = vertices.size();
     createVAO();
     createVBO(0, 3, vertices);
@@ -22,7 +22,7 @@ void Model::bindIndexBuffer(const IndexArray& indexBuffer) {
     glGenBuffers(1, &vboId);
     this->vbos.push_back(vboId);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vboId);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexBuffer.size() * sizeof(GLint), &indexBuffer[0], GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexBuffer.size() * sizeof(GLint), &indexBuffer[0], mode);
 }
 
 void Model::createVAO() {
@@ -37,7 +37,7 @@ void Model::createVBO(int attribNumber, int coordSize, const VertexArray& data) 
     this->vbos.push_back(vboID);
     glBindBuffer(GL_ARRAY_BUFFER, vboID);
 
-    glBufferData(GL_ARRAY_BUFFER, data.size() * sizeof(GLfloat), &data[0], GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, data.size() * sizeof(GLfloat), &data[0], mode);
     glVertexAttribPointer(attribNumber, coordSize, GL_FLOAT, false, 0, (void*) 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }

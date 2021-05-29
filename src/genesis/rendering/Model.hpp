@@ -17,6 +17,8 @@ typedef std::function<void(Model*)> AttributeInit;
 
 class Model : public Renderable {
 protected:
+    GLenum mode;
+
     int vertices;
     size_t attribArrays = 0;
     GLuint vaoID;
@@ -25,7 +27,7 @@ protected:
     void createVAO();
 
 public:
-    Model(VertexArray vertices, AttributeInit attribInitFunc);
+    Model(VertexArray vertices, AttributeInit attribInitFunc, GLenum mode = GL_STATIC_DRAW);
 
     virtual ~Model();
 
