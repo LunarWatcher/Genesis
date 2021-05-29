@@ -153,16 +153,10 @@ void Renderer::renderText(const std::string& text, float x, float y, float scale
         float width = characterData->bitmapWidth * scale;
         float height = characterData->bitmapHeight * scale;
 
-        // clang-format off
-        std::vector<float> points {
-            xPos        , yPos + height,
-            xPos        , yPos,
-            xPos + width, yPos,
-            xPos        , yPos + height,
-            xPos + width, yPos,
-            xPos + width, yPos + height
-        };
-        // clang-format on
+        // @formatter:off
+        std::vector<float> points{xPos, yPos + height, xPos, yPos, xPos + width, yPos, xPos, yPos + height,
+            xPos + width, yPos, xPos + width, yPos + height};
+        // @formatter:on
         x += (characterData->advanceX >> 6) * scale;
 
         glBindBuffer(GL_ARRAY_BUFFER, textController.vertices);
@@ -205,8 +199,9 @@ void Renderer::run() {
         auto end = std::chrono::high_resolution_clock::now();
         lastTime = end;
         auto sleepFor = targetTime - (now - end);
-        if (sleepFor > std::chrono::milliseconds(0))
+        if (sleepFor > std::chrono::milliseconds(0)) {
             std::this_thread::sleep_for(sleepFor);
+        }
     } while (glfwWindowShouldClose(window) == 0);
 
     glfwTerminate();

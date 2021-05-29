@@ -14,7 +14,6 @@
 #include <thread>
 
 namespace genesis {
-
 WorldController::WorldController() : generator(std::make_shared<perlin::DumbGenerator>()) {
     WorldController::INSTANCE = this;
 
@@ -26,24 +25,23 @@ WorldController::WorldController() : generator(std::make_shared<perlin::DumbGene
 
 void WorldController::generate() {
     auto chunk = std::make_shared<Chunk>(-1, 0);
+
     this->chunks.push_back(chunk);
     auto chunk2 = std::make_shared<Chunk>(0, 0);
+
     this->chunks.push_back(chunk2);
 }
 
 void WorldController::tick() {
-    for (auto& controller : this->controllers) {
+    for (auto& controller : this->controllers)
         controller->tick();
-    }
 }
 
 void WorldController::render() {
     for (auto& chunk : this->chunks)
         chunk->render();
 
-    for (auto& controller : this->controllers) {
+    for (auto& controller : this->controllers)
         controller->render();
-    }
 }
-
 } // namespace genesis

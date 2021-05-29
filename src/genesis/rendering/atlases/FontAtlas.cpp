@@ -46,14 +46,16 @@ FontAtlas::FontAtlas(const std::string& font) {
             GL_UNSIGNED_BYTE, face->glyph->bitmap.buffer);
 
         wchar_t mChar = wchar_t(i);
-        this->characterMap[mChar] = Character{//
+        this->characterMap[mChar] = Character{
+            //
             face->glyph->advance.x, //
             face->glyph->advance.y, //
             face->glyph->bitmap.width, //
             face->glyph->bitmap.rows, //
             face->glyph->bitmap_left, //
             face->glyph->bitmap_top, //
-            x, y};
+            x, y //
+        };
         x += face->glyph->bitmap.width;
         currRowHeight = std::max(currRowHeight, face->glyph->bitmap.rows);
     }
