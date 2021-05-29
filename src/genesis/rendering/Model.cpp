@@ -4,12 +4,14 @@
 #include <vector>
 namespace genesis {
 
-Model::Model(VertexArray vertices, std::function<void(Model*)> attribInitFunc, GLenum mode) : mode(mode) {
-    this->vertices = vertices.size();
+Model::Model(VertexArray vertices, std::function<void(Model*)> attribInitFunc, int coordSize, GLenum mode)
+        : mode(mode) {
     createVAO();
-    createVBO(0, 3, vertices);
+    createVBO(0, coordSize, vertices);
     attribInitFunc(this);
     glBindVertexArray(0);
+
+    this->vertices = vertices.size() / (this->hasIndexBuffer ? 1 : coordSize);
 }
 
 Model::~Model() {
@@ -18,6 +20,7 @@ Model::~Model() {
 }
 
 void Model::bindIndexBuffer(const IndexArray& indexBuffer) {
+    this->hasIndexBuffer = true;
     GLuint vboId;
     glGenBuffers(1, &vboId);
     this->vbos.push_back(vboId);
@@ -47,7 +50,11 @@ void Model::render() {
     for (size_t i = 0; i < attribArrays; ++i) {
         glEnableVertexAttribArray(i);
     }
-    glDrawElements(GL_TRIANGLES, vertices, GL_UNSIGNED_INT, 0);
+    if (hasIndexBuffer) {
+        glDrawElements(GL_TRIANGLES, vertices, GL_UNSIGNED_INT, 0);
+    } else {
+        glDrawArrays(GL_TRIANGLES, 0, vertices);
+    }
     for (size_t i = 0; i < attribArrays; ++i) {
         glDisableVertexAttribArray(i);
     }

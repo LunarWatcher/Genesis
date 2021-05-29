@@ -85,22 +85,47 @@ void Renderer::initFonts() {
     }
     this->fontAtlas = std::make_shared<FontAtlas>();
 
-    glGenVertexArrays(1, &textController.vao);
-    glBindVertexArray(textController.vao);
+    std::vector<float> points, uv;
 
-    glGenBuffers(1, &textController.vertices);
-    glGenBuffers(1, &textController.textureCoords);
+    float x = 0, y = 0, scale = 1;
+    std::string text = "LET'S GOOOOOOOOOOO!";
+    std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
+    std::wstring wide = converter.from_bytes(text);
+    for (auto& character : wide) {
+        auto characterData = this->fontAtlas->getCharacter(character);
+        if (!characterData) {
+            continue;
+        }
 
-    glBindBuffer(GL_ARRAY_BUFFER, textController.vertices);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 12, nullptr, GL_DYNAMIC_DRAW);
-    glVertexAttribPointer(0, 2, GL_FLOAT, false, 0, nullptr);
+        float xPos = x + characterData->bitmapLeft * scale;
+        float yPos = y - (characterData->bitmapHeight - characterData->bitmapTop) * scale;
 
-    glBindBuffer(GL_ARRAY_BUFFER, textController.textureCoords);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 12, nullptr, GL_DYNAMIC_DRAW);
-    glVertexAttribPointer(1, 2, GL_FLOAT, false, 0, nullptr);
+        float width = characterData->bitmapWidth * scale;
+        float height = characterData->bitmapHeight * scale;
 
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);
+        // clang-format off
+        points.insert(points.end(), {
+            xPos, yPos,
+            xPos, yPos + height,
+            xPos + width, yPos,
+            xPos + width, yPos,
+            xPos, yPos + height,
+            xPos + width, yPos + height
+        });
+        // clang-format on
+
+        x += (characterData->advanceX >> 6) * scale;
+
+        std::vector<float> tmp = fontAtlas->generateUVCoords(*characterData);
+        uv.insert(uv.end(), tmp.begin(), tmp.end());
+    }
+    std::cout << "Points: " << points.size() << std::endl;
+    textModel = std::make_shared<Model>(
+        points,
+        [&](Model* mod) {
+            mod->createVBO(1, 2, uv);
+        },
+        2);
 }
 
 void Renderer::tick() {
@@ -134,48 +159,7 @@ void Renderer::render() {
 
 void Renderer::renderText(const std::string& text, float x, float y, float scale, const glm::vec4& color) {
     textShader->loadTextColor(color);
-
-    std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
-    std::wstring wide = converter.from_bytes(text);
-
-    glBindVertexArray(textController.vao);
-
-    this->fontAtlas->bind();
-    for (auto& character : wide) {
-        auto characterData = this->fontAtlas->getCharacter(character);
-        if (!characterData) {
-            continue;
-        }
-
-        float xPos = x + characterData->bitmapLeft * scale;
-        float yPos = y - (characterData->bitmapHeight - characterData->bitmapTop) * scale;
-
-        float width = characterData->bitmapWidth * scale;
-        float height = characterData->bitmapHeight * scale;
-
-        // @formatter:off
-        std::vector<float> points{xPos, yPos + height, xPos, yPos, xPos + width, yPos, xPos, yPos + height,
-            xPos + width, yPos, xPos + width, yPos + height};
-        // @formatter:on
-        x += (characterData->advanceX >> 6) * scale;
-
-        glBindBuffer(GL_ARRAY_BUFFER, textController.vertices);
-        glBufferSubData(GL_ARRAY_BUFFER, 0, points.size() * sizeof(float), &points[0]);
-
-        glBindBuffer(GL_ARRAY_BUFFER, textController.textureCoords);
-        auto uvCoords = fontAtlas->generateUVCoords(*characterData);
-        glBufferSubData(GL_ARRAY_BUFFER, 0, uvCoords.size() * sizeof(float), &uvCoords[0]);
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-        glEnableVertexAttribArray(0);
-        glEnableVertexAttribArray(1);
-        glDrawArrays(GL_TRIANGLES, 0, 6);
-        glDisableVertexAttribArray(1);
-        glDisableVertexAttribArray(0);
-    }
-    glBindVertexArray(0);
-
-    this->fontAtlas->unbind();
+    this->textModel->render();
 }
 
 void Renderer::run() {

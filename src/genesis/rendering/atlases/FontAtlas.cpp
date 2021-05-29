@@ -16,6 +16,7 @@ FontAtlas::FontAtlas(const std::string& font) {
     if (FT_New_Face(Renderer::getInstance().getFontLibrary(), font.c_str(), 0, &this->face)) {
         throw std::runtime_error("Freetype died (0002)");
     }
+    glActiveTexture(GL_TEXTURE0);
     FT_Set_Pixel_Sizes(this->face, 0, 48);
     glGenTextures(1, &this->textureId);
     glBindTexture(GL_TEXTURE_2D, this->textureId);
@@ -56,7 +57,7 @@ FontAtlas::FontAtlas(const std::string& font) {
             face->glyph->bitmap_top, //
             x, y //
         };
-        x += face->glyph->bitmap.width;
+        x += face->glyph->bitmap.width + 1;
         currRowHeight = std::max(currRowHeight, face->glyph->bitmap.rows);
     }
 
@@ -69,19 +70,27 @@ FontAtlas::FontAtlas(const std::string& font) {
 }
 
 std::vector<float> FontAtlas::generateUVCoords(const Character& chr) {
+    double x = chr.textureX;
+    double y = chr.textureY;
+    double width = chr.bitmapWidth;
+    double height = chr.bitmapHeight;
+
+    double reX = ((double) x) / DIMENSIONS;
+    double reY = ((double) y) / DIMENSIONS;
+    double newX = ((double) x + width) / DIMENSIONS;
+    double newY = ((double) y + height) / DIMENSIONS;
+    // reX += 1.0 / DIMENSIONS;
+    // reY += 1.0 / DIMENSIONS;
+    // newX -= 1.0 / DIMENSIONS;
+    // newY -= 1.0 / DIMENSIONS;
+
     return {
-        double(chr.textureX) / DIMENSIONS,
-        double(chr.textureY + chr.bitmapHeight) / DIMENSIONS,
-        double(chr.textureX) / DIMENSIONS,
-        double(chr.textureY) / DIMENSIONS,
-        double(chr.textureX + chr.bitmapWidth) / DIMENSIONS,
-        double(chr.textureY) / DIMENSIONS,
-        double(chr.textureX) / DIMENSIONS,
-        double(chr.textureY + chr.bitmapHeight) / DIMENSIONS,
-        double(chr.textureX + chr.bitmapWidth) / DIMENSIONS,
-        double(chr.textureY) / DIMENSIONS,
-        double(chr.textureX + chr.bitmapWidth) / DIMENSIONS,
-        double(chr.textureY + chr.bitmapHeight) / DIMENSIONS,
+        reX, reY, // 0
+        reX, newY, // 1
+        newX, reY, // 3
+        newX, reY, // 3
+        reX, newY, // 1
+        newX, newY, // 2
     };
 }
 

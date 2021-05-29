@@ -43,15 +43,20 @@ std::vector<GLfloat> Texture::generateFromPosition(unsigned int x, unsigned int 
     if (height == -1)
         height = this->atlasHeight;
 
-    double reX = ((double) x * this->atlasWidth) / this->width;
-    double reY = ((double) y * this->atlasHeight) / this->height;
-    double newX = ((double) x * this->atlasWidth + width) / this->width;
-    double newY = ((double) y * this->atlasHeight + height) / this->height;
+    double reX = ((double) x * width) / this->width;
+    double reY = ((double) y * height) / this->height;
+    double newX = ((double) x * width + width) / this->width;
+    double newY = ((double) y * height + height) / this->height;
     reX += 1.0 / this->width;
     reY += 1.0 / this->height;
     newX -= 1.0 / this->width;
     newY -= 1.0 / this->height;
-    return {reX, reY, reX, newY, newX, newY, newX, reY};
+    return {
+        reX, reY, // 0
+        reX, newY, // 1
+        newX, newY, // 2
+        newX, reY // 3
+    };
 }
 
 } // namespace genesis

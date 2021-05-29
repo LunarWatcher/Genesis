@@ -24,10 +24,12 @@ protected:
     GLuint vaoID;
     std::vector<GLuint> vbos;
 
+    bool hasIndexBuffer = false;
+
     void createVAO();
 
 public:
-    Model(VertexArray vertices, AttributeInit attribInitFunc, GLenum mode = GL_STATIC_DRAW);
+    Model(VertexArray vertices, AttributeInit attribInitFunc, int vertSize = 3, GLenum mode = GL_STATIC_DRAW);
 
     virtual ~Model();
 
