@@ -1,4 +1,14 @@
 * [ ] Abstract away text models to a class
     * [ ] ... and make them modifiable
     * [ ] ... and translatable. Using a matrix might be optimal, at least if we also want to fuck around with text effects
-* [ ] Figure out the fuck text was so urgently needed for
+* [x] Figure out the fuck text was so urgently needed for
+* [ ] Mouse picking
+* [ ] Figure out what the fuck we're doing about naturally generating resources with the noise function being broken af
+
+Potentially backlog-worthy:
+* [ ] Set up basic menus
+    * For now:
+        * [ ] Scene framework
+        * [ ] Menu
+        * [ ] The actual game
+        * [ ] Command line options for jumping straight to the game
