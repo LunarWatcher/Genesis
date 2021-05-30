@@ -55,7 +55,7 @@ std::vector<GLfloat> Texture::generateFromPosition(unsigned int x, unsigned int 
         reX, reY, // 0
         reX, newY, // 1
         newX, newY, // 2
-        newX, reY // 3
+        newX, reY, // 3
     };
 }
 

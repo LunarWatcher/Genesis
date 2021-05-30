@@ -1,0 +1,4 @@
+* [ ] Abstract away text models to a class
+    * [ ] ... and make them modifiable
+    * [ ] ... and translatable. Using a matrix might be optimal, at least if we also want to fuck around with text effects
+* [ ] Figure out the fuck text was so urgently needed for
