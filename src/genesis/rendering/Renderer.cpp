@@ -87,8 +87,9 @@ void Renderer::initFonts() {
 
     std::vector<float> points, uv;
 
-    float x = 0, y = 0, scale = 1;
-    std::string text = "LET'S GOOOOOOOOOOO!";
+    float sourceX = 10;
+    float x = sourceX, y = 100, scale = 0.8;
+    std::string text = "I can draw text!\nWOOOOOOOO!\næøåâèô";
     std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
     std::wstring wide = converter.from_bytes(text);
     for (auto& character : wide) {
@@ -96,28 +97,34 @@ void Renderer::initFonts() {
         if (!characterData) {
             continue;
         }
+        if (character == L'\n') {
+            y -= (characterData->advanceY >> 6) * /*2.4 */ scale;
+            x = sourceX;
+            continue;
+        }
 
-        float xPos = x + characterData->bitmapLeft * scale;
-        float yPos = y - (characterData->bitmapHeight - characterData->bitmapTop) * scale;
+        if (1 && characterData->textureX != -1 && characterData->textureY != -1) {
 
-        float width = characterData->bitmapWidth * scale;
-        float height = characterData->bitmapHeight * scale;
+            float xPos = x + characterData->bitmapLeft * scale;
+            float yPos = y - (characterData->bitmapHeight - characterData->bitmapTop) * scale;
 
-        // clang-format off
-        points.insert(points.end(), {
-            xPos, yPos + height,
-            xPos, yPos,
-            xPos + width, yPos + height,
-            xPos + width, yPos + height,
-            xPos, yPos,
-            xPos + width, yPos,
-        });
-        // clang-format on
+            float width = characterData->bitmapWidth * scale;
+            float height = characterData->bitmapHeight * scale;
 
+            // clang-format off
+            points.insert(points.end(), {
+                xPos, yPos + height,
+                xPos, yPos,
+                xPos + width, yPos + height,
+                xPos + width, yPos + height,
+                xPos, yPos,
+                xPos + width, yPos,
+            });
+            std::vector<float> tmp = fontAtlas->generateUVCoords(*characterData);
+            uv.insert(uv.end(), tmp.begin(), tmp.end());
+            // clang-format on
+        }
         x += (characterData->advanceX >> 6) * scale;
-
-        std::vector<float> tmp = fontAtlas->generateUVCoords(*characterData);
-        uv.insert(uv.end(), tmp.begin(), tmp.end());
     }
     std::cout << "Points: " << points.size() << std::endl;
     textModel = std::make_shared<Model>(
@@ -148,7 +155,7 @@ void Renderer::render() {
 
     textShader->apply();
     fontAtlas->bind();
-    renderText("LET'S GOOOOOOOOOOOOO!", 0, 0, 1.0);
+    renderText("LET'S GOOOOOOOOOOOOO!", 0, 0, 2.0, {0.5, 0, 0.5, 1});
 
     fontAtlas->unbind();
     textShader->stop();

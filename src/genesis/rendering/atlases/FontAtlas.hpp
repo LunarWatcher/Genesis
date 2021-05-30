@@ -19,11 +19,14 @@ typedef struct {
 
 class FontAtlas : public Texture {
 public:
+    /* Theoretically tested values for the entirety of unicode
+    2 << 13;
+    143859;
+    */
     static inline constexpr int DIMENSIONS = 512;
-    static inline constexpr int CHARACTERS = 128;
+    static inline constexpr int CHARACTERS = 256;
 
 private:
-    FT_Face face;
     std::map<wchar_t, Character> characterMap;
 
 public:

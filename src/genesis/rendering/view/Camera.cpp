@@ -11,8 +11,7 @@ namespace genesis {
 Camera::Camera() {
 
     this->perspectiveMatrix = glm::perspective(glm::radians(FOV), 16.0f / 9.0f, NEAR_PLANE, FAR_PLANE);
-    // this->orthoMatrix = glm::ortho(0.0f, 1280.0f, 0.0f, 720.0f);
-    this->orthoMatrix = glm::ortho(0.0f, 800.0f, 0.0f, 600.0f);
+    this->orthoMatrix = glm::ortho(0.0f, 1280.0f, 0.0f, 720.0f);
 
     auto inputManager = Renderer::getInstance().getInputManager();
     inputManager->registerKeyCallback(GLFW_KEY_W, // Map W
