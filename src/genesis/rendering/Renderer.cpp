@@ -105,12 +105,12 @@ void Renderer::initFonts() {
 
         // clang-format off
         points.insert(points.end(), {
+            xPos, yPos + height,
             xPos, yPos,
-            xPos, yPos + height,
+            xPos + width, yPos + height,
+            xPos + width, yPos + height,
+            xPos, yPos,
             xPos + width, yPos,
-            xPos + width, yPos,
-            xPos, yPos + height,
-            xPos + width, yPos + height
         });
         // clang-format on
 
