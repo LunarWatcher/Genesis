@@ -2,12 +2,16 @@
 
 #include "GL/glew.h"
 #include "GLFW/glfw3.h"
+
 #include "Model.hpp"
 #include "Renderable.hpp"
+
 #include "genesis/rendering/atlases/FontAtlas.hpp"
 #include "genesis/rendering/atlases/WorldTexture.hpp"
 #include "genesis/rendering/shaders/TextShader.hpp"
+#include "genesis/rendering/ui/Text.hpp"
 #include "genesis/rendering/view/Camera.hpp"
+
 #include <memory>
 #include <vector>
 
@@ -32,6 +36,8 @@ private:
 
     std::shared_ptr<WorldController> worldController;
     std::shared_ptr<InputManager> inputManager;
+
+    std::shared_ptr<TextModel> text;
     double delta;
 
     FT_Library fontLibrary;
@@ -45,9 +51,6 @@ public:
 
     void tick();
     void render();
-
-    void renderText(
-        const std::string& text, float x, float y, float scale, const glm::vec4& color = {0.0, 0.0, 0.0, 1.0});
 
     void run();
 
@@ -77,6 +80,10 @@ public:
 
     auto getCamera() {
         return camera;
+    }
+
+    auto getFontAtlas() {
+        return fontAtlas;
     }
 
     FT_Library& getFontLibrary() {

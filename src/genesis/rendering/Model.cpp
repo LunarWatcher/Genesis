@@ -33,7 +33,7 @@ void Model::createVAO() {
     glBindVertexArray(vaoID);
 }
 
-void Model::createVBO(int attribNumber, int coordSize, const VertexArray& data) {
+void Model::createVBO(unsigned int attribNumber, int coordSize, const VertexArray& data) {
     GLuint vboID;
     glGenBuffers(1, &vboID);
     attribArrays += 1;

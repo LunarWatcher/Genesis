@@ -9,6 +9,8 @@ set (SOURCE_FILES genesis/Main.cpp
                     genesis/rendering/Texture.cpp
                     genesis/rendering/atlases/WorldTexture.cpp
                     genesis/rendering/atlases/FontAtlas.cpp
+                    # UI
+                    genesis/rendering/ui/Text.cpp
                     # Camera
                     genesis/rendering/view/Camera.cpp
                     # Entities

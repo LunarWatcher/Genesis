@@ -10,6 +10,7 @@ TextShader::TextShader() : Shader("text") {
     orthoMatrix = this->getUniformLocation("orthoMatrix");
 
     apply();
+    loadTextColor({0.0, 0.0, 0.0, 1.0});
     loadOrthoMatrix(Renderer::getInstance().getCamera()->getOrthoMatrix());
     stop();
 }

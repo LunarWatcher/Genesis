@@ -65,6 +65,8 @@ void Renderer::initGame() {
     this->textureShader = std::make_shared<DefaultShader>();
     this->textShader = std::make_shared<TextShader>();
 
+    this->textShader->loadTextColor({0, 0, 0, 1.0});
+
     // Input
     glfwSetWindowUserPointer(window, inputManager.get());
     glfwSetKeyCallback(window, [](GLFWwindow* win, int key, int scanCode, int action, int mods) {
@@ -85,54 +87,7 @@ void Renderer::initFonts() {
     }
     this->fontAtlas = std::make_shared<FontAtlas>();
 
-    std::vector<float> points, uv;
-
-    float sourceX = 10;
-    float x = sourceX, y = 100, scale = 0.8;
-    std::string text = "I can draw text!\nWOOOOOOOO!\næøåâèô";
-    std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
-    std::wstring wide = converter.from_bytes(text);
-    for (auto& character : wide) {
-        auto characterData = this->fontAtlas->getCharacter(character);
-        if (!characterData) {
-            continue;
-        }
-        if (character == L'\n') {
-            y -= (characterData->advanceY >> 6) * /*2.4 */ scale;
-            x = sourceX;
-            continue;
-        }
-
-        if (1 && characterData->textureX != -1 && characterData->textureY != -1) {
-
-            float xPos = x + characterData->bitmapLeft * scale;
-            float yPos = y - (characterData->bitmapHeight - characterData->bitmapTop) * scale;
-
-            float width = characterData->bitmapWidth * scale;
-            float height = characterData->bitmapHeight * scale;
-
-            // clang-format off
-            points.insert(points.end(), {
-                xPos, yPos + height,
-                xPos, yPos,
-                xPos + width, yPos + height,
-                xPos + width, yPos + height,
-                xPos, yPos,
-                xPos + width, yPos,
-            });
-            std::vector<float> tmp = fontAtlas->generateUVCoords(*characterData);
-            uv.insert(uv.end(), tmp.begin(), tmp.end());
-            // clang-format on
-        }
-        x += (characterData->advanceX >> 6) * scale;
-    }
-    std::cout << "Points: " << points.size() << std::endl;
-    textModel = std::make_shared<Model>(
-        points,
-        [&](Model* mod) {
-            mod->createVBO(1, 2, uv);
-        },
-        2);
+    this->text = std::make_shared<TextModel>("This is text :D", 10.0f, 10.0f);
 }
 
 void Renderer::tick() {
@@ -155,18 +110,14 @@ void Renderer::render() {
 
     textShader->apply();
     fontAtlas->bind();
-    renderText("LET'S GOOOOOOOOOOOOO!", 0, 0, 2.0, {0.5, 0, 0.5, 1});
+
+    text->render();
 
     fontAtlas->unbind();
     textShader->stop();
 
     glfwSwapBuffers(window);
     glfwPollEvents();
-}
-
-void Renderer::renderText(const std::string& text, float x, float y, float scale, const glm::vec4& color) {
-    textShader->loadTextColor(color);
-    this->textModel->render();
 }
 
 void Renderer::run() {

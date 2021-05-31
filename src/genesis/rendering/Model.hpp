@@ -28,6 +28,8 @@ protected:
 
     void createVAO();
 
+    Model() = default;
+
 public:
     Model(VertexArray vertices, AttributeInit attribInitFunc, int vertSize = 3, GLenum mode = GL_STATIC_DRAW);
 
@@ -35,8 +37,8 @@ public:
 
     virtual void render() override;
 
-    void bindIndexBuffer(const IndexArray& indexBuffer);
-    void createVBO(int attribNumber, int size, const VertexArray& data);
+    virtual void bindIndexBuffer(const IndexArray& indexBuffer);
+    virtual void createVBO(unsigned int attribNumber, int size, const VertexArray& data);
 };
 
 } // namespace genesis
