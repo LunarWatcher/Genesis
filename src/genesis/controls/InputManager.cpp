@@ -28,7 +28,7 @@ bool InputManager::registerKeyCallback(int key, int mods, InputCallback callback
     return true;
 }
 
-void InputManager::onMousePressed(int button, int action, int mods) {
+void InputManager::onMousePressed(int button, int action, int) {
     // This is done purely for the sake of tracking whether the primary button
     // is pressed.
     // This is largely for tracking mouse-motion sensitive stuff, like previews
@@ -45,7 +45,7 @@ void InputManager::onMousePressed(int button, int action, int mods) {
     // TODO: for when tiling is done
 }
 
-void InputManager::onMouseMoved(double x, double y) {
+void InputManager::onMouseMoved(double, double) {
     // TODO: drag or whatever
     // I guess
 }

@@ -23,11 +23,12 @@ FontAtlas::FontAtlas(const std::string& font) {
     glBindTexture(GL_TEXTURE_2D, this->textureId);
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
+    // GL_ALPHA was apparently deprecated in 4.0 (https://stackoverflow.com/a/15618571/6296561),
+    // and doesn't seem to work.
+    // Instead, the iamge data is stored in the red channel, which is re-converted to alpha
+    // levels by the shaders.
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, DIMENSIONS, DIMENSIONS, //
         0, GL_RED, GL_UNSIGNED_BYTE, 0);
-    // std::string x = "\uFDFD";
-    // std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
-    // std::wstring wide = converter.from_bytes(x);
 
     int x = 0, y = 0;
     unsigned int currRowHeight = 0;

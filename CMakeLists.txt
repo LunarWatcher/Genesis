@@ -35,6 +35,13 @@ if (NOT WIN32)
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pedantic -Wall -Wextra -Wno-c++11-narrowing")
     set (CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g -O0 -fsanitize=undefined")
     set (CMAKE_CXX_FLAGS_RELEASE "-O3")
+
+    # Silence the warning for volatile deprecation.
+    # Only used to shut the compiler up - glm is out of my control,
+    # and is the only source of the warning at this time
+    # TODO: find the equivalent for Windoze
+    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-volatile")
+
 else()
     set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
     # I _think_ CMAKE should be able to figure out windows flags wrt. frameworks
