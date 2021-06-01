@@ -1,6 +1,5 @@
 #pragma once
 
-#include "GL/gl.h"
 #include "genesis/rendering/Model.hpp"
 
 #include <codecvt>
