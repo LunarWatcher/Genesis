@@ -7,12 +7,13 @@
 namespace genesis {
 
 class TextShader : public Shader {
-private:
+protected:
     GLint textColor, //
         orthoMatrix;
 
 public:
     TextShader();
+    virtual ~TextShader() = default;
 
     void loadTextColor(const glm::vec4& mVec);
     void loadOrthoMatrix(const glm::mat4& matrix);
