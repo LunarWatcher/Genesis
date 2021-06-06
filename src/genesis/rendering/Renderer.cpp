@@ -124,8 +124,6 @@ void Renderer::render() {
 
     particleEmitter->render();
 
-    particleEmitter->render();
-
     particleShader->stop();
 
     glfwSwapBuffers(window);
