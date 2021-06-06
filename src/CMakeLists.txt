@@ -3,12 +3,16 @@ set (SOURCE_FILES genesis/Main.cpp
                     # Rendering
                     genesis/rendering/Model.cpp genesis/rendering/Shader.cpp
                     genesis/rendering/Renderer.cpp
+                    # Shaders
                     genesis/rendering/shaders/DefaultShader.cpp
                     genesis/rendering/shaders/TextShader.cpp
+                    genesis/rendering/shaders/ParticleShader.cpp
                     # Textures
                     genesis/rendering/Texture.cpp
                     genesis/rendering/atlases/WorldTexture.cpp
                     genesis/rendering/atlases/FontAtlas.cpp
+                    # Effects
+                    genesis/rendering/particles/ParticleEmitter.cpp
                     # UI
                     genesis/rendering/ui/Text.cpp
                     # Camera
@@ -39,6 +43,7 @@ set (resources
     # Shaders {{{
     shaders/default.frag shaders/default.vert
     shaders/text.frag shaders/text.vert
+    shaders/particle.frag shaders/particle.vert
     # }}}
     images/programmer.png
 )

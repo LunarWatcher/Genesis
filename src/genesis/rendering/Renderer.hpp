@@ -8,6 +8,8 @@
 
 #include "genesis/rendering/atlases/FontAtlas.hpp"
 #include "genesis/rendering/atlases/WorldTexture.hpp"
+#include "genesis/rendering/particles/ParticleEmitter.hpp"
+#include "genesis/rendering/shaders/ParticleShader.hpp"
 #include "genesis/rendering/shaders/TextShader.hpp"
 #include "genesis/rendering/ui/Text.hpp"
 #include "genesis/rendering/view/Camera.hpp"
@@ -30,6 +32,7 @@ private:
 
     std::shared_ptr<DefaultShader> textureShader;
     std::shared_ptr<TextShader> textShader;
+    std::shared_ptr<ParticleShader> particleShader;
 
     std::shared_ptr<WorldTexture> texturePack;
     std::shared_ptr<FontAtlas> fontAtlas;
@@ -41,7 +44,11 @@ private:
     double delta;
 
     FT_Library fontLibrary;
+    // Text testing
     std::shared_ptr<Model> textModel;
+
+    // Particle testing
+    std::shared_ptr<Model> particleEmitter;
 
     void initGame();
     void initFonts();

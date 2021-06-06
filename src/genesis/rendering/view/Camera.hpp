@@ -39,6 +39,10 @@ public:
         return activeYLayer;
     }
 
+    const glm::mat4 getViewMatrix() {
+        return matrix;
+    }
+
     const glm::mat4& getPerspectiveMatrix() {
         return perspectiveMatrix;
     }

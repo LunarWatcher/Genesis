@@ -1,19 +1,20 @@
+#pragma once
+
 #include "genesis/rendering/Shader.hpp"
+#include "glm/ext/matrix_float4x4.hpp"
 
 namespace genesis {
 
 class ParticleShader : public Shader {
 private:
     GLint projectionMatrix, //
-        offset, //
-        color;
+        viewMatrix;
 
 public:
-    ParticleShader() : Shader("shaders/particles") {
-        projectionMatrix = getUniformLocation("projectionMatrix");
-        offset = getUniformLocation("offset");
-        color = getUniformLocation("color");
-    }
+    ParticleShader();
+
+    void loadViewMatrix(const glm::mat4& matrix);
+    void loadProjectionMatrix(const glm::mat4& matrix);
 };
 
 } // namespace genesis

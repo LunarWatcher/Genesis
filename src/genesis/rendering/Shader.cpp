@@ -7,12 +7,15 @@
 
 namespace genesis {
 
-Shader::Shader(const std::string& shaderName) {
+Shader::Shader(const std::string& shaderName) : Shader(shaderName + ".vert", shaderName + ".frag") {}
+
+Shader::Shader(const std::string& vert, const std::string& frag) {
+
     GLint vertexID = glCreateShader(GL_VERTEX_SHADER);
     GLint fragmentID = glCreateShader(GL_FRAGMENT_SHADER);
 
-    auto vertexSource = loadShader(shaderName + ".vert");
-    auto fragSource = loadShader(shaderName + ".frag");
+    auto vertexSource = loadShader(vert);
+    auto fragSource = loadShader(frag);
 
     compileShader(vertexID, vertexSource);
     compileShader(fragmentID, fragSource);
@@ -20,14 +23,14 @@ Shader::Shader(const std::string& shaderName) {
 }
 
 std::string Shader::loadShader(const std::string& fileName) {
-    std::string shaderSoruce;
+    std::string shaderSource;
     std::ifstream stream("shaders/" + fileName);
     if (stream.is_open()) {
         std::stringstream ss;
         ss << stream.rdbuf();
         return ss.str();
     }
-    throw std::runtime_error("Failed to load shader: " + fileName);
+    throw std::runtime_error("Failed to open shader file: shaders/" + fileName);
 }
 
 void Shader::compileShader(int shaderID, const std::string& shaderSource) {
@@ -42,7 +45,9 @@ void Shader::compileShader(int shaderID, const std::string& shaderSource) {
     if (logLength > 0) {
         std::vector<char> message(logLength + 1);
         glGetShaderInfoLog(shaderID, logLength, nullptr, &message[0]);
+        std::cerr << "Compiling shader failed; " << std::endl;
         std::cerr << &message[0] << std::endl;
+
         throw new std::runtime_error("Failed to load shader");
     }
 }

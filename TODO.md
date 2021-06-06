@@ -20,3 +20,4 @@
 # Rendering
 * [ ] Optimize chunks -- either a solid mesh sent to the renderer (potentially incompatible with a multidimensional system, when implemented, due to mining mechanics), or by making sure to only render visible tiles
     * [ ] Bonus: Low-resolution, single-chunk textures for zooming out
+* [ ] Check if 430/440 is a better choice wrt. compute shaders

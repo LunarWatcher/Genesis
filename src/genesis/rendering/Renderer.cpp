@@ -64,8 +64,11 @@ void Renderer::initGame() {
 
     this->textureShader = std::make_shared<DefaultShader>();
     this->textShader = std::make_shared<TextShader>();
+    this->particleShader = std::make_shared<ParticleShader>();
 
     this->textShader->loadTextColor({0, 0, 0, 1.0});
+
+    particleEmitter = std::make_shared<ParticleEmitter>();
 
     // Input
     glfwSetWindowUserPointer(window, inputManager.get());
@@ -115,6 +118,15 @@ void Renderer::render() {
 
     fontAtlas->unbind();
     textShader->stop();
+
+    particleShader->apply();
+    particleShader->loadViewMatrix(camera->getViewMatrix());
+
+    particleEmitter->render();
+
+    particleEmitter->render();
+
+    particleShader->stop();
 
     glfwSwapBuffers(window);
     glfwPollEvents();

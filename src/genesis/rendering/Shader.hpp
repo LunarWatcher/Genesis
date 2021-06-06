@@ -12,6 +12,8 @@ protected:
 
 public:
     Shader(const std::string& shaderName);
+    Shader(const std::string& vert, const std::string& frag);
+
     virtual ~Shader() = default;
 
     std::string loadShader(const std::string& fileName);
