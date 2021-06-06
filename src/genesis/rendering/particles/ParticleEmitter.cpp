@@ -26,7 +26,7 @@ ParticleEmitter::ParticleEmitter() {
         glBindBuffer(GL_ARRAY_BUFFER, this->vbos[1]);
         glBufferSubData(GL_ARRAY_BUFFER, i * 4 * sizeof(float), 4 * sizeof(float), &p.position[0]);
         glBindBuffer(GL_ARRAY_BUFFER, this->vbos[2]);
-        glBufferSubData(GL_ARRAY_BUFFER, i, sizeof(float), &p.scale);
+        glBufferSubData(GL_ARRAY_BUFFER, i * sizeof(float), sizeof(float), &p.scale);
     }
 
     glBindVertexArray(0);
@@ -38,7 +38,6 @@ void ParticleEmitter::render() {
         glEnableVertexAttribArray(i);
     }
     glVertexAttribDivisor(1, 1);
-    glVertexAttribDivisor(2, 0);
 
     // We draw the vertices as an instanced thing
     glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, particles.size());
