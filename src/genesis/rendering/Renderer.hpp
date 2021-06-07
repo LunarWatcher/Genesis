@@ -14,11 +14,20 @@
 #include "genesis/rendering/ui/Text.hpp"
 #include "genesis/rendering/view/Camera.hpp"
 
+#include <iostream>
 #include <memory>
 #include <vector>
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
+
+#ifdef API_DEBUG
+inline void GLAPIENTRY MessageCallback(
+    GLenum, GLenum type, GLuint, GLenum severity, GLsizei, const GLchar* message, const void*) {
+    std::cout << "GL CALLBACK: " << (type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : "") << " type = " << type
+              << ", severity = " << severity << ", message = " << message << std::endl;
+}
+#endif
 
 namespace genesis {
 

@@ -57,8 +57,11 @@ void Model::createVBO(unsigned int attribNumber, int coordSize, GLsizeiptr size)
     this->vbos.push_back(vboID);
     glBindBuffer(GL_ARRAY_BUFFER, vboID);
 
-    glBufferData(GL_ARRAY_BUFFER, size, nullptr, GL_DYNAMIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, size * sizeof(GLfloat), nullptr, GL_DYNAMIC_DRAW);
     glVertexAttribPointer(attribNumber, coordSize, GL_FLOAT, false, 0, (void*) 0);
+    int aSize = 0;
+    glGetBufferParameteriv(GL_ARRAY_BUFFER, GL_BUFFER_SIZE, &aSize);
+    std::cout << "Size: " << size << ", got " << aSize << std::endl;
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
