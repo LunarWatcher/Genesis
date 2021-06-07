@@ -17,7 +17,7 @@ ParticleEmitter::ParticleEmitter() {
     // The rest is dynamic
 
     // Position + age
-    createVBO(1, 3, 100 * 4);
+    createVBO(1, 4, 100 * 4);
     // Scale
     createVBO(2, 1, 100);
 

@@ -16,8 +16,8 @@ uniform mat4 projectionMatrix;
 out float age;
 
 void main() {
-    vec4 viewSpace = viewMatrix * vec4(position.xyz, 1);
-    viewSpace.xy += particleSize * (vertPos.xy - vec2(0.5));
+    vec4 viewSpace = viewMatrix * vec4(position.xyz, position.w);
+    viewSpace.xyz += particleSize * (vertPos.xyz - vec3(0.5));
 
     // Output
     gl_Position = projectionMatrix * viewSpace;
