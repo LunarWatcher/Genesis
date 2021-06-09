@@ -9,17 +9,21 @@ namespace genesis {
 
 Shader::Shader(const std::string& shaderName) : Shader(shaderName + ".vert", shaderName + ".frag") {}
 
-Shader::Shader(const std::string& vert, const std::string& frag) {
+Shader::Shader(const std::string& vert, const std::string& frag)
+        : Shader(std::vector<std::pair<std::string, GLenum>>{{vert, GL_VERTEX_SHADER}, {frag, GL_FRAGMENT_SHADER}}) {}
 
-    GLint vertexID = glCreateShader(GL_VERTEX_SHADER);
-    GLint fragmentID = glCreateShader(GL_FRAGMENT_SHADER);
+Shader::Shader(const std::vector<std::pair<std::string, GLenum>>& frag) {
+    std::vector<int> ids;
+    for (const auto& [shaderLocation, shaderType] : frag) {
+        GLint id = glCreateShader(shaderType);
 
-    auto vertexSource = loadShader(vert);
-    auto fragSource = loadShader(frag);
+        std::string shaderSource = loadShader(shaderLocation);
+        compileShader(id, shaderSource);
 
-    compileShader(vertexID, vertexSource);
-    compileShader(fragmentID, fragSource);
-    createProgram(vertexID, fragmentID);
+        ids.push_back(id);
+    }
+
+    createProgram(ids);
 }
 
 std::string Shader::loadShader(const std::string& fileName) {
@@ -52,13 +56,14 @@ void Shader::compileShader(int shaderID, const std::string& shaderSource) {
     }
 }
 
-void Shader::createProgram(int vertexID, int fragmentID) {
+void Shader::createProgram(const std::vector<int>& shaderIds) {
     GLint result = GL_FALSE;
     int logLength;
 
     this->programID = glCreateProgram();
-    glAttachShader(programID, vertexID);
-    glAttachShader(programID, fragmentID);
+    for (const auto& shaderID : shaderIds) {
+        glAttachShader(programID, shaderID);
+    }
     glLinkProgram(programID);
 
     glGetProgramiv(programID, GL_LINK_STATUS, &result);
@@ -70,11 +75,10 @@ void Shader::createProgram(int vertexID, int fragmentID) {
         throw std::runtime_error("Failed to link program");
     }
 
-    glDetachShader(programID, vertexID);
-    glDetachShader(programID, fragmentID);
-
-    glDeleteShader(vertexID);
-    glDeleteShader(fragmentID);
+    for (const auto& shaderID : shaderIds) {
+        glDetachShader(programID, shaderID);
+        glDeleteShader(shaderID);
+    }
 }
 
 GLint Shader::getUniformLocation(const std::string& name) {

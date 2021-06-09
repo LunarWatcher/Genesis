@@ -2,6 +2,7 @@
 
 #include "GL/glew.h"
 #include <string>
+#include <vector>
 
 namespace genesis {
 
@@ -13,12 +14,13 @@ protected:
 public:
     Shader(const std::string& shaderName);
     Shader(const std::string& vert, const std::string& frag);
+    Shader(const std::vector<std::pair<std::string, GLenum>>& shaders);
 
     virtual ~Shader() = default;
 
     std::string loadShader(const std::string& fileName);
     void compileShader(int shaderID, const std::string& shaderSource);
-    void createProgram(int vertexID, int fragmentID);
+    void createProgram(const std::vector<int>& shaderIDs);
 
     virtual void apply() {
         glUseProgram(programID);
