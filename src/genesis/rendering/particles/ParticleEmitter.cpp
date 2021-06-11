@@ -45,7 +45,7 @@ void ParticleEmitter::render() {
     glVertexAttribDivisor(2, 6);
 
     // We draw the vertices as an instanced thing
-    glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr, particles.size());
+    glDrawElementsInstanced(GL_TRIANGLES, indices, GL_UNSIGNED_INT, nullptr, particles.size());
 
     for (size_t i = 0; i < attribArrays; ++i) {
         glDisableVertexAttribArray(i);

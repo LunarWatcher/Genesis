@@ -20,6 +20,7 @@ Model::~Model() {
 }
 
 void Model::bindIndexBuffer(const IndexArray& indexBuffer) {
+    this->indices = indexBuffer.size();
     this->hasIndexBuffer = true;
     GLuint vboId;
     glGenBuffers(1, &vboId);

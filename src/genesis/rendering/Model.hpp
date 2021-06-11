@@ -19,7 +19,7 @@ class Model : public Renderable {
 protected:
     GLenum mode = GL_STATIC_DRAW;
 
-    int vertices;
+    size_t vertices, indices = -1;
     size_t attribArrays = 0;
     GLuint vaoID;
     std::vector<GLuint> vbos;
