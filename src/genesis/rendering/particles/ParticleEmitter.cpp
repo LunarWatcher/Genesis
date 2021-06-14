@@ -1,5 +1,6 @@
 #include "ParticleEmitter.hpp"
 #include "genesis/rendering/Constants.hpp"
+#include "genesis/rendering/Renderer.hpp"
 
 #include <iostream>
 
@@ -22,13 +23,15 @@ ParticleEmitter::ParticleEmitter() {
     createVBO(2, 1, 100);
 
     for (int i = 0; i < 100; ++i) {
-        Particle p{glm::vec4{1.0 + i, 1.0 + i, -2.0, 1.0}, 1.0};
+        // clang-format off
+        Particle p{glm::vec4{ 1.0, 1.0, -2.0, 1.0 },
+            { cos(0.1 + ((double) i) / 5.0), sin(0.1 + ((double) i) / 5.0), 0.0 },
+            0.2};
+        // clang-format on
         this->particles.push_back(p);
 
-        glBindBuffer(GL_ARRAY_BUFFER, this->vbos[2]);
-        glBufferSubData(GL_ARRAY_BUFFER, i * 4 * sizeof(float), 4 * sizeof(float), &p.position[0]);
-        glBindBuffer(GL_ARRAY_BUFFER, this->vbos[3]);
-        glBufferSubData(GL_ARRAY_BUFFER, i * sizeof(float), sizeof(float), &p.scale);
+        glNamedBufferSubData(this->vbos[2], i * 4 * sizeof(float), 4 * sizeof(float), &p.position[0]);
+        glNamedBufferSubData(this->vbos[3], i * sizeof(float), sizeof(float), &p.scale);
     }
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -36,6 +39,16 @@ ParticleEmitter::ParticleEmitter() {
 }
 
 void ParticleEmitter::render() {
+    // TODO: move to an update method {{{
+    for (size_t i = 0; i < this->particles.size(); ++i) {
+        auto& particle = this->particles.at(i);
+        particle.position.x += particle.velocity.x * Renderer::getInstance().getDelta();
+        particle.position.y += particle.velocity.y * Renderer::getInstance().getDelta();
+        particle.position.z += particle.velocity.z * Renderer::getInstance().getDelta();
+
+        glNamedBufferSubData(this->vbos[2], i * 4 * sizeof(float), 4 * sizeof(float), &particle.position[0]);
+    }
+    // }}}
     glBindVertexArray(this->vaoID);
     for (size_t i = 0; i < attribArrays; ++i) {
         glEnableVertexAttribArray(i);

@@ -5,6 +5,7 @@ namespace genesis {
 
 struct Particle {
     glm::vec4 position;
+    glm::vec3 velocity;
     float scale;
 };
 
