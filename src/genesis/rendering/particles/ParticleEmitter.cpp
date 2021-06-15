@@ -25,7 +25,7 @@ ParticleEmitter::ParticleEmitter() {
     for (int i = 0; i < 100; ++i) {
         // clang-format off
         Particle p{glm::vec4{ 1.0, 1.0, -2.0, 1.0 },
-            { cos(0.1 + ((double) i) / 5.0), sin(0.1 + ((double) i) / 5.0), 0.0 },
+            { cos(0.1 + ((double) i) * 7 / 100.0), sin(0.1 + ((double) i) * 7 / 100.0), 0.0 },
             0.2};
         // clang-format on
         this->particles.push_back(p);
@@ -42,9 +42,7 @@ void ParticleEmitter::render() {
     // TODO: move to an update method {{{
     for (size_t i = 0; i < this->particles.size(); ++i) {
         auto& particle = this->particles.at(i);
-        particle.position.x += particle.velocity.x * Renderer::getInstance().getDelta();
-        particle.position.y += particle.velocity.y * Renderer::getInstance().getDelta();
-        particle.position.z += particle.velocity.z * Renderer::getInstance().getDelta();
+        particle.position += glm::vec4(particle.velocity, 0.0) * (float) Renderer::getInstance().getDelta();
 
         glNamedBufferSubData(this->vbos[2], i * 4 * sizeof(float), 4 * sizeof(float), &particle.position[0]);
     }

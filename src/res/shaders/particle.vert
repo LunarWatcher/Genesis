@@ -14,12 +14,17 @@ uniform mat4 viewMatrix;
 uniform mat4 projectionMatrix;
 
 out float age;
+out float scale;
+out vec2 flatPos;
 
 void main() {
-    vec4 viewSpace = viewMatrix * vec4(position.xyz, position.w);
+    vec4 viewSpace = viewMatrix * vec4(position.xyz, 1.0);
     viewSpace.xyz += particleSize * (vertPos.xyz - vec3(0.5));
 
     // Output
     gl_Position = projectionMatrix * viewSpace;
     age = position.w;
+    scale = particleSize;
+    flatPos = position.xy;
+
 }

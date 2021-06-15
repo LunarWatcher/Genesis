@@ -111,7 +111,7 @@ void Renderer::render() {
     texturePack->bind();
     camera->applyCamera(*textureShader);
 
-    worldController->render();
+    // worldController->render();
 
     texturePack->unbind();
     textureShader->stop();

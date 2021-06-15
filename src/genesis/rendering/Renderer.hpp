@@ -24,8 +24,12 @@
 #ifdef API_DEBUG
 inline void GLAPIENTRY MessageCallback(
     GLenum, GLenum type, GLuint, GLenum severity, GLsizei, const GLchar* message, const void*) {
-    std::cout << "GL CALLBACK: " << (type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : "") << " type = " << type
-              << ", severity = " << severity << ", message = " << message << std::endl;
+    if (std::string(message).find("will use VIDEO memory as the source") != std::string::npos) {
+        // Silence verbose video memory warnings
+        return;
+    }
+    std::cout << "GL CALLBACK: " << std::hex << (type == GL_DEBUG_TYPE_ERROR ? "**GL ERROR**" : "") << " type = 0x"
+              << type << ", severity = 0x" << severity << ", message = " << message << std::endl;
 }
 #endif
 
