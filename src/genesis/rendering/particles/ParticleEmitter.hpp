@@ -4,7 +4,7 @@
 namespace genesis {
 
 struct Particle {
-    glm::vec4 position;
+    glm::vec3 position;
     glm::vec3 velocity;
     float scale;
 };
@@ -16,7 +16,7 @@ private:
 public:
     ParticleEmitter();
 
-    void render() override;
+    virtual void render() override;
 };
 
 } // namespace genesis

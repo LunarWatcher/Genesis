@@ -32,6 +32,7 @@ Renderer::Renderer() {
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    glfwWindowHint(GLFW_SAMPLES, 4);
 
     glfwSwapInterval(1);
 
@@ -48,6 +49,8 @@ Renderer::Renderer() {
 
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glEnable(GL_PROGRAM_POINT_SIZE);
+    glEnable(GL_MULTISAMPLE);
 
 #ifdef API_DEBUG
     glEnable(GL_DEBUG_OUTPUT);
@@ -111,7 +114,7 @@ void Renderer::render() {
     texturePack->bind();
     camera->applyCamera(*textureShader);
 
-    // worldController->render();
+    worldController->render();
 
     texturePack->unbind();
     textureShader->stop();

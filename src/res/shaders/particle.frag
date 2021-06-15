@@ -1,15 +1,11 @@
 #version 400 core
 
-// I imagine we can use this for something.
-in float age;
-in float scale;
-in vec2  flatPos;
+in vec4 inColor;
 
-// TODO: make the color a uniform
-// Or maybe make it easier for different particles to have different fragment shaders?
 out vec4 color;
 
-
 void main() {
-    color = vec4(1.0, 0.0, 1.0, 1.0);
+    vec2 pos = 2 * gl_PointCoord - 1.0;
+    if (dot(pos, pos) > 1.0) discard;
+    color = inColor;
 }
