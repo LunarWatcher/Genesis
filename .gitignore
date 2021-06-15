@@ -10,7 +10,6 @@ src/res/images/test.png
 build/
 .sconsign.dblite
 compile_commands.json
-/nova
 
 # Grabbed from https://github.com/github/.gitignore
 
