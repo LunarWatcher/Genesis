@@ -16,7 +16,7 @@ Model::Model(VertexArray vertices, std::function<void(Model*)> attribInitFunc, i
 
 Model::~Model() {
     glDeleteVertexArrays(1, &vaoID);
-    glDeleteBuffers(this->vbos.size(), &vbos[0]);
+    glDeleteBuffers(this->vbos.size(), vbos.data());
 }
 
 void Model::bindIndexBuffer(const IndexArray& indexBuffer) {
@@ -26,7 +26,7 @@ void Model::bindIndexBuffer(const IndexArray& indexBuffer) {
     glGenBuffers(1, &vboId);
     this->vbos.push_back(vboId);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vboId);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexBuffer.size() * sizeof(GLint), &indexBuffer[0], mode);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexBuffer.size() * sizeof(GLint), indexBuffer.data(), mode);
 }
 
 void Model::createVAO() {
@@ -45,7 +45,8 @@ void Model::createVBO(unsigned int attribNumber, int coordSize, const VertexArra
     this->vbos.push_back(vboID);
     glBindBuffer(GL_ARRAY_BUFFER, vboID);
 
-    glBufferData(GL_ARRAY_BUFFER, data.size() * sizeof(GLfloat), &data[0], mode);
+    glBufferData(GL_ARRAY_BUFFER, data.size() * sizeof(GLfloat), data.data(), mode);
+    glEnableVertexAttribArray(attribNumber);
     glVertexAttribPointer(attribNumber, coordSize, GL_FLOAT, false, 0, (void*) 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
@@ -58,22 +59,17 @@ void Model::createVBO(unsigned int attribNumber, int coordSize, GLsizeiptr size)
     glBindBuffer(GL_ARRAY_BUFFER, vboID);
 
     glBufferData(GL_ARRAY_BUFFER, size * sizeof(GLfloat), nullptr, GL_DYNAMIC_DRAW);
+    glEnableVertexAttribArray(attribNumber);
     glVertexAttribPointer(attribNumber, coordSize, GL_FLOAT, false, 0, (void*) 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
 void Model::render() {
     glBindVertexArray(this->vaoID);
-    for (size_t i = 0; i < attribArrays; ++i) {
-        glEnableVertexAttribArray(i);
-    }
     if (hasIndexBuffer) {
         glDrawElements(GL_TRIANGLES, vertices, GL_UNSIGNED_INT, 0);
     } else {
         glDrawArrays(GL_TRIANGLES, 0, vertices);
-    }
-    for (size_t i = 0; i < attribArrays; ++i) {
-        glDisableVertexAttribArray(i);
     }
     glBindVertexArray(0);
 }
