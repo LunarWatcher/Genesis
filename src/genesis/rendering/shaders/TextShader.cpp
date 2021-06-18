@@ -16,7 +16,7 @@ TextShader::TextShader() : Shader("text") {
 }
 
 void TextShader::loadTextColor(const glm::vec4& mVec) {
-    glUniform4f(textColor, mVec.r, mVec.g, mVec.b, mVec.a);
+    glUniform4fv(textColor, 1, &mVec[0]);
 }
 
 void TextShader::loadOrthoMatrix(const glm::mat4& matrix) {
