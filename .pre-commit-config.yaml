@@ -6,10 +6,3 @@ repos:
         exclude: .clang-format
       - id: end-of-file-fixer
       - id: trailing-whitespace
-  - repo: https://github.com/pocc/pre-commit-hooks
-    rev: v1.1.1
-    hooks:
-      #- id: clang-format
-        #args: [ -i, --style=file ]
-      - id: uncrustify
-        args: [-l cpp, -c .uncrustify.cfg]
