@@ -5,19 +5,20 @@
       "adapter": "vscode-cpptools",
       "configuration": {
         "request": "launch",
-        "program": "build/bin/genesis",
+        "program": "${workspaceRoot}/build/bin/genesis",
         "args": [ ],
-        "cwd": "build/",
+        "cwd": "${workspaceRoot}/build/",
         "environment": [ ],
         "externalConsole": true,
-        "MIMode": "<lldb or gdb>"
+        "MIMode": "gdb"
       }
     },
     "Attach": {
       "adapter": "vscode-cpptools",
       "configuration": {
         "request": "attach",
-        "program": "build/bin/genesis",
+        "program": "${workspaceRoot}/build/bin/genesis",
+        "cwd": "${workspaceRoot}/build/",
         "MIMode": "gdb"
       }
     }

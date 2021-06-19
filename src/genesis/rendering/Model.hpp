@@ -12,6 +12,7 @@ namespace genesis {
 
 typedef std::vector<GLfloat> VertexArray;
 typedef std::vector<GLint> IndexArray;
+
 class Model;
 typedef std::function<void(Model*)> AttributeInit;
 
@@ -20,7 +21,6 @@ protected:
     GLenum mode = GL_STATIC_DRAW;
 
     size_t vertices, indices = -1;
-    size_t attribArrays = 0;
     GLuint vaoID;
     std::vector<GLuint> vbos;
 

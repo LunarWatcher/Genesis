@@ -41,11 +41,11 @@ void Model::createVBO(unsigned int attribNumber, int coordSize, const VertexArra
 void Model::createVBO(unsigned int attribNumber, int coordSize, const VertexArray& data, GLenum mode) {
     GLuint vboID;
     glGenBuffers(1, &vboID);
-    ++attribArrays;
     this->vbos.push_back(vboID);
     glBindBuffer(GL_ARRAY_BUFFER, vboID);
 
     glBufferData(GL_ARRAY_BUFFER, data.size() * sizeof(GLfloat), data.data(), mode);
+    // these only need to be enabled once
     glEnableVertexAttribArray(attribNumber);
     glVertexAttribPointer(attribNumber, coordSize, GL_FLOAT, false, 0, (void*) 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -54,11 +54,11 @@ void Model::createVBO(unsigned int attribNumber, int coordSize, const VertexArra
 void Model::createVBO(unsigned int attribNumber, int coordSize, GLsizeiptr size) {
     GLuint vboID;
     glGenBuffers(1, &vboID);
-    ++attribArrays;
     this->vbos.push_back(vboID);
     glBindBuffer(GL_ARRAY_BUFFER, vboID);
 
     glBufferData(GL_ARRAY_BUFFER, size * sizeof(GLfloat), nullptr, GL_DYNAMIC_DRAW);
+    // These only need to be enabled once
     glEnableVertexAttribArray(attribNumber);
     glVertexAttribPointer(attribNumber, coordSize, GL_FLOAT, false, 0, (void*) 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
