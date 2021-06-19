@@ -17,7 +17,7 @@ typedef std::map<int, FlatMap> ChunkMap;
 
 class Chunk : public Renderable {
 public:
-    static inline constexpr int CHUNK_SIZE = 16;
+    static constexpr int CHUNK_SIZE = 16;
 
 private:
     ChunkMap chunkMap;
