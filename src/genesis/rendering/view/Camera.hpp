@@ -50,6 +50,8 @@ public:
     const glm::mat4& getOrthoMatrix() {
         return orthoMatrix;
     }
+
+    glm::vec2 convertToWorld(int mouseX, int mouseY);
 };
 
 } // namespace genesis

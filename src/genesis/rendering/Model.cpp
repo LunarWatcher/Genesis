@@ -2,6 +2,7 @@
 #include <iostream>
 #include <stdexcept>
 #include <vector>
+
 namespace genesis {
 
 Model::Model(VertexArray vertices, std::function<void(Model*)> attribInitFunc, int coordSize, GLenum mode)

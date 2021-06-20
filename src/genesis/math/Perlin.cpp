@@ -6,11 +6,12 @@
 
 namespace perlin {
 
+// Default constructor for superclass {{{
 NoiseGenerator::NoiseGenerator() {
     seed = rawRandom();
     gen = std::mt19937(seed);
 }
-
+// }}}
 // 2D perlin noise {{{
 /**
  * Interpolation using smoothing.
@@ -62,8 +63,11 @@ int Perlin2DNoiseGenerator::clampPerlin(double perlinInput) {
     // Get the noise in [0, 1]
     auto clampedPerlin = (perlinInput + 1) / 2;
     // Generate the range
-    auto normalizedPerlin = std::floor(
-        clampedPerlin * (genesis::Constants::MAX_OVERWORLD_HEIGHT + genesis::Constants::FLAT_COMPENSATION_FACTOR));
+    auto normalizedPerlin = std::floor(clampedPerlin
+        * (genesis::Constants::MAX_OVERWORLD_HEIGHT
+           + genesis::Constants::FLAT_COMPENSATION_FACTOR
+        )
+    );
 
     // This is potentially possible to modify with biomes, but that's a problem for later
     if (normalizedPerlin >= 10 && normalizedPerlin <= 10 + genesis::Constants::FLAT_COMPENSATION_FACTOR) {
@@ -120,7 +124,6 @@ void DumbGenerator::generateChunk(genesis::ChunkMap& ref, int chunkX, int chunkY
         activeLevel[z].resize(genesis::Chunk::CHUNK_SIZE);
 
         for (int x = 0; x < genesis::Chunk::CHUNK_SIZE; ++x) {
-
             activeLevel[z][x] = std::make_shared<genesis::Entity>(
                 tile, glm::vec3{chunkX * genesis::Chunk::CHUNK_SIZE + x, chunkY * genesis::Chunk::CHUNK_SIZE + z, 0});
         }

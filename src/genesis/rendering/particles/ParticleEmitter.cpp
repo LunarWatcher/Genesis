@@ -45,16 +45,7 @@ void ParticleEmitter::render() {
     }
     // }}}
     glBindVertexArray(this->vaoID);
-    // Old crap {{{
-    // glVertexAttribDivisor(0, 0);
-    // glVertexAttribDivisor(1, 1);
-    // glVertexAttribDivisor(2, 6);
 
-    //// We draw the vertices as an instanced thing
-    // glDrawElementsInstanced(GL_TRIANGLES, indices, GL_UNSIGNED_INT, nullptr, particles.size());
-    // glEnable(GL_POINT_SMOOTH);
-    // }}}
-    glHint(GL_POINT_SMOOTH_HINT, GL_NICEST);
     glDrawArrays(GL_POINTS, 0, this->particles.size());
 
     glBindVertexArray(0);
