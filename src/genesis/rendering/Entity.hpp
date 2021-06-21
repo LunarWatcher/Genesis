@@ -51,9 +51,11 @@ public:
     glm::vec3& getPosition() {
         return position;
     }
+
     glm::vec3& getRotation() {
         return rotation;
     }
+
     float& getScale() {
         return scale;
     }

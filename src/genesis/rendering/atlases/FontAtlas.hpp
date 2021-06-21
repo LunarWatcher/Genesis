@@ -38,7 +38,7 @@ public:
         return {};
     }
 
-    std::vector<float> generateUVCoords(const Character& chr);
+    std::vector<GLfloat> generateUVCoords(const Character& chr);
 };
 
 } // namespace genesis

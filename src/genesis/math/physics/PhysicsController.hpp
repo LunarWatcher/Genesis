@@ -11,10 +11,14 @@ namespace genesis {
 
 class PhysicsObject {
 private:
-    Collider collider;
+    std::shared_ptr<Collider> collider;
     std::shared_ptr<Entity> entity;
 
 public:
+    PhysicsObject(std::shared_ptr<Collider> collider, std::shared_ptr<Entity> entity)
+            : collider(collider), entity(entity) {
+    }
+
     virtual void tick() = 0;
 };
 

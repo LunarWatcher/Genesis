@@ -18,6 +18,7 @@ set (SOURCE_FILES genesis/Main.cpp
                     genesis/rendering/particles/ParticleEmitter.cpp
                     # }}}
                     # UI {{{
+
                     genesis/rendering/ui/Text.cpp
                     # }}}
                     # Camera {{{

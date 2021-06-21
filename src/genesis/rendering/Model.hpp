@@ -14,11 +14,12 @@ typedef std::vector<GLfloat> VertexArray;
 typedef std::vector<GLint> IndexArray;
 
 class Model;
-typedef std::function<void(Model*)> AttributeInit;
+typedef std::function<void (Model*)> AttributeInit;
 
 class Model : public Renderable {
 protected:
     GLenum mode = GL_STATIC_DRAW;
+    GLenum renderType = GL_TRIANGLES;
 
     size_t vertices, indices = -1;
     GLuint vaoID;
@@ -54,6 +55,10 @@ public:
      * Consequentially, the mode used is GL_DYNAMIC_DRAW
      */
     virtual void createVBO(unsigned int attribNumber, int coordSize, GLsizeiptr size);
+
+    void setRenderType(GLenum renderType) {
+        this->renderType = renderType;
+    }
 };
 
 } // namespace genesis

@@ -44,7 +44,7 @@ public:
     // Texture atlas helper
     // Generates UV coordinates from the given image x and image y.
     // If a width and height is supplied
-    std::vector<GLfloat> generateFromPosition(unsigned int x = 0, unsigned int y = 0, int width = -1, int height = -1);
+    virtual std::vector<GLfloat> generateFromPosition(unsigned int x = 0, unsigned int y = 0, int width = -1, int height = -1);
 };
 
 } // namespace genesis
