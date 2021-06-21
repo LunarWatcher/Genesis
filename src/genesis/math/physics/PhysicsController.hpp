@@ -1,6 +1,8 @@
 #pragma once
 
 #include "genesis/rendering/Renderable.hpp"
+#include "genesis/rendering/Entity.hpp"
+#include "Collider.hpp"
 
 #include <memory>
 #include <vector>
@@ -8,6 +10,10 @@
 namespace genesis {
 
 class PhysicsObject {
+private:
+    Collider collider;
+    std::shared_ptr<Entity> entity;
+
 public:
     virtual void tick() = 0;
 };
