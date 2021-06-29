@@ -18,7 +18,7 @@ protected:
 public:
     Texture() = default;
     Texture(const std::string& image, int atlasWidth = -1, int atlasHeight = -1);
-    ~Texture();
+    virtual ~Texture();
 
     void bind();
     void unbind();

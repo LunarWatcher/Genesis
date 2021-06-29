@@ -1,7 +1,7 @@
 #pragma once
 
-#include "genesis/rendering/Renderable.hpp"
 #include "genesis/rendering/Entity.hpp"
+#include "genesis/rendering/Renderable.hpp"
 #include "Collider.hpp"
 
 #include <memory>
@@ -9,25 +9,15 @@
 
 namespace genesis {
 
-class PhysicsObject {
-private:
-    std::shared_ptr<Collider> collider;
-    std::shared_ptr<Entity> entity;
+class PhysicsController {
+protected:
+    // TODO: quadtree or something to boost performance
+    std::vector<std::shared_ptr<Entity>> entities;
 
 public:
-    PhysicsObject(std::shared_ptr<Collider> collider, std::shared_ptr<Entity> entity)
-            : collider(collider), entity(entity) {
-    }
 
+    // I guess we could use this for something
     virtual void tick() = 0;
-};
-
-class PhysicsController : public Renderable {
-private:
-    std::vector<std::shared_ptr<PhysicsObject>> obj;
-public:
-    void render() override;
-
 
 };
 

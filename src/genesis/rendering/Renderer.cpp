@@ -74,7 +74,9 @@ void Renderer::initGame() {
     this->textShader = std::make_shared<TextShader>();
     this->particleShader = std::make_shared<ParticleShader>();
 
+    this->textShader->apply();
     this->textShader->loadTextColor({0, 0, 0, 1.0});
+    this->textShader->stop();
 
     particleEmitter = std::make_shared<ParticleEmitter>();
 

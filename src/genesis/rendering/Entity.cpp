@@ -4,6 +4,9 @@
 
 namespace genesis {
 
+void Entity::tick() {
+}
+
 void Entity::render() {
     regenerateTransMatrix();
     Renderer::getInstance().getTextureShader()->loadTransMatrix(this->transMatrix);
