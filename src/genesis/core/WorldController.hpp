@@ -10,7 +10,7 @@
 namespace genesis {
 
 class Chunk;
-class WorldController : public Scene {
+class WorldController {
 private:
     static inline WorldController* INSTANCE = nullptr;
     static inline constexpr int MS_PER_DAY = 20'000;
