@@ -26,7 +26,7 @@ public:
     virtual void tick() = 0;
 
     bool hasCollision(double x, double y);
-    bool hasCollision(std::shared_ptr<Collider> collider);
+    bool hasCollision(std::shared_ptr<Rectangle> collider);
 };
 
 }

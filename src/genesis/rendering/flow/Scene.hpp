@@ -1,4 +1,7 @@
+#pragma once
+
 #include "genesis/math/physics/PhysicsController.hpp"
+
 namespace genesis {
 
 // Scenes are physics controllers. Brilliant, innit?

@@ -53,7 +53,10 @@ public:
         }
     }
 
-    glm::vec3& getPosition() {
+    const glm::vec3& getPosition() {
+        return position;
+    }
+    const glm::vec3& getPosition() const {
         return position;
     }
 

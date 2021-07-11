@@ -21,6 +21,10 @@ WorldController::WorldController() : generator(std::make_shared<perlin::DumbGene
     controllers[0]->addEntity(
         std::make_shared<Entity>(Renderer::getInstance().getTexturePack()->getModel(WorldTile::COLONIST_A),
             glm::vec3{1, 0, 0}, glm::vec3{0, 0, 0}, 1));
+
+    Renderer::getInstance().getPhysicsEngine()->registerControllers(0, {
+        std::static_pointer_cast<PhysicsController>(controllers[0]),
+    });
 }
 
 void WorldController::generate() {

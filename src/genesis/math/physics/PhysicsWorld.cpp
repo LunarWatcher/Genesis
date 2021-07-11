@@ -16,6 +16,7 @@ void PhysicsWorld::tick() {
 void PhysicsWorld::clickElement(double x, double y) {
     for (auto& controller : stageControllerMap.at(Renderer::getInstance().getActiveScene())) {
         if (controller->hasCollision(x, y)) {
+            std::cout << "You've sunk my battleship" << std::endl;
             break;
         }
     }
