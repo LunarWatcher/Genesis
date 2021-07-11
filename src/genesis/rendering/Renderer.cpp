@@ -78,8 +78,6 @@ void Renderer::initGame() {
     this->textShader->loadTextColor({0, 0, 0, 1.0});
     this->textShader->stop();
 
-    particleEmitter = std::make_shared<ParticleEmitter>();
-
     // Input
     glfwSetWindowUserPointer(window, inputManager.get());
     glfwSetKeyCallback(window, [](GLFWwindow* win, int key, int scanCode, int action, int mods) {
@@ -100,7 +98,6 @@ void Renderer::initFonts() {
     }
     this->fontAtlas = std::make_shared<FontAtlas>();
 
-    this->text = std::make_shared<TextModel>("This is text :D", 10.0f, 10.0f);
 }
 
 void Renderer::tick() {
@@ -124,7 +121,6 @@ void Renderer::render() {
     textShader->apply();
     fontAtlas->bind();
 
-    text->render();
 
     fontAtlas->unbind();
     textShader->stop();
@@ -132,7 +128,6 @@ void Renderer::render() {
     particleShader->apply();
     particleShader->loadViewMatrix(camera->getViewMatrix());
 
-    particleEmitter->render();
 
     particleShader->stop();
 

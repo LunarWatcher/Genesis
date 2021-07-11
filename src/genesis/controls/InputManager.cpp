@@ -28,21 +28,27 @@ bool InputManager::registerKeyCallback(int key, int mods, InputCallback callback
     return true;
 }
 
-void InputManager::onMousePressed(int button, int action, int) {
+void InputManager::onMousePressed(int button, int action, int mods) {
+    // we can do substantially better, but for now, we just screw modifiers
+    if (mods != 0) return;
     // This is done purely for the sake of tracking whether the primary button
     // is pressed.
     // This is largely for tracking mouse-motion sensitive stuff, like previews
     // of drag actions.
-    // Problem for the future tho
+    // Problem for the future tho (fuck you past me, write better comments)
     // Could potentially expand to a vector or something if more keys need this
     // level of control
     // Need to take modifiers into account though.
     if (button == GLFW_MOUSE_BUTTON_1)
         this->isMouse1Pressed = action;
+
     double x, y;
     glfwGetCursorPos(Renderer::getInstance().getWindow(), &x, &y);
-    // And use the position here for something:tm:
-    // TODO: for when tiling is done
+
+    // I suppose that in a real system, we'd need to detect release?
+    // And then check if there's dragging or some shit like that
+    // iDunno
+    Renderer::getInstance().getPhysicsEngine()->clickElement(x, y);
 }
 
 void InputManager::onMouseMoved(double, double) {

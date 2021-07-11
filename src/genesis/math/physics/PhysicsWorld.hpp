@@ -19,7 +19,7 @@ public:
     void registerControllers(int scene, const std::vector<std::shared_ptr<PhysicsController>>& controllers);
 
     void tick();
-    // void clickElement(double x, double y);
+    void clickElement(double x, double y);
 };
 
 }

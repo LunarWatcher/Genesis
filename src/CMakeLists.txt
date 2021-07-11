@@ -45,6 +45,7 @@ set (SOURCE_FILES genesis/Main.cpp
                     # Physics {{{
                     genesis/math/physics/Rectangle.cpp
                     genesis/math/physics/PhysicsWorld.cpp
+                    genesis/math/physics/PhysicsController.cpp
                     # }}}
                     # }}}
 )

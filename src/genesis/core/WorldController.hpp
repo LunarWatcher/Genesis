@@ -3,13 +3,14 @@
 #include "genesis/controls/InputManager.hpp"
 #include "genesis/rendering/environment/Chunk.hpp"
 #include "genesis/world/EntityController.hpp"
+#include "genesis/rendering/flow/Scene.hpp"
 
 #include "genesis/math/Perlin.hpp"
 
 namespace genesis {
 
 class Chunk;
-class WorldController {
+class WorldController : public Scene {
 private:
     static inline WorldController* INSTANCE = nullptr;
     static inline constexpr int MS_PER_DAY = 20'000;

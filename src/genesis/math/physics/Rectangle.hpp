@@ -12,7 +12,7 @@ public:
     Rectangle(int x, int y, int width, int height) : x(x), y(y), z(0), width(width), height(height) {}
     Rectangle(int x, int y, int z, int width, int height) : x(x), y(y), z(z), width(width), height(height) {}
 
-    bool collidesWith(const Rectangle& other) override;
+    bool collidesWith(const Rectangle& other, bool anyZ = false) override;
 };
 
 }

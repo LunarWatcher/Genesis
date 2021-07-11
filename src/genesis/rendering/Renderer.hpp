@@ -14,6 +14,8 @@
 #include "genesis/rendering/ui/Text.hpp"
 #include "genesis/rendering/view/Camera.hpp"
 
+#include "genesis/math/physics/PhysicsWorld.hpp"
+
 #include <iostream>
 #include <memory>
 #include <vector>
@@ -22,6 +24,8 @@
 #include FT_FREETYPE_H
 
 #ifdef API_DEBUG
+// Used for debugging OpenGL API calls
+// Super useful for backtracing invalid calls
 inline void GLAPIENTRY MessageCallback(
     GLenum, GLenum type, GLuint, GLenum severity, GLsizei, const GLchar* message, const void*) {
     if (std::string(message).find("will use VIDEO memory as the source") != std::string::npos) {
@@ -51,17 +55,17 @@ private:
     std::shared_ptr<FontAtlas> fontAtlas;
 
     std::shared_ptr<WorldController> worldController;
+    std::shared_ptr<PhysicsWorld> physicsController;
+
     std::shared_ptr<InputManager> inputManager;
 
-    std::shared_ptr<TextModel> text;
     double delta;
 
     FT_Library fontLibrary;
-    // Text testing
-    std::shared_ptr<Model> textModel;
 
-    // Particle testing
-    std::shared_ptr<Model> particleEmitter;
+    // Scene management {{{
+    int activeScene = 0;
+    // }}}
 
     void initGame();
     void initFonts();
@@ -110,8 +114,16 @@ public:
         return fontLibrary;
     }
 
-    static Renderer getInstance() {
+    static Renderer& getInstance() {
         return *INSTANCE;
+    }
+
+    auto getActiveScene() {
+        return activeScene;
+    }
+
+    auto getPhysicsEngine() {
+        return this->physicsController;
     }
 };
 

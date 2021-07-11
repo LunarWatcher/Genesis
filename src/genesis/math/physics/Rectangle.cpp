@@ -2,8 +2,8 @@
 
 namespace genesis {
 
-bool Rectangle::collidesWith(const Rectangle &other) {
-    if (z != other.z) return false;
+bool Rectangle::collidesWith(const Rectangle &other, bool anyZ) {
+    if (anyZ && z != other.z) return false;
 
     return (x <= other.x + other.width
             && x >= other.x
