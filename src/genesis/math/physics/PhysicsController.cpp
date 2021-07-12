@@ -3,9 +3,9 @@
 
 namespace genesis {
 
-bool PhysicsController::hasCollision(double x, double y) {
+bool PhysicsController::hasCollision(const glm::vec2& coords) {
     // we make a pseudo-collider for the cursor
-    std::shared_ptr<Rectangle> collider = std::make_shared<Rectangle>(x, y, 1, 1);
+    std::shared_ptr<Rectangle> collider = std::make_shared<Rectangle>(coords.x, coords.y, 1, 1);
     return hasCollision(collider);
 }
 

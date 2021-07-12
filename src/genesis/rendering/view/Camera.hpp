@@ -51,7 +51,7 @@ public:
         return orthoMatrix;
     }
 
-    glm::vec2 convertToWorld(int mouseX, int mouseY);
+    glm::vec2 convertToWorld(double mouseX, double mouseY);
 };
 
 } // namespace genesis

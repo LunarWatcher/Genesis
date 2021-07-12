@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Model.hpp"
-#include "genesis/math/physics/Collider.hpp"
 #include "genesis/rendering/Renderable.hpp"
 #include "glm/matrix.hpp"
 #include "glm/vec3.hpp"
@@ -10,6 +9,7 @@
 
 namespace genesis {
 
+class Collider;
 /**
  * Entities are the simplest type of textured GameObject.
  * It has a position, optional rotation, and a Model.
@@ -53,7 +53,7 @@ public:
         }
     }
 
-    const glm::vec3& getPosition() {
+    glm::vec3& getPosition() {
         return position;
     }
     const glm::vec3& getPosition() const {

@@ -14,8 +14,9 @@ void PhysicsWorld::tick() {
 }
 
 void PhysicsWorld::clickElement(double x, double y) {
+    glm::vec2 worldCoords = Renderer::getInstance().getCamera()->convertToWorld(x, y);
     for (auto& controller : stageControllerMap.at(Renderer::getInstance().getActiveScene())) {
-        if (controller->hasCollision(x, y)) {
+        if (controller->hasCollision(worldCoords)) {
             std::cout << "You've sunk my battleship" << std::endl;
             break;
         }

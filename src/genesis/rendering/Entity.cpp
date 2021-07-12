@@ -1,6 +1,7 @@
 #include "Entity.hpp"
 #include "genesis/rendering/Renderer.hpp"
 #include "glm/gtc/matrix_transform.hpp"
+#include "genesis/math/physics/Collider.hpp"
 
 namespace genesis {
 
@@ -23,7 +24,7 @@ void Entity::regenerateTransMatrix() {
     transMatrix = glm::rotate(this->transMatrix, this->rotation.y, glm::vec3{0, 1, 0});
     transMatrix = glm::rotate(this->transMatrix, this->rotation.z, glm::vec3{0, 0, 1});
     if (this->collider) {
-        collider->update(&this);
+        collider->update(*this);
     }
 }
 

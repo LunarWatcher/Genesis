@@ -75,4 +75,9 @@ void Camera::setYLayer(int newLayer) {
     this->activeYLayer = newLayer;
 }
 
+glm::vec2 Camera::convertToWorld(double mouseX, double mouseY) {
+    auto vec4 = this->perspectiveMatrix * this->matrix * glm::vec4{mouseX / 1024.0, mouseY / 576.0, -3, 1.0};
+    return {vec4.x, vec4.y};
+}
+
 } // namespace genesis

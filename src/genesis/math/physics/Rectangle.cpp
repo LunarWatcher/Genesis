@@ -18,8 +18,8 @@ bool Rectangle::collidesWith(const Rectangle &other, bool anyZ) {
 
 void Rectangle::update(const Entity& e) {
     auto& pos = e.getPosition();
-    this->x = pos.x;
-    this->y = pos.y;
+    this->x = pos.x - 1;
+    this->y = pos.y - 1;
     this->z = pos.z;
 }
 
