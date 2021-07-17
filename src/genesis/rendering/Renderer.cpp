@@ -57,6 +57,9 @@ Renderer::Renderer() {
     glDebugMessageCallback(MessageCallback, 0);
 #endif
 
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_CULL_FACE);
+
     initGame();
     initFonts();
 }
@@ -108,7 +111,7 @@ void Renderer::tick() {
 
 void Renderer::render() {
 
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glClearColor(0.529, 0.8078, 0.922, 1);
 
     textureShader->apply();

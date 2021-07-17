@@ -2,6 +2,7 @@
 #include "genesis/rendering/Constants.hpp"
 #include "genesis/rendering/Renderer.hpp"
 #include "glm/ext/matrix_clip_space.hpp"
+#include "glm/ext/matrix_projection.hpp"
 #include "glm/ext/matrix_transform.hpp"
 #include "glm/ext/vector_float3.hpp"
 #include <iostream>
@@ -76,8 +77,23 @@ void Camera::setYLayer(int newLayer) {
 }
 
 glm::vec2 Camera::convertToWorld(double mouseX, double mouseY) {
-    auto vec4 = this->perspectiveMatrix * this->matrix * glm::vec4{mouseX / 1024.0, mouseY / 576.0, -3, 1.0};
-    return {vec4.x, vec4.y};
+    GLfloat z;
+
+    GLfloat x = mouseX,
+          y = 576 - mouseY;
+
+    glReadPixels(x, y, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &z);
+
+    return glm::vec2{
+        glm::unProject(
+            glm::vec3{
+                x, y, z
+            },
+            this->matrix,
+            this->perspectiveMatrix,
+            glm::vec4{0, 0, 1024.0, 576.0}
+        )
+    };
 }
 
 } // namespace genesis

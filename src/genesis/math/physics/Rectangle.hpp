@@ -6,11 +6,11 @@ namespace genesis {
 
 class Rectangle : public Collider {
 private:
-    int x, y, z, //
+    double x, y, z, //
         width, height;
 public:
-    Rectangle(int x, int y, int width, int height) : x(x), y(y), z(0), width(width), height(height) {}
-    Rectangle(int x, int y, int z, int width, int height) : x(x), y(y), z(z), width(width), height(height) {}
+    Rectangle(double x, double y, double width, double height) : x(x), y(y), z(0), width(width), height(height) {}
+    Rectangle(double x, double y, double z, double width, double height) : x(x), y(y), z(z), width(width), height(height) {}
 
     bool collidesWith(const Rectangle& other, bool anyZ = false) override;
 

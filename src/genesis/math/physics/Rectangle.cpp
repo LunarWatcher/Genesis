@@ -4,22 +4,24 @@ namespace genesis {
 
 bool Rectangle::collidesWith(const Rectangle &other, bool anyZ) {
     if (!anyZ && z != other.z) return false;
+    std::cout << "This: x = " << width << ", y = " << y
+        << ". Other: x = " << other.width << ", y = " << other.y
+        << std::endl;
 
-    return (x <= other.x + other.width
-            && x >= other.x
-            && y <= other.y + other.height
-            && y >= other.y)
-        || (x + width >= other.x
-            && x + width <= other.x + other.width
-            && y + height >= other.y
-            && y + height <= other.y + other.height
-        );
+    double aW = x + width,
+           aH = y + height,
+           bW = other.x + other.width,
+           bH = other.y + other.height;
+    return aW >= other.x
+        && bW >= x
+        && aH >= other.y
+        && bH >= y;
 }
 
 void Rectangle::update(const Entity& e) {
     auto& pos = e.getPosition();
-    this->x = pos.x - 1;
-    this->y = pos.y - 1;
+    this->x = pos.x;
+    this->y = pos.y;
     this->z = pos.z;
 }
 
