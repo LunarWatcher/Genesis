@@ -8,6 +8,7 @@
 
 #include "genesis/rendering/atlases/FontAtlas.hpp"
 #include "genesis/rendering/atlases/WorldTexture.hpp"
+#include "genesis/rendering/flow/Scene.hpp"
 #include "genesis/rendering/particles/ParticleEmitter.hpp"
 #include "genesis/rendering/shaders/ParticleShader.hpp"
 #include "genesis/rendering/shaders/TextShader.hpp"
@@ -58,6 +59,19 @@ private:
     std::shared_ptr<PhysicsWorld> physicsController;
 
     std::shared_ptr<InputManager> inputManager;
+    /**
+     * Vector of active scenes.
+     *
+     * The definition of an active scene isn't just "a scene being rendered now",
+     * but one that's used to operate the current set of scenes.
+     *
+     * For a full-focus settings screen while the game is running, or a full-focus
+     * menu screen while the game is running, the the underlying game is still
+     * considered active, even if it isn't updated.
+     *
+     * Essentially, suspended scenes are still considered active
+     */
+    std::vector<std::shared_ptr<Scene>> activeSceneStack;
 
     double delta;
 

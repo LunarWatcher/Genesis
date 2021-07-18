@@ -4,13 +4,15 @@
 
 namespace genesis {
 
-// Scenes are physics controllers. Brilliant, innit?
-class Scene : public PhysicsController {
+class Scene {
+protected:
+    bool _isActive;
 public:
-    // Scenes are renderable and tickable
-    // Ticking is also inherited from the PhysicsController
-    void tick() override;
-    void render();
+    virtual void tick() = 0;
+    virtual void render() = 0;
+
+    bool isActive() { return _isActive; }
+    void setActive(bool active) { _isActive = active; }
 };
 
 }
