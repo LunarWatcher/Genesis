@@ -72,8 +72,10 @@ void Renderer::initGame() {
 
     this->physicsController = std::make_shared<PhysicsWorld>();
 
-    this->worldController = std::make_shared<WorldController>();
-    this->worldController->generate();
+    auto wc = std::make_shared<WorldController>();
+    transition(wc);
+
+    wc->generate();
 
     this->textureShader = std::make_shared<DefaultShader>();
     this->textShader = std::make_shared<TextShader>();
@@ -106,35 +108,30 @@ void Renderer::initFonts() {
 }
 
 void Renderer::tick() {
-    worldController->tick();
+    for (auto scene : activeSceneStack) {
+        scene->tick();
+    }
 }
 
 void Renderer::render() {
+    camera->regenerateCameraMatrix();
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glClearColor(0.529, 0.8078, 0.922, 1);
 
+    // Update shader data {{{
     textureShader->apply();
-    texturePack->bind();
-    camera->applyCamera(*textureShader);
-
-    worldController->render();
-
-    texturePack->unbind();
+    textureShader->loadViewMatrix(camera->getViewMatrix());
     textureShader->stop();
-
-    textShader->apply();
-    fontAtlas->bind();
-
-
-    fontAtlas->unbind();
-    textShader->stop();
 
     particleShader->apply();
     particleShader->loadViewMatrix(camera->getViewMatrix());
-
-
     particleShader->stop();
+    // }}}
+    for (auto scene : activeSceneStack) {
+        // TODO: respect paused behavior
+        scene->render();
+    }
 
     glfwSwapBuffers(window);
     glfwPollEvents();
@@ -168,5 +165,29 @@ void Renderer::run() {
 
     glfwTerminate();
 }
+
+// Scene management {{{
+void Renderer::transition(std::shared_ptr<Scene> scene) {
+    for (auto& stg : activeSceneStack) {
+        stg->onDestroy();
+    }
+    activeSceneStack.clear();
+    activeSceneStack.push_back(scene);
+}
+
+void Renderer::add(std::shared_ptr<Scene> scene) {
+    activeSceneStack.push_back(scene);
+}
+
+void Renderer::pop(std::shared_ptr<Scene> scene) {
+    if (auto sc = std::find(activeSceneStack.begin(), activeSceneStack.end(), scene);
+            sc != activeSceneStack.end()) {
+        activeSceneStack.erase(sc);
+        return;
+    }
+    throw std::runtime_error("Tried to pop a non-existent item");
+}
+
+// }}}
 
 } // namespace genesis

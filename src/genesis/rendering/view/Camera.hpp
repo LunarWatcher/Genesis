@@ -27,11 +27,12 @@ private:
 
     int activeYLayer = 0;
 
-    void regenerateCameraMatrix();
 
 public:
     Camera();
-    void applyCamera(DefaultShader& shader);
+
+    void regenerateCameraMatrix();
+    glm::vec2 convertToWorld(double mouseX, double mouseY);
 
     void setYLayer(int newLayer);
 
@@ -51,7 +52,6 @@ public:
         return orthoMatrix;
     }
 
-    glm::vec2 convertToWorld(double mouseX, double mouseY);
 };
 
 } // namespace genesis

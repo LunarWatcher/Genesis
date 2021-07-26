@@ -8,7 +8,7 @@
 namespace genesis {
 
 Chunk::Chunk(int chunkX, int chunkY) : chunkX(chunkX), chunkY(chunkY) {
-    Renderer::getInstance().getWorld()->getNoiseGenerator()->generateChunk(this->chunkMap, chunkX, chunkY);
+    Renderer::getInstance().getSceneByType<WorldController>()->getNoiseGenerator()->generateChunk(this->chunkMap, chunkX, chunkY);
 }
 
 void Chunk::render() {

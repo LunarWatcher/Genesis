@@ -10,7 +10,7 @@
 namespace genesis {
 
 class Chunk;
-class WorldController {
+class WorldController : public Scene {
 private:
     static inline WorldController* INSTANCE = nullptr;
     static inline constexpr int MS_PER_DAY = 20'000;
@@ -24,8 +24,8 @@ public:
 
     void generate();
 
-    void render();
-    void tick();
+    void render() override;
+    void tick() override;
 
     std::shared_ptr<perlin::NoiseGenerator> getNoiseGenerator() {
         return generator;

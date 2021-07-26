@@ -42,10 +42,15 @@ void WorldController::tick() {
 }
 
 void WorldController::render() {
+    Renderer& inst = Renderer::getInstance();
+    inst.getTextureShader()->apply();
+    inst.getTexturePack()->bind();
     for (auto& chunk : this->chunks)
         chunk->render();
 
     for (auto& controller : this->controllers)
         controller->render();
+    inst.getTexturePack()->unbind();
+    inst.getTextureShader()->stop();
 }
 } // namespace genesis

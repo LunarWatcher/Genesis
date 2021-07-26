@@ -20,6 +20,7 @@
 #include <iostream>
 #include <memory>
 #include <vector>
+#include <type_traits>
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
@@ -55,7 +56,6 @@ private:
     std::shared_ptr<WorldTexture> texturePack;
     std::shared_ptr<FontAtlas> fontAtlas;
 
-    std::shared_ptr<WorldController> worldController;
     std::shared_ptr<PhysicsWorld> physicsController;
 
     std::shared_ptr<InputManager> inputManager;
@@ -112,10 +112,6 @@ public:
         return inputManager;
     }
 
-    auto getWorld() {
-        return worldController;
-    }
-
     auto getCamera() {
         return camera;
     }
@@ -139,6 +135,19 @@ public:
     auto getPhysicsEngine() {
         return this->physicsController;
     }
+
+    template <typename T>
+    std::shared_ptr<T> getSceneByType() {
+        for (auto scene : this->activeSceneStack) {
+            auto ptr = std::dynamic_pointer_cast<T>(scene);
+            if (ptr) return ptr;
+        }
+        return nullptr;
+    }
+
+    void transition(std::shared_ptr<Scene> scene);
+    void add(std::shared_ptr<Scene> scene);
+    void pop(std::shared_ptr<Scene> scene);
 };
 
 } // namespace genesis
