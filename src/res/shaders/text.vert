@@ -8,7 +8,7 @@ out vec2 textureCoords;
 uniform mat4 orthoMatrix;
 
 void main() {
-    gl_Position = orthoMatrix * vec4(position.xy, -1.0, 1.0);
+    gl_Position = orthoMatrix * vec4(position.xy, 0.0, 1.0);
 
     textureCoords = inTextureCoords;
 }

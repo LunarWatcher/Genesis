@@ -136,6 +136,10 @@ public:
         return this->physicsController;
     }
 
+    auto getTextShader() {
+        return textShader;
+    }
+
     template <typename T>
     std::shared_ptr<T> getSceneByType() {
         for (auto scene : this->activeSceneStack) {

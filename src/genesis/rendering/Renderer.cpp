@@ -8,6 +8,8 @@
 #include "genesis/rendering/atlases/FontAtlas.hpp"
 #include "shaders/DefaultShader.hpp"
 
+#include "genesis/core/menu/Menu.hpp"
+
 #include <chrono>
 #include <codecvt>
 #include <iostream>
@@ -62,6 +64,9 @@ Renderer::Renderer() {
 
     initGame();
     initFonts();
+
+    auto menu = std::make_shared<MenuScene>();
+    transition(menu);
 }
 
 void Renderer::initGame() {
@@ -72,18 +77,14 @@ void Renderer::initGame() {
 
     this->physicsController = std::make_shared<PhysicsWorld>();
 
-    auto wc = std::make_shared<WorldController>();
-    transition(wc);
+    //auto wc = std::make_shared<WorldController>();
+    //transition(wc);
 
-    wc->generate();
+    //wc->generate();
 
     this->textureShader = std::make_shared<DefaultShader>();
     this->textShader = std::make_shared<TextShader>();
     this->particleShader = std::make_shared<ParticleShader>();
-
-    this->textShader->apply();
-    this->textShader->loadTextColor({0, 0, 0, 1.0});
-    this->textShader->stop();
 
     // Input
     glfwSetWindowUserPointer(window, inputManager.get());
@@ -119,14 +120,25 @@ void Renderer::render() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glClearColor(0.529, 0.8078, 0.922, 1);
 
+    // TODO: set up a system to allow scenes to define these.
+    // Though I'm not entirely sure if that's even necessary.
+    // A few bits are tied to the camera class, but I'm not
+    // sure if that's used elsewhere.
+    // if it is, we may need to hook up a system that exposes
+    // the currently rendered scene in a pointer or something.
+    // It's already a pointer, so it's a fairly cheap operation.
+    //
+    // Just use some common sense though.
     // Update shader data {{{
     textureShader->apply();
     textureShader->loadViewMatrix(camera->getViewMatrix());
-    textureShader->stop();
-
     particleShader->apply();
     particleShader->loadViewMatrix(camera->getViewMatrix());
-    particleShader->stop();
+    // we don't need to call stop for each shader.
+    // Apply overwrites any other enabled shaders.
+    // I think.
+    // At least for a single type.
+    textShader->stop();
     // }}}
     for (auto scene : activeSceneStack) {
         // TODO: respect paused behavior

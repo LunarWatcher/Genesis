@@ -16,6 +16,7 @@ public:
     // Lifecycle
     virtual void onPause() {}
     virtual void onDestroy() {}
+    virtual void onResume() {}
 
     bool isActive() { return _isActive; }
     void setActive(bool active) { _isActive = active; }

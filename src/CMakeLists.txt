@@ -4,6 +4,9 @@ set (SOURCE_FILES genesis/Main.cpp
                     genesis/rendering/Model.cpp genesis/rendering/Shader.cpp
                     genesis/rendering/Renderer.cpp
                     # }}}
+                    # Scenes {{{
+                    genesis/core/menu/Menu.cpp
+                    # }}}
                     # Shaders {{{
                     genesis/rendering/shaders/DefaultShader.cpp
                     genesis/rendering/shaders/TextShader.cpp
