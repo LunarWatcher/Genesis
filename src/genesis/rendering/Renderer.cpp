@@ -7,6 +7,7 @@
 #include "genesis/rendering/Texture.hpp"
 #include "genesis/rendering/atlases/FontAtlas.hpp"
 #include "shaders/DefaultShader.hpp"
+#include "genesis/conf/Settings.hpp"
 
 #include "genesis/core/menu/Menu.hpp"
 
@@ -38,7 +39,11 @@ Renderer::Renderer() {
 
     glfwSwapInterval(1);
 
-    this->window = glfwCreateWindow(1024, 576, "Genesis", nullptr, nullptr);
+    this->window = glfwCreateWindow(Settings::instance->getInt("width"),
+        Settings::instance->getInt("height"),
+        "Genesis",
+        nullptr, nullptr);
+
     if (!window) {
         glfwTerminate();
         throw std::runtime_error("Failed to open GLFW window");

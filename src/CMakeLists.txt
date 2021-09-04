@@ -35,6 +35,7 @@ set (SOURCE_FILES
     # }}}
     # Core {{{
     genesis/core/WorldController.cpp
+    genesis/conf/Settings.cpp
     # }}}
     # Controls {{{
     genesis/controls/InputManager.cpp
