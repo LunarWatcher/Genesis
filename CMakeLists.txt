@@ -51,8 +51,13 @@ else()
 endif()
 
 add_subdirectory(src)
+add_subdirectory(tests)
 
 add_custom_target(run
     COMMAND bin/genesis
     DEPENDS genesis
-    COMMENT "Runs the program")
+    COMMENT "Run the game")
+add_custom_target(test
+    COMMAND bin/tests
+    DEPENDS tests
+    COMMENT "Test the game")
