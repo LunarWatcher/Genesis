@@ -26,7 +26,7 @@ conan_cmake_configure (REQUIRES nlohmann_json/3.9.1 glfw/3.3.4 glew/2.2.0
                         freetype/2.10.4
                         GENERATORS cmake)
 conan_cmake_autodetect (settings)
-conan_cmake_install (PATH_OR_REFERENCE . BUILD missing REMOTE conan-center SETTINGS ${settings})
+conan_cmake_install (PATH_OR_REFERENCE . BUILD missing SETTINGS ${settings})
 
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup()
