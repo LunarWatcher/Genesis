@@ -10,12 +10,12 @@
 
 namespace genesis {
 
-using Character = struct {
+typedef struct {
     int advanceX, advanceY, //
         bitmapWidth, bitmapHeight, //
         bitmapLeft, bitmapTop, //
         textureX, textureY;
-};
+} Character;
 
 class FontAtlas : public Texture {
 public:

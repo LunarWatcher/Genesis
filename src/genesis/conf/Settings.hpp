@@ -27,6 +27,11 @@ public:
 
     Settings();
 
+    void save();
+
+    // At least this beats manually doing the getters :')
+    // These are just wrappers around std::any_cast, which we need anyway.
+    // We already expose conf.
     GETTER(int, Int)
     GETTER(size_t, Size)
     GETTER(double, Double)

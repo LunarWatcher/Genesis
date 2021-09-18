@@ -145,7 +145,7 @@ void Renderer::render() {
     // At least for a single type.
     textShader->stop();
     // }}}
-    for (auto scene : activeSceneStack) {
+    for (auto& scene : activeSceneStack) {
         // TODO: respect paused behavior
         scene->render();
     }
