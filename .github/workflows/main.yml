@@ -13,7 +13,7 @@ jobs:
       - uses: actions/setup-python@v2
       - name: Set up clang tidy
         run: |
-          sudo apt install clang-tidy-11
+          sudo apt install clang-tidy-11 libgl-dev
           # Y u do dis to meh?
           # As much as I love clang, I hate that it doesn't even try to set a generic file name (i.e. clang-tidy instead of
           # clang-tidy-11, clang++ instead of clang++-11, clang-format instead of clang-format-11, etc.).
