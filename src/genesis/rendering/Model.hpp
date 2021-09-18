@@ -34,7 +34,7 @@ protected:
 
     Model() = default;
 public:
-    Model(VertexArray vertices, AttributeInit attribInitFunc, int vertSize = 3, GLenum mode = GL_STATIC_DRAW);
+    Model(const VertexArray& vertices, const AttributeInit& attribInitFunc, int vertSize = 3, GLenum mode = GL_STATIC_DRAW);
 
     virtual ~Model();
 

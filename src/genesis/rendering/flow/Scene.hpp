@@ -10,7 +10,6 @@ protected:
 public:
     virtual ~Scene() = default;
 
-    virtual void tick() = 0;
     virtual void render() = 0;
 
     // Lifecycle
@@ -18,7 +17,7 @@ public:
     virtual void onDestroy() {}
     virtual void onResume() {}
 
-    bool isActive() { return _isActive; }
+    bool isActive() const { return _isActive; }
     void setActive(bool active) { _isActive = active; }
 };
 

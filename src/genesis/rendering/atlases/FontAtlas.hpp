@@ -30,7 +30,7 @@ private:
     std::map<wchar_t, Character> characterMap;
 
 public:
-    FontAtlas(const std::string& font = "/usr/share/fonts/truetype/ubuntu/Ubuntu-R.ttf");
+    explicit FontAtlas(const std::string& font = "/usr/share/fonts/truetype/ubuntu/Ubuntu-R.ttf");
 
     std::optional<Character> getCharacter(wchar_t chr) {
         if (characterMap.contains(chr))

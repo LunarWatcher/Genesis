@@ -11,8 +11,20 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
+      - name: Set up clang tidy
+        run: |
+          sudo apt install clang-tidy-11
+          # Y u do dis to meh?
+          # As much as I love clang, I hate that it doesn't even try to set a generic file name (i.e. clang-tidy instead of
+          # clang-tidy-11, clang++ instead of clang++-11, clang-format instead of clang-format-11, etc.).
+          # Symlinks are cheap anyway
+          sudo ln -s /usr/bin/clang-tidy-11 /usr/bin/clang-tidy
       - name: Run hooks
         run: |
-          python3 -m pip install pre-commit
+          python3 -m pip install pre-commit conan
+          # clang-tidy needs a compilation database
+          # No one cares what type it is
+          mkdir build && cd build && cmake .. -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=1 && make && cd ..
+          cp build/compile_commands.json .
           pre-commit run --all-files
   # TODO: tests? Dunno how, games aren't easily testable

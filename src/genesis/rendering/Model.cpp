@@ -5,7 +5,7 @@
 
 namespace genesis {
 
-Model::Model(VertexArray vertices, std::function<void(Model*)> attribInitFunc, int coordSize, GLenum mode)
+Model::Model(const VertexArray& vertices, const std::function<void(Model*)>& attribInitFunc, int coordSize, GLenum mode)
         : mode(mode) {
     createVAO();
     createVBO(0, coordSize, vertices);
@@ -23,7 +23,7 @@ Model::~Model() {
 void Model::bindIndexBuffer(const IndexArray& indexBuffer) {
     this->indices = indexBuffer.size();
     this->hasIndexBuffer = true;
-    GLuint vboId;
+    GLuint vboId = 0;
     glGenBuffers(1, &vboId);
     this->vbos.push_back(vboId);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vboId);
@@ -40,7 +40,7 @@ void Model::createVBO(unsigned int attribNumber, int coordSize, const VertexArra
 }
 
 void Model::createVBO(unsigned int attribNumber, int coordSize, const VertexArray& data, GLenum mode) {
-    GLuint vboID;
+    GLuint vboID = 0;
     glGenBuffers(1, &vboID);
     this->vbos.push_back(vboID);
     glBindBuffer(GL_ARRAY_BUFFER, vboID);
@@ -48,12 +48,12 @@ void Model::createVBO(unsigned int attribNumber, int coordSize, const VertexArra
     glBufferData(GL_ARRAY_BUFFER, data.size() * sizeof(GLfloat), data.data(), mode);
     // these only need to be enabled once
     glEnableVertexAttribArray(attribNumber);
-    glVertexAttribPointer(attribNumber, coordSize, GL_FLOAT, false, 0, (void*) 0);
+    glVertexAttribPointer(attribNumber, coordSize, GL_FLOAT, GL_FALSE, 0, (void*) 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
 void Model::createVBO(unsigned int attribNumber, int coordSize, GLsizeiptr size) {
-    GLuint vboID;
+    GLuint vboID = 0;
     glGenBuffers(1, &vboID);
     this->vbos.push_back(vboID);
     glBindBuffer(GL_ARRAY_BUFFER, vboID);
@@ -61,7 +61,7 @@ void Model::createVBO(unsigned int attribNumber, int coordSize, GLsizeiptr size)
     glBufferData(GL_ARRAY_BUFFER, size * sizeof(GLfloat), nullptr, GL_DYNAMIC_DRAW);
     // These only need to be enabled once
     glEnableVertexAttribArray(attribNumber);
-    glVertexAttribPointer(attribNumber, coordSize, GL_FLOAT, false, 0, (void*) 0);
+    glVertexAttribPointer(attribNumber, coordSize, GL_FLOAT, GL_FALSE, 0, (void*) 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 

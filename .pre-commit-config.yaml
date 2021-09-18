@@ -1,8 +1,15 @@
+fail_fast: false
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v3.4.0
+    rev: v4.0.1
     hooks:
       - id: check-yaml
         exclude: .clang-format
       - id: end-of-file-fixer
       - id: trailing-whitespace
+  - repo: https://github.com/pocc/pre-commit-hooks
+    rev: v1.3.4
+    hooks:
+      - id: clang-tidy
+
+      #- id: include-what-you-use
