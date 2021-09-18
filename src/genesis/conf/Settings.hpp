@@ -5,6 +5,8 @@
 #include <any>
 #include <memory>
 
+#include "stc/Environment.hpp"
+
 namespace genesis {
 
 #define GETTER(type, name) type get##name(const std::string& key) { return std::any_cast<type>(conf.at(key)); }
@@ -20,13 +22,10 @@ private:
 
 public:
     std::map<std::string, std::any> conf;
-    std::string home;
+    fs::path home;
     static std::shared_ptr<Settings> instance;
 
     Settings();
-
-    std::string getHome();
-    std::string join(const std::string& a, const std::string& b);
 
     GETTER(int, Int)
     GETTER(size_t, Size)

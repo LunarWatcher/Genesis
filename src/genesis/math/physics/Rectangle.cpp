@@ -1,12 +1,11 @@
 #include "Rectangle.hpp"
 
+#include "genesis/rendering/Entity.hpp"
+
 namespace genesis {
 
 bool Rectangle::collidesWith(const Rectangle &other, bool anyZ) {
     if (!anyZ && z != other.z) return false;
-    std::cout << "This: x = " << width << ", y = " << y
-        << ". Other: x = " << other.width << ", y = " << other.y
-        << std::endl;
 
     double aW = x + width,
            aH = y + height,

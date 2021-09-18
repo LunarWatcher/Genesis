@@ -21,7 +21,6 @@ class Collider;
 class Entity : public Renderable {
 private:
     std::shared_ptr<Model> model;
-    std::shared_ptr<Collider> collider;
 
     glm::vec3 position;
     glm::vec3 rotation;
@@ -68,11 +67,7 @@ public:
         return scale;
     }
 
-    void initializeCollider(std::shared_ptr<Collider> collider) {
-        this->collider = collider;
-    }
 
-    std::shared_ptr<Collider> getCollider() { return collider; }
 };
 
 } // namespace genesis

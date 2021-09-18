@@ -1,4 +1,5 @@
 #include "PhysicsController.hpp"
+#include "genesis/math/physics/Collider.hpp"
 #include "genesis/math/physics/Rectangle.hpp"
 
 namespace genesis {
@@ -13,7 +14,7 @@ bool PhysicsController::hasCollision(std::shared_ptr<Rectangle> collider) {
 
     // This is where a quadtree optimization would be useful.
     for (auto& entity : entities) {
-        auto entityCollider = entity->getCollider();
+        std::shared_ptr<Collider> entityCollider = nullptr; // entity->getCollider();
         // if the entity has a collider
         if (entityCollider != nullptr) {
             if (entityCollider->collidesWith(*collider, true)) {

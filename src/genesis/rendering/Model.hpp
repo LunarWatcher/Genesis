@@ -1,8 +1,11 @@
 #pragma once
 
 #include "GL/glew.h"
+
 #include "Renderable.hpp"
 #include "genesis/rendering/Texture.hpp"
+#include "genesis/math/physics/Collider.hpp"
+
 #include <functional>
 #include <memory>
 #include <stdexcept>
@@ -30,7 +33,6 @@ protected:
     void createVAO();
 
     Model() = default;
-
 public:
     Model(VertexArray vertices, AttributeInit attribInitFunc, int vertSize = 3, GLenum mode = GL_STATIC_DRAW);
 

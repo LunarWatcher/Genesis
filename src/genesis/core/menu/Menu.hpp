@@ -3,7 +3,7 @@
 
 namespace genesis {
 
-class MenuScene : public Scene, public PhysicsController {
+class MenuScene : public Scene {
 private:
     int selectedPosition = 0;
 

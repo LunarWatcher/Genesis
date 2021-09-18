@@ -1,10 +1,9 @@
 #pragma once
 
-#include "genesis/rendering/Entity.hpp"
-
 namespace genesis {
 
 class Rectangle;
+class Entity;
 
 /**
  * Abstract shared class for various colliders

@@ -3,6 +3,7 @@
 #include "genesis/rendering/shaders/DefaultShader.hpp"
 
 namespace genesis {
+
 class Renderable {
 public:
     virtual ~Renderable() = default;

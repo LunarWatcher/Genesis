@@ -23,9 +23,6 @@ void Entity::regenerateTransMatrix() {
     transMatrix = glm::rotate(this->transMatrix, this->rotation.x, glm::vec3{1, 0, 0});
     transMatrix = glm::rotate(this->transMatrix, this->rotation.y, glm::vec3{0, 1, 0});
     transMatrix = glm::rotate(this->transMatrix, this->rotation.z, glm::vec3{0, 0, 1});
-    if (this->collider) {
-        collider->update(*this);
-    }
 }
 
 } // namespace genesis

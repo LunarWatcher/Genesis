@@ -4,7 +4,7 @@
 
 namespace genesis {
 
-class Scene {
+class Scene : public PhysicsController {
 protected:
     bool _isActive;
 public:

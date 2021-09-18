@@ -60,7 +60,7 @@ add_executable(genesis genesis/Main.cpp)
 # Executable dependencies {{{
 target_include_directories(genesissrc PUBLIC ${CONAN_INCLUDE_DIRS})
 target_include_directories(genesissrc PUBLIC ./)
-target_include_directories(genesissrc PUBLIC ../stb/)
+target_include_directories(genesissrc PUBLIC ../stb/ ../stc/src)
 
 target_link_libraries(genesissrc ${CONAN_LIBS})
 # }}}
