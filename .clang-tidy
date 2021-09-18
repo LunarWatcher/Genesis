@@ -13,3 +13,5 @@ CheckOptions:
   value:           'exception_ptr$;'
 - key:             readability-implicit-bool-conversion.AllowPointerConditions
   value:           true
+
+WarningsAsErrors: '*'
