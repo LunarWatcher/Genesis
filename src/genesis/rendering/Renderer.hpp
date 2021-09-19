@@ -149,9 +149,9 @@ public:
         return nullptr;
     }
 
-    void transition(std::shared_ptr<Scene> scene);
-    void add(std::shared_ptr<Scene> scene);
-    void pop(std::shared_ptr<Scene> scene);
+    void transition(const std::shared_ptr<Scene>& scene);
+    void add(const std::shared_ptr<Scene>& scene);
+    void pop(const std::shared_ptr<Scene>& scene);
 };
 
 } // namespace genesis

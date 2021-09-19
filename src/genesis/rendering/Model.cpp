@@ -8,7 +8,7 @@ namespace genesis {
 Model::Model(const VertexArray& vertices, const std::function<void(Model*)>& attribInitFunc, int coordSize, GLenum mode)
         : mode(mode) {
     createVAO();
-    createVBO(0, coordSize, vertices);
+    createVBO(0, coordSize, vertices); // NOLINT
     attribInitFunc(this);
     glBindVertexArray(0);
 
@@ -36,7 +36,7 @@ void Model::createVAO() {
 }
 
 void Model::createVBO(unsigned int attribNumber, int coordSize, const VertexArray& data) {
-    createVBO(attribNumber, coordSize, data, this->mode);
+    createVBO(attribNumber, coordSize, data, this->mode); // NOLINT
 }
 
 void Model::createVBO(unsigned int attribNumber, int coordSize, const VertexArray& data, GLenum mode) {
@@ -56,7 +56,7 @@ void Model::createVBO(unsigned int attribNumber, int coordSize, GLsizeiptr size)
     GLuint vboID = 0;
     glGenBuffers(1, &vboID);
     this->vbos.push_back(vboID);
-    glBindBuffer(GL_ARRAY_BUFFER, vboID);
+    glBindBuffer(GL_ARRAY_BUFFER, vboID); // NOLINT
 
     glBufferData(GL_ARRAY_BUFFER, size * sizeof(GLfloat), nullptr, GL_DYNAMIC_DRAW);
     // These only need to be enabled once

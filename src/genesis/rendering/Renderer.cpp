@@ -114,7 +114,7 @@ void Renderer::initFonts() {
 }
 
 void Renderer::tick() {
-    for (auto scene : activeSceneStack) {
+    for (auto& scene : activeSceneStack) {
         scene->tick();
     }
 }
@@ -184,7 +184,7 @@ void Renderer::run() {
 }
 
 // Scene management {{{
-void Renderer::transition(std::shared_ptr<Scene> scene) {
+void Renderer::transition(const std::shared_ptr<Scene>& scene) {
     for (auto& stg : activeSceneStack) {
         stg->onDestroy();
     }
@@ -192,11 +192,11 @@ void Renderer::transition(std::shared_ptr<Scene> scene) {
     activeSceneStack.push_back(scene);
 }
 
-void Renderer::add(std::shared_ptr<Scene> scene) {
+void Renderer::add(const std::shared_ptr<Scene>& scene) {
     activeSceneStack.push_back(scene);
 }
 
-void Renderer::pop(std::shared_ptr<Scene> scene) {
+void Renderer::pop(const std::shared_ptr<Scene>& scene) {
     if (auto sc = std::find(activeSceneStack.begin(), activeSceneStack.end(), scene);
             sc != activeSceneStack.end()) {
         activeSceneStack.erase(sc);
