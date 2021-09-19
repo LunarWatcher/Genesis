@@ -142,7 +142,7 @@ public:
 
     template <typename T>
     std::shared_ptr<T> getSceneByType() {
-        for (auto scene : this->activeSceneStack) {
+        for (auto& scene : this->activeSceneStack) {
             auto ptr = std::dynamic_pointer_cast<T>(scene);
             if (ptr) return ptr;
         }

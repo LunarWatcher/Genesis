@@ -49,7 +49,7 @@ public:
      *                      I coulnd't be arsed to make a list when I probably
      *                      won't use it effectively - ever.
      */
-    bool registerKeyCallback(int key, int mods, InputCallback callback);
+    bool registerKeyCallback(int key, int mods, const InputCallback& callback);
 };
 
 } // namespace genesis

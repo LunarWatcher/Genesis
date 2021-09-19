@@ -13,7 +13,7 @@
 namespace genesis {
 
 FontAtlas::FontAtlas(const std::string& font) {
-    FT_Face face;
+    FT_Face face; // NOLINT
     if (FT_New_Face(Renderer::getInstance().getFontLibrary(), font.c_str(), 0, &face)) {
         throw std::runtime_error("Freetype died (0002)");
     }
@@ -51,7 +51,7 @@ FontAtlas::FontAtlas(const std::string& font) {
             }
         }
 
-        wchar_t mChar = wchar_t(i);
+        auto mChar = wchar_t(i);
         // there are still some characters we do save.
         this->characterMap[mChar] = Character{
             face->glyph->advance.x, //

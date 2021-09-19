@@ -16,10 +16,10 @@ class EntityController : public Renderable, public PhysicsController {
 public:
     virtual ~EntityController() = default;
 
-    virtual void render() override;
-    virtual void tick() override = 0;
+    void render() override;
+    void tick() override = 0;
 
-    void addEntity(std::shared_ptr<Entity> entity);
+    void addEntity(const std::shared_ptr<Entity>& entity);
 };
 
 } // namespace genesis

@@ -43,10 +43,10 @@ std::vector<GLfloat> Texture::generateFromPosition(unsigned int x, unsigned int 
     if (height == -1)
         height = this->atlasHeight;
 
-    double reX = ((double) x * width) / this->width;
-    double reY = ((double) y * height) / this->height;
-    double newX = ((double) x * width + width) / this->width;
-    double newY = ((double) y * height + height) / this->height;
+    GLfloat reX = ((GLfloat) x * width) / this->width;
+    GLfloat reY = ((GLfloat) y * height) / this->height;
+    GLfloat newX = ((GLfloat) x * width + width) / this->width;
+    GLfloat newY = ((GLfloat) y * height + height) / this->height;
     reX += 1.0 / this->width;
     reY += 1.0 / this->height;
     newX -= 1.0 / this->width;

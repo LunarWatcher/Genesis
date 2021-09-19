@@ -20,7 +20,7 @@ void MenuScene::render() {
     ts->apply();
     fa->bind();
 
-    for (auto model : models) {
+    for (auto& model : models) {
         model->render();
     }
 

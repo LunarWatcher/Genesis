@@ -10,7 +10,7 @@ bool PhysicsController::hasCollision(const glm::vec2& coords) {
     return hasCollision(collider);
 }
 
-bool PhysicsController::hasCollision(std::shared_ptr<Rectangle> collider) {
+bool PhysicsController::hasCollision(const std::shared_ptr<Rectangle>& collider) {
 
     // This is where a quadtree optimization would be useful.
     for (auto& entity : entities) {

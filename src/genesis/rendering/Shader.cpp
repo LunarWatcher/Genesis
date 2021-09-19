@@ -39,7 +39,7 @@ std::string Shader::loadShader(const std::string& fileName) {
 
 void Shader::compileShader(int shaderID, const std::string& shaderSource) {
     GLint result = GL_FALSE;
-    int logLength;
+    int logLength = 0;
     const char* strPointer = shaderSource.c_str();
     glShaderSource(shaderID, 1, &strPointer, nullptr);
     glCompileShader(shaderID);
@@ -52,13 +52,13 @@ void Shader::compileShader(int shaderID, const std::string& shaderSource) {
         std::cerr << "Compiling shader failed; " << std::endl;
         std::cerr << &message[0] << std::endl;
 
-        throw new std::runtime_error("Failed to load shader");
+        throw std::runtime_error("Failed to load shader");
     }
 }
 
 void Shader::createProgram(const std::vector<int>& shaderIds) {
     GLint result = GL_FALSE;
-    int logLength;
+    int logLength = 0;
 
     this->programID = glCreateProgram();
     for (const auto& shaderID : shaderIds) {

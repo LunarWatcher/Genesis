@@ -14,7 +14,7 @@ void InputManager::onKeyPressed(int key, int, int action, int mods) {
     keys[fwd] = action == GLFW_PRESS;
 }
 
-bool InputManager::registerKeyCallback(int key, int mods, InputCallback callback) {
+bool InputManager::registerKeyCallback(int key, int mods, const InputCallback& callback) {
     if (callback == nullptr) {
         throw std::runtime_error("Cannot register a null callback");
     }
@@ -42,7 +42,7 @@ void InputManager::onMousePressed(int button, int action, int mods) {
     if (button == GLFW_MOUSE_BUTTON_1)
         this->isMouse1Pressed = action;
 
-    double x, y;
+    double x = NAN, y = NAN;
     glfwGetCursorPos(Renderer::getInstance().getWindow(), &x, &y);
 
     // I suppose that in a real system, we'd need to detect release?

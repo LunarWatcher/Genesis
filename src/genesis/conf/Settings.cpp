@@ -31,7 +31,7 @@ Settings::Settings() {
         std::ifstream stream(home / ".genesis/settings.confl");
         std::string line = "";
         while (std::getline(stream, line)) {
-            if (auto idx = line.find("="); idx != std::string::npos) {
+            if (auto idx = line.find('='); idx != std::string::npos) {
                 std::string key = line.substr(0, idx);
                 std::string value = line.substr(idx + 1);
                 std::cout << key << ": " << value;

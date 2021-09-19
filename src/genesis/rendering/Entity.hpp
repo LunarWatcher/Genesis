@@ -32,11 +32,11 @@ protected:
     void regenerateTransMatrix();
 
 public:
-    Entity(std::shared_ptr<Model> model, glm::vec3 position, glm::vec3 rotation, float scale)
+    Entity(const std::shared_ptr<Model>& model, glm::vec3 position, glm::vec3 rotation, float scale)
             : model(model), position(position), rotation(rotation), scale(scale) {
         regenerateTransMatrix();
     }
-    Entity(std::shared_ptr<Model> model, glm::vec3 position) : Entity(model, position, glm::vec3{0, 0, 0}, 0) {}
+    Entity(const std::shared_ptr<Model>& model, glm::vec3 position) : Entity(model, position, glm::vec3{0, 0, 0}, 0) {}
 
     virtual void tick();
     void render() override;
@@ -46,7 +46,7 @@ public:
      * Calls regenerateTransMatrix() when the block is done iff the callback
      * returns true
      */
-    void modify(std::function<bool()> callback) {
+    void modify(const std::function<bool()>& callback) {
         if (callback()) {
             regenerateTransMatrix();
         }

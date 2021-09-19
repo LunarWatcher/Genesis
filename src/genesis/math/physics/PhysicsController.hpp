@@ -26,7 +26,7 @@ public:
     virtual void tick() = 0;
 
     bool hasCollision(const glm::vec2& coords);
-    bool hasCollision(std::shared_ptr<Rectangle> collider);
+    bool hasCollision(const std::shared_ptr<Rectangle>& collider);
 };
 
 }
