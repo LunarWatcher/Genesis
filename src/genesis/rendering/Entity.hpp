@@ -41,16 +41,6 @@ public:
     virtual void tick();
     void render() override;
 
-    /**
-     * Glorified `with` (python) alternative.
-     * Calls regenerateTransMatrix() when the block is done iff the callback
-     * returns true
-     */
-    void modify(const std::function<bool()>& callback) {
-        if (callback()) {
-            regenerateTransMatrix();
-        }
-    }
 
     glm::vec3& getPosition() {
         return position;
@@ -59,7 +49,7 @@ public:
         return position;
     }
 
-    glm::vec3& getRotation() {
+    glm::vec3& getRotationcsearch-nohlsearch)%!Hn() {
         return rotation;
     }
 

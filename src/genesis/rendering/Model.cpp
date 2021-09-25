@@ -5,8 +5,7 @@
 
 namespace genesis {
 
-Model::Model(const VertexArray& vertices, const std::function<void(Model*)>& attribInitFunc, int coordSize, GLenum mode)
-        : mode(mode) {
+Entity::Entity(const VertexArray& vertices, const AttributeInit& attribInitFunc, int coordSize) {
     createVAO();
     createVBO(0, coordSize, vertices); // NOLINT
     attribInitFunc(this);
@@ -15,31 +14,37 @@ Model::Model(const VertexArray& vertices, const std::function<void(Model*)>& att
     this->vertices = vertices.size() / (this->hasIndexBuffer ? 1 : coordSize);
 }
 
-Model::~Model() {
+Entity::Entity(const VertexArray& vertices, const AttributeInit& attribInitFunc,
+        const glm::vec3& position, const glm::vec3& rotation, const float& scale)
+            : position(position), rotation(rotation), scale(scale) {
+
+}
+
+Entity::~Entity() {
     glDeleteVertexArrays(1, &vaoID);
     glDeleteBuffers(this->vbos.size(), vbos.data());
 }
 
-void Model::bindIndexBuffer(const IndexArray& indexBuffer) {
+void Entity::bindIndexBuffer(const IndexArray& indexBuffer) {
     this->indices = indexBuffer.size();
     this->hasIndexBuffer = true;
     GLuint vboId = 0;
     glGenBuffers(1, &vboId);
     this->vbos.push_back(vboId);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vboId);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexBuffer.size() * sizeof(GLint), indexBuffer.data(), mode);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexBuffer.size() * sizeof(GLint), indexBuffer.data(), renderMode);
 }
 
-void Model::createVAO() {
+void Entity::createVAO() {
     glGenVertexArrays(1, &vaoID);
     glBindVertexArray(vaoID);
 }
 
-void Model::createVBO(unsigned int attribNumber, int coordSize, const VertexArray& data) {
-    createVBO(attribNumber, coordSize, data, this->mode); // NOLINT
+void Entity::createVBO(unsigned int attribNumber, int coordSize, const VertexArray& data) {
+    createVBO(attribNumber, coordSize, data, this->renderMode); // NOLINT
 }
 
-void Model::createVBO(unsigned int attribNumber, int coordSize, const VertexArray& data, GLenum mode) {
+void Entity::createVBO(unsigned int attribNumber, int coordSize, const VertexArray& data, GLenum mode) {
     GLuint vboID = 0;
     glGenBuffers(1, &vboID);
     this->vbos.push_back(vboID);
@@ -52,7 +57,7 @@ void Model::createVBO(unsigned int attribNumber, int coordSize, const VertexArra
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void Model::createVBO(unsigned int attribNumber, int coordSize, GLsizeiptr size) {
+void Entity::createVBO(unsigned int attribNumber, int coordSize, GLsizeiptr size) {
     GLuint vboID = 0;
     glGenBuffers(1, &vboID);
     this->vbos.push_back(vboID);
@@ -65,7 +70,7 @@ void Model::createVBO(unsigned int attribNumber, int coordSize, GLsizeiptr size)
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void Model::render() {
+void Entity::render() {
     glBindVertexArray(this->vaoID);
     if (hasIndexBuffer) {
         glDrawElements(renderType, vertices, GL_UNSIGNED_INT, 0);
