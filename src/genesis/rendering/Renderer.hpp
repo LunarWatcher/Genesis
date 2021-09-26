@@ -3,7 +3,7 @@
 #include "GL/glew.h"
 #include "GLFW/glfw3.h"
 
-#include "Model.hpp"
+#include "Entity.hpp"
 #include "Renderable.hpp"
 
 #include "genesis/rendering/atlases/FontAtlas.hpp"
@@ -22,6 +22,8 @@
 #include <vector>
 #include <type_traits>
 
+#include <spdlog/spdlog.h>
+
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
@@ -34,6 +36,8 @@ inline void GLAPIENTRY MessageCallback(
         // Silence verbose video memory warnings
         return;
     }
+
+    // TODO: replace with spdlog
     std::cout << "GL CALLBACK: " << std::hex << (type == GL_DEBUG_TYPE_ERROR ? "**GL ERROR**" : "") << " type = 0x"
               << type << ", severity = 0x" << severity << ", message = " << message << std::endl;
 }

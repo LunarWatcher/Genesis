@@ -1,13 +1,13 @@
 #pragma once
 
-#include "genesis/rendering/Model.hpp"
+#include "genesis/rendering/Entity.hpp"
 
 #include <codecvt>
 #include <locale>
 
 namespace genesis {
 
-class TextModel : public Model {
+class TextModel : public Entity {
 private:
     static inline std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
     glm::vec4 color;
@@ -17,8 +17,8 @@ private:
 
 public:
     TextModel(const std::string& text, float x, float y, float scale = 1, const glm::vec4& color = {1, 0, 0, 1})
-            : Model(), color(color) {
-        mode = GL_DYNAMIC_DRAW;
+            : Entity(), color(color) {
+        renderMode = GL_DYNAMIC_DRAW;
         createVAO();
         regenerateVertices(text, x, y, scale);
         glBindVertexArray(0);

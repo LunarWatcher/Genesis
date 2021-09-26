@@ -1,6 +1,6 @@
 #pragma once
 
-#include "genesis/rendering/Model.hpp"
+#include "genesis/rendering/Entity.hpp"
 #include "genesis/rendering/Texture.hpp"
 
 #include <map>
@@ -19,12 +19,12 @@ enum class WorldTile {
 
 class WorldTexture : public Texture {
 private:
-    std::map<WorldTile, std::shared_ptr<Model>> models;
+    std::map<WorldTile, std::shared_ptr<Entity>> models;
 
 public:
     WorldTexture(const std::string& sourceFile);
 
-    std::shared_ptr<Model> getModel(WorldTile type) {
+    std::shared_ptr<Entity> getEntity(WorldTile type) {
         // map takes care of returning a nullptr if the tile doesn't exist
         // But it shouldn't ever trigger a type that doesn't exist. Fucking bigbrain
         // right there, Olivia :blobthinksmart:

@@ -7,7 +7,7 @@ class MenuScene : public Scene {
 private:
     int selectedPosition = 0;
 
-    std::vector<std::shared_ptr<Model>> models;
+    std::vector<std::shared_ptr<Entity>> models;
 public:
     MenuScene();
 

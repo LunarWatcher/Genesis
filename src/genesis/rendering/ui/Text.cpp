@@ -65,12 +65,12 @@ void TextModel::regenerateVertices(const std::string& text, float x, float y, fl
 }
 
 void TextModel::render() {
-    Model::render();
+    Entity::render();
 }
 
 void TextModel::createVBO(unsigned int attribNumber, int coordSize, const VertexArray& data) {
     if (this->vbos.size() < attribNumber + 1) {
-        Model::createVBO(attribNumber, coordSize, data);
+        Entity::createVBO(attribNumber, coordSize, data);
     } else {
         auto vbo = this->vbos.at(attribNumber);
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
