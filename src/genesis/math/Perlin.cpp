@@ -81,7 +81,7 @@ int Perlin2DNoiseGenerator::clampPerlin(double perlinInput) {
 void Perlin2DNoiseGenerator::generateChunk(genesis::ChunkMap& ref, int chunkX, int chunkY) {
     constexpr double STEP_DISTANCE = 1.0 / genesis::Chunk::CHUNK_SIZE;
 
-    auto rawObject = std::make_shared<genesis::Entity>(genesis::Constants::square, [&](genesis::Entity* model) {
+    auto rawObject = std::make_shared<genesis::Model>(genesis::Constants::square, [&](genesis::Model* model) {
         model->bindIndexBuffer(genesis::Constants::squareIndices);
         model->createVBO(1, 2, genesis::Renderer::getInstance().getTexturePack()->generateFromPosition(0, 12, 64, 64));
     });

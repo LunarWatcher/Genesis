@@ -1,6 +1,6 @@
 #pragma once
 
-#include "genesis/rendering/Entity.hpp"
+#include "genesis/rendering/Model.hpp"
 namespace genesis {
 
 struct Particle {
@@ -9,7 +9,7 @@ struct Particle {
     float scale;
 };
 
-class ParticleEmitter : public Entity {
+class ParticleEmitter : public Model {
 private:
     std::vector<Particle> particles;
 

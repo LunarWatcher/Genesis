@@ -1,7 +1,7 @@
 
 set (SOURCE_FILES
     # Rendering {{{
-    genesis/rendering/Shader.cpp
+    genesis/rendering/Model.cpp genesis/rendering/Shader.cpp
     genesis/rendering/Renderer.cpp
     # }}}
     # Scenes {{{

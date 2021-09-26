@@ -1,4 +1,4 @@
-# Settings
+# Confl
 
 Settings are stored in a primitive format; `.confl`. This is a creative adaption of the `.conf`/`.ini` and `.properties`-formats.
 

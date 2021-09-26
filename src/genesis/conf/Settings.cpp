@@ -33,9 +33,6 @@ Settings::Settings() {
         while (std::getline(stream, line)) {
             if (auto idx = line.find('='); idx != std::string::npos) {
                 std::string key = line.substr(0, idx);
-                if (key.find(' ') != std::string::npos) {
-                    throw std::runtime_error("Malformed config with space in key at: " + line);
-                }
                 std::string value = line.substr(idx + 1);
                 std::cout << key << ": " << value;
             } else {
