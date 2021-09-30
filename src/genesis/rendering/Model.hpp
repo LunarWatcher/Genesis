@@ -10,6 +10,7 @@
 #include <memory>
 #include <stdexcept>
 #include <vector>
+#include <map>
 
 namespace genesis {
 
@@ -26,7 +27,7 @@ protected:
 
     size_t vertices, indices = -1;
     GLuint vaoID;
-    std::vector<GLuint> vbos;
+    std::map<unsigned int, GLuint> vbos;
 
     bool hasIndexBuffer = false;
 
@@ -48,6 +49,16 @@ public:
 
     /**
      * Creates a VBO using a different mode than that defined in the class.
+     *
+     * This method may throw an instance of std::runtime_exception if
+     * trying to assign an attribNumber that already exists.
+     * Consequently, all VBOs are required to be in descending order,
+     * and registered in descending order.
+     *
+     * But I shouldn't do that in the first place so this shouldn't be a problem
+     * Odds are that no one but me is gonna read this anyway.
+     *
+     * Hi Livi :p
      */
     virtual void createVBO(unsigned int attribNumber, int coordSize, const VertexArray& data, GLenum mode);
 
@@ -61,6 +72,8 @@ public:
     void setRenderType(GLenum renderType) {
         this->renderType = renderType;
     }
+
+    friend class TextModel;
 };
 
 } // namespace genesis

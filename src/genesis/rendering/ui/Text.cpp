@@ -58,27 +58,14 @@ void TextModel::regenerateVertices(const std::string& text, float x, float y, fl
         x += (characterData->advanceX >> 6) * scale;
     }
 
-    createVBO(0, 2, points);
-    this->vertices = points.size() / 2;
+    this->model.createVBO(0, 2, points);
+    this->model.createVBO(1, 2, uv);
 
-    createVBO(1, 2, uv);
+    this->model.vertices = points.size() / 2;
 }
 
 void TextModel::render() {
-    Model::render();
-}
-
-void TextModel::createVBO(unsigned int attribNumber, int coordSize, const VertexArray& data) {
-    if (this->vbos.size() < attribNumber + 1) {
-        Model::createVBO(attribNumber, coordSize, data);
-    } else {
-        auto vbo = this->vbos.at(attribNumber);
-        glBindBuffer(GL_ARRAY_BUFFER, vbo);
-
-        glBufferData(GL_ARRAY_BUFFER, data.size() * sizeof(GLfloat), &data[0], mode);
-        glVertexAttribPointer(attribNumber, coordSize, GL_FLOAT, false, 0, (void*) 0);
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-    }
+    model.render();
 }
 
 } // namespace genesis
