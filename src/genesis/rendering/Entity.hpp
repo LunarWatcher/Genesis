@@ -29,8 +29,10 @@ private:
     glm::mat4 transMatrix;
 
 protected:
+    // TODO: Sort out your shit, Olivia
     void regenerateTransMatrix();
 
+    Entity() = default;
 public:
     Entity(const std::shared_ptr<Model>& model, glm::vec3 position, glm::vec3 rotation, float scale)
             : model(model), position(position), rotation(rotation), scale(scale) {

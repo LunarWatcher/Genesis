@@ -70,8 +70,8 @@ Renderer::Renderer() {
     initGame();
     initFonts();
 
-    auto menu = std::make_shared<MenuScene>();
-    transition(menu);
+    //auto menu = std::make_shared<WorldController>();
+    //transition(menu);
 }
 
 void Renderer::initGame() {
@@ -82,10 +82,10 @@ void Renderer::initGame() {
 
     this->physicsController = std::make_shared<PhysicsWorld>();
 
-    //auto wc = std::make_shared<WorldController>();
-    //transition(wc);
+    auto wc = std::make_shared<WorldController>();
+    transition(wc);
 
-    //wc->generate();
+    wc->generate();
 
     this->textureShader = std::make_shared<DefaultShader>();
     this->textShader = std::make_shared<TextShader>();
