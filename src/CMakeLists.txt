@@ -52,6 +52,9 @@ set (SOURCE_FILES
     genesis/math/physics/PhysicsController.cpp
     # }}}
     # }}}
+    # Logging {{{
+    genesis/logging/Loggers.cpp
+    # }}}
 )
 
 add_library(genesissrc STATIC ${SOURCE_FILES})

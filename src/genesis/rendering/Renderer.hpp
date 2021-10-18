@@ -16,6 +16,7 @@
 #include "genesis/rendering/view/Camera.hpp"
 
 #include "genesis/math/physics/PhysicsWorld.hpp"
+#include "spdlog/logger.h"
 
 #include <iostream>
 #include <memory>
@@ -44,6 +45,7 @@ namespace genesis {
 class WorldController;
 class Renderer {
 private:
+    static std::shared_ptr<spdlog::logger> logger;
     static inline Renderer* INSTANCE;
 
     GLFWwindow* window;
