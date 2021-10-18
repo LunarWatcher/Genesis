@@ -16,7 +16,7 @@ private:
     static inline constexpr int MS_PER_DAY = 20'000;
 
     std::vector<std::shared_ptr<Chunk>> chunks;
-    std::vector<std::shared_ptr<EntityController>> controllers;
+    std::vector<std::shared_ptr<EntityController>> entityControllers;
     std::shared_ptr<perlin::NoiseGenerator> generator;
 
 public:
@@ -30,6 +30,8 @@ public:
     std::shared_ptr<perlin::NoiseGenerator> getNoiseGenerator() {
         return generator;
     }
+
+    const std::vector<std::shared_ptr<EntityController>>& getEntityControllers() override;
 };
 
 } // namespace genesis

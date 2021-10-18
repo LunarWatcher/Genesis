@@ -15,7 +15,7 @@ void EntityController::render() {
 void EntityController::addEntity(const std::shared_ptr<Entity>& entity) {
     this->entities.push_back(entity);
     entity->modify([&]() {
-        //entity->initializeCollider(std::make_shared<Rectangle>(0, 0, 1, 1));
+        entity->initializeCollider(std::make_shared<Rectangle>(0, 0, 1, 1));
         return true;
     });
 }

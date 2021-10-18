@@ -6,6 +6,9 @@
 namespace genesis {
 
 void Entity::tick() {
+    if (this->collider) {
+        this->collider->update(*this);
+    }
 }
 
 void Entity::render() {

@@ -7,7 +7,6 @@
 namespace genesis {
 
 void PlayerCamp::tick() {
-    return;
     for (auto& entity : this->entities) {
         entity->modify([entity]() {
             auto& pos = entity->getPosition();
@@ -17,6 +16,7 @@ void PlayerCamp::tick() {
 
             return true;
         });
+        entity->tick();
     }
 }
 

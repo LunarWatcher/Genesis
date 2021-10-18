@@ -1,5 +1,6 @@
 #include "PhysicsWorld.hpp"
 #include "genesis/rendering/Renderer.hpp"
+#include "spdlog/spdlog.h"
 
 namespace genesis {
 
@@ -15,10 +16,12 @@ void PhysicsWorld::tick() {
 
 void PhysicsWorld::clickElement(double x, double y) {
     glm::vec2 worldCoords = Renderer::getInstance().getCamera()->convertToWorld(x, y);
-    for (auto& controller : stageControllerMap.at(Renderer::getInstance().getActiveScene())) {
-        if (controller->hasCollision(worldCoords)) {
-            std::cout << "You've sunk my battleship" << std::endl;
-            break;
+    for (auto& scene : Renderer::getInstance().getActiveSceneStack()) {
+        for (auto& controller : scene->getEntityControllers()) {
+            if (controller->hasCollision(worldCoords)) {
+                spdlog::info("Critical hit!");
+                break;
+            }
         }
     }
 

@@ -29,6 +29,8 @@ private:
     glm::mat4 transMatrix;
 
 protected:
+    std::shared_ptr<Collider> collider;
+
     // TODO: Sort out your shit, Olivia
     void regenerateTransMatrix();
 
@@ -57,6 +59,7 @@ public:
     glm::vec3& getPosition() {
         return position;
     }
+
     const glm::vec3& getPosition() const {
         return position;
     }
@@ -69,6 +72,13 @@ public:
         return scale;
     }
 
+    void initializeCollider(const std::shared_ptr<Collider>& collider) {
+        this->collider = collider;
+    }
+
+    const std::shared_ptr<Collider>& getCollider() {
+        return collider;
+    }
 
 };
 

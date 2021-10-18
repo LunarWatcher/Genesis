@@ -17,14 +17,11 @@ namespace genesis {
 WorldController::WorldController() : generator(std::make_shared<perlin::DumbGenerator>()) {
     WorldController::INSTANCE = this;
 
-    controllers.push_back(std::make_shared<PlayerCamp>());
-    controllers[0]->addEntity(
+    entityControllers.push_back(std::make_shared<PlayerCamp>());
+    entityControllers[0]->addEntity(
         std::make_shared<Entity>(Renderer::getInstance().getTexturePack()->getModel(WorldTile::COLONIST_A),
             glm::vec3{2, 2, 0.1}, glm::vec3{0, 0, 0}, 1));
 
-    Renderer::getInstance().getPhysicsEngine()->registerControllers(0, {
-        std::static_pointer_cast<PhysicsController>(controllers[0]),
-    });
 }
 
 void WorldController::generate() {
@@ -37,7 +34,7 @@ void WorldController::generate() {
 }
 
 void WorldController::tick() {
-    for (auto& controller : this->controllers)
+    for (auto& controller : this->entityControllers)
         controller->tick();
 }
 
@@ -48,9 +45,14 @@ void WorldController::render() {
     for (auto& chunk : this->chunks)
         chunk->render();
 
-    for (auto& controller : this->controllers)
+    for (auto& controller : this->entityControllers)
         controller->render();
     inst.getTexturePack()->unbind();
     inst.getTextureShader()->stop();
 }
+
+const std::vector<std::shared_ptr<EntityController>>& WorldController::getEntityControllers() {
+    return entityControllers;
+}
+
 } // namespace genesis
