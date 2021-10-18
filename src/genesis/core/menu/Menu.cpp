@@ -6,7 +6,7 @@ namespace genesis {
 
 MenuScene::MenuScene() {
 
-    auto play = std::make_shared<TextModel>("Play", 200, 200, 1, glm::vec4{ 1.0, 0.0, 1.0, 1.0 });
+    auto play = std::make_shared<TextEntity>("Play", 200, 200, 1, glm::vec4{ 1.0, 0.0, 1.0, 1.0 });
     models.push_back(play);
 
 }

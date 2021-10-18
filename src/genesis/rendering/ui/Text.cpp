@@ -5,7 +5,7 @@
 
 namespace genesis {
 
-void TextModel::regenerateVertices(const std::string& text, float x, float y, float scale) {
+void TextEntity::regenerateVertices(const std::string& text, float x, float y, float scale) {
     // Cache variable to store the leftmost x for newline operations
     const float sourceX = x;
 
@@ -64,7 +64,7 @@ void TextModel::regenerateVertices(const std::string& text, float x, float y, fl
     this->model.vertices = points.size() / 2;
 }
 
-void TextModel::render() {
+void TextEntity::render() {
     model.render();
 }
 

@@ -73,7 +73,7 @@ public:
         this->renderType = renderType;
     }
 
-    friend class TextModel;
+    friend class TextEntity;
 };
 
 } // namespace genesis
