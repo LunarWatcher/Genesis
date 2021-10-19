@@ -207,4 +207,10 @@ void Renderer::pop(const std::shared_ptr<Scene>& scene) {
 
 // }}}
 
+void Renderer::refreshDisplay() {
+    bool fullscreen = Settings::instance->getBool("fullscreen");
+
+    // TODO: toggle fullscreen
+}
+
 } // namespace genesis

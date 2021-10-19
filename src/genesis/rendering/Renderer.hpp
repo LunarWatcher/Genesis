@@ -156,6 +156,8 @@ public:
     void transition(const std::shared_ptr<Scene>& scene);
     void add(const std::shared_ptr<Scene>& scene);
     void pop(const std::shared_ptr<Scene>& scene);
+
+    void refreshDisplay();
 };
 
 } // namespace genesis

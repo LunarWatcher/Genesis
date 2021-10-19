@@ -21,6 +21,7 @@ private:
     };
 
 public:
+
     std::map<std::string, std::any> conf;
     fs::path home;
     static std::shared_ptr<Settings> instance;
