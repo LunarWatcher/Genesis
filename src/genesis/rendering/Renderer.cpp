@@ -70,8 +70,9 @@ Renderer::Renderer() {
     initGame();
     initFonts();
 
-    //auto menu = std::make_shared<WorldController>();
-    //transition(menu);
+    auto menu = std::make_shared<MenuScene>();
+    transition(menu);
+    logger->info("Initialized menu");
 }
 
 void Renderer::initGame() {
@@ -82,10 +83,6 @@ void Renderer::initGame() {
 
     this->physicsController = std::make_shared<PhysicsWorld>();
 
-    auto wc = std::make_shared<WorldController>();
-    transition(wc);
-
-    wc->generate();
 
     this->textureShader = std::make_shared<DefaultShader>();
     this->textShader = std::make_shared<TextShader>();
@@ -145,7 +142,12 @@ void Renderer::render() {
     // At least for a single type.
     textShader->stop();
     // }}}
+
     for (auto& scene : activeSceneStack) {
+        if (scene == nullptr) {
+            logger->error("Expected scene to be non-null, but got null");
+            throw std::runtime_error("Received null scene during rendering");
+        }
         // TODO: respect paused behavior
         scene->render();
     }
@@ -203,6 +205,14 @@ void Renderer::pop(const std::shared_ptr<Scene>& scene) {
         return;
     }
     throw std::runtime_error("Tried to pop a non-existent item");
+}
+
+void Renderer::createGame() {
+    logger->info("Creating game.");
+    auto wc = std::make_shared<WorldController>();
+
+    transition(wc);
+    wc->generate();
 }
 
 // }}}

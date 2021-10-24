@@ -1,13 +1,31 @@
 #include "Text.hpp"
+#include "genesis/math/physics/Rectangle.hpp"
 #include "genesis/rendering/Renderer.hpp"
+#include "genesis/conf/Settings.hpp"
+
+#include "spdlog/spdlog.h"
 
 #include <iostream>
 
 namespace genesis {
 
+TextEntity::TextEntity(const std::string& text, float x, float y, float scale, const glm::vec4& color)
+        : color(color) {
+
+    initializeCollider(std::make_shared<Rectangle>(0, 0, 0, 0, 0));
+
+    model.mode = GL_DYNAMIC_DRAW;
+    model.createVAO();
+    regenerateVertices(text, x, y, scale);
+    glBindVertexArray(0);
+}
+
 void TextEntity::regenerateVertices(const std::string& text, float x, float y, float scale) {
     // Cache variable to store the leftmost x for newline operations
     const float sourceX = x;
+    const float sourceY = y;
+    float firstLineOffset = -9999;
+    float maxX = -9999, maxY = -9999;
 
     // Convert the string. Utility for dealing with unicode
     // Purely future-compatible at this time, however. While unicode is supported
@@ -16,6 +34,7 @@ void TextEntity::regenerateVertices(const std::string& text, float x, float y, f
 
     // Raw data
     VertexArray points, uv;
+    bool firstLine = true;
 
     for (auto& character : wide) {
         // Look for a character
@@ -28,6 +47,7 @@ void TextEntity::regenerateVertices(const std::string& text, float x, float y, f
         // This is the only character to modify y and reset x atm.
         // That is gonna change when text wrapping is implemented
         if (character == L'\n') {
+            firstLine = false;
             y -= (characterData->advanceY >> 6) * scale;
             x = sourceX;
             continue;
@@ -40,6 +60,10 @@ void TextEntity::regenerateVertices(const std::string& text, float x, float y, f
 
             float width = characterData->bitmapWidth * scale;
             float height = characterData->bitmapHeight * scale;
+
+            maxX = std::max(maxX, xPos + width);
+            maxY = std::max(maxY, yPos + height);
+            if (firstLine) firstLineOffset = std::max(firstLineOffset, yPos);
 
             // clang-format off
             points.insert(points.end(), {
@@ -57,7 +81,9 @@ void TextEntity::regenerateVertices(const std::string& text, float x, float y, f
         // x is incremented either way, largely to enable spaces
         x += (characterData->advanceX >> 6) * scale;
     }
-
+    Entity::position = glm::vec3{ sourceX * 2.0 / Settings::instance->getInt("width") - 1, (sourceY + firstLineOffset) * 2.0 / Settings::instance->getInt("height") - 1, 0 };
+    this->collider->setDims(maxX - sourceX, maxY - sourceY);
+    this->collider->update(*this);
     this->model.createVBO(0, 2, points);
     this->model.createVBO(1, 2, uv);
 

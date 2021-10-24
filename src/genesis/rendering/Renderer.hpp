@@ -157,6 +157,8 @@ public:
     void add(const std::shared_ptr<Scene>& scene);
     void pop(const std::shared_ptr<Scene>& scene);
 
+    void createGame();
+
     void refreshDisplay();
 };
 

@@ -15,6 +15,7 @@ public:
 
     virtual bool collidesWith(const Rectangle& other, bool anyZ = false) = 0;
 
+    virtual void setDims(const double& w, const double& y) = 0;
     virtual void update(const Entity& e) = 0;
 };
 

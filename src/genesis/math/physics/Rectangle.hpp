@@ -14,6 +14,7 @@ public:
 
     bool collidesWith(const Rectangle& other, bool anyZ = false) override;
 
+    void setDims(const double& width, const double& height) override;
     void update(const Entity& e) override;
 };
 

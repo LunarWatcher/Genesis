@@ -18,13 +18,7 @@ private:
     void regenerateVertices(const std::string& text, float x, float y, float scale);
 
 public:
-    TextEntity(const std::string& text, float x, float y, float scale = 1, const glm::vec4& color = {1, 0, 0, 1})
-            : color(color) {
-        model.mode = GL_DYNAMIC_DRAW;
-        model.createVAO();
-        regenerateVertices(text, x, y, scale);
-        glBindVertexArray(0);
-    }
+    TextEntity(const std::string& text, float x, float y, float scale = 1, const glm::vec4& color = {1, 0, 0, 1});
 
     void render() override;
 

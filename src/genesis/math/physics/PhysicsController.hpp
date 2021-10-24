@@ -25,8 +25,8 @@ public:
     // I guess we could use this for something
     virtual void tick() = 0;
 
-    bool hasCollision(const glm::vec2& coords);
-    bool hasCollision(const std::shared_ptr<Rectangle>& collider);
+    virtual bool hasCollision(const glm::vec2& coords);
+    virtual bool hasCollision(const std::shared_ptr<Rectangle>& collider);
 };
 
 }

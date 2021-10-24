@@ -19,7 +19,7 @@ class Collider;
  * May be made abstract in the future
  */
 class Entity : public Renderable {
-private:
+protected:
     std::shared_ptr<Model> model;
 
     glm::vec3 position;
@@ -28,7 +28,6 @@ private:
 
     glm::mat4 transMatrix;
 
-protected:
     std::shared_ptr<Collider> collider;
 
     // TODO: Sort out your shit, Olivia
@@ -36,6 +35,8 @@ protected:
 
     Entity() = default;
 public:
+    long long ID = -1;
+
     Entity(const std::shared_ptr<Model>& model, glm::vec3 position, glm::vec3 rotation, float scale)
             : model(model), position(position), rotation(rotation), scale(scale) {
         regenerateTransMatrix();

@@ -1,6 +1,7 @@
 #include "Rectangle.hpp"
 
 #include "genesis/rendering/Entity.hpp"
+#include "spdlog/spdlog.h"
 
 namespace genesis {
 
@@ -15,6 +16,12 @@ bool Rectangle::collidesWith(const Rectangle &other, bool anyZ) {
         && bW >= x
         && aH >= other.y
         && bH >= y;
+}
+
+
+void Rectangle::setDims(const double& width, const double& height) {
+    this->width = width;
+    this->height = height;
 }
 
 void Rectangle::update(const Entity& e) {

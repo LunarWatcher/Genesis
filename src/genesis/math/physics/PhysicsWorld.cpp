@@ -19,7 +19,6 @@ void PhysicsWorld::clickElement(double x, double y) {
     for (auto& scene : Renderer::getInstance().getActiveSceneStack()) {
         for (auto& controller : scene->getEntityControllers()) {
             if (controller->hasCollision(worldCoords)) {
-                spdlog::info("Critical hit!");
                 break;
             }
         }

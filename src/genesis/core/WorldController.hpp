@@ -13,7 +13,6 @@ class Chunk;
 class WorldController : public Scene {
 private:
     static inline WorldController* INSTANCE = nullptr;
-    static inline constexpr int MS_PER_DAY = 20'000;
 
     std::vector<std::shared_ptr<Chunk>> chunks;
     std::vector<std::shared_ptr<EntityController>> entityControllers;

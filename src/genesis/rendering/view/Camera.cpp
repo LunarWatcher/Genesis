@@ -5,6 +5,7 @@
 #include "glm/ext/matrix_projection.hpp"
 #include "glm/ext/matrix_transform.hpp"
 #include "glm/ext/vector_float3.hpp"
+#include "spdlog/spdlog.h"
 #include <iostream>
 
 namespace genesis {
@@ -77,6 +78,8 @@ glm::vec2 Camera::convertToWorld(double mouseX, double mouseY) {
     GLfloat x = mouseX,
           y = 576 - mouseY;
 
+    // TODO: make this shit better. See also text.frag
+    // Read: Fuck alpha, this shit breaks when there's alpha
     glReadPixels(x, y, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &z);
 
     return glm::vec2{

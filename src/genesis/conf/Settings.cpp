@@ -34,7 +34,6 @@ Settings::Settings() {
             if (auto idx = line.find('='); idx != std::string::npos) {
                 std::string key = line.substr(0, idx);
                 std::string value = line.substr(idx + 1);
-                std::cout << key << ": " << value;
             } else {
                 throw std::runtime_error("Malformed config at: " + line);
             }
