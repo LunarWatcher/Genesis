@@ -9,20 +9,24 @@ namespace genesis {
 
 enum class WorldTile {
     // Ground {{{
-    GRASS, //
-    STONE, //
+    GRASS = 0, //
+    STONE = 1, //
     // }}}
     // Entities {{{
-    COLONIST_A,
+    COLONIST_A = 12 * 16,
     // }}}
 };
 
-class WorldTexture : public Texture {
+class TextureAtlas : public Texture {
 private:
-    std::map<WorldTile, std::shared_ptr<Model>> models;
+    int atlasUnits;
 
+    std::map<WorldTile, std::shared_ptr<Model>> models;
+    std::vector<std::vector<GLfloat>> uvCoordinates;
+
+    std::pair<int, int> decodeCoordinates(int offset);
 public:
-    WorldTexture(const std::string& sourceFile);
+    TextureAtlas(const std::string& sourceFile);
 
     std::shared_ptr<Model> getModel(WorldTile type) {
         // map takes care of returning a nullptr if the tile doesn't exist

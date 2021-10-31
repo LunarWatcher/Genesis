@@ -10,6 +10,10 @@
 namespace genesis {
 
 class Chunk;
+// TODO: rename.
+// The fuck were you thinking?
+// WorldController?
+// I mean, sure, but wtf??
 class WorldController : public Scene {
 private:
     static inline WorldController* INSTANCE = nullptr;

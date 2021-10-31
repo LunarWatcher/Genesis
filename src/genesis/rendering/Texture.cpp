@@ -20,8 +20,8 @@ Texture::Texture(const std::string& file, int atlasWidth, int atlasHeight) {
 
     glBindTexture(GL_TEXTURE_2D, 0);
 
-    this->atlasWidth = atlasWidth == -1 ? this->width : atlasWidth;
-    this->atlasHeight = atlasHeight == -1 ? this->height : atlasHeight;
+    this->atlasTileWidth = atlasWidth == -1 ? this->width : atlasWidth;
+    this->atlasTileHeight = atlasHeight == -1 ? this->height : atlasHeight;
 }
 
 Texture::~Texture() {
@@ -39,9 +39,9 @@ void Texture::unbind() {
 
 std::vector<GLfloat> Texture::generateFromPosition(unsigned int x, unsigned int y, int width, int height) {
     if (width == -1)
-        width = this->atlasWidth;
+        width = this->atlasTileWidth;
     if (height == -1)
-        height = this->atlasHeight;
+        height = this->atlasTileHeight;
 
     GLfloat reX = ((GLfloat) x * width) / this->width;
     GLfloat reY = ((GLfloat) y * height) / this->height;
@@ -57,6 +57,10 @@ std::vector<GLfloat> Texture::generateFromPosition(unsigned int x, unsigned int 
         newX, newY, // 2
         newX, reY, // 3
     };
+}
+
+std::vector<GLfloat> Texture::generateFromPosition(const std::pair<unsigned int, unsigned int>& position, int width, int height) {
+    return generateFromPosition(position.first, position.second, width, height);
 }
 
 } // namespace genesis

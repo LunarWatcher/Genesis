@@ -14,7 +14,7 @@ set (SOURCE_FILES
     # }}}
     # Textures {{{
     genesis/rendering/Texture.cpp
-    genesis/rendering/atlases/WorldTexture.cpp
+    genesis/rendering/atlases/TextureAtlas.cpp
     genesis/rendering/atlases/FontAtlas.cpp
     # }}}
     # Effects {{{

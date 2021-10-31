@@ -7,7 +7,7 @@
 #include "Renderable.hpp"
 
 #include "genesis/rendering/atlases/FontAtlas.hpp"
-#include "genesis/rendering/atlases/WorldTexture.hpp"
+#include "genesis/rendering/atlases/TextureAtlas.hpp"
 #include "genesis/rendering/flow/Scene.hpp"
 #include "genesis/rendering/particles/ParticleEmitter.hpp"
 #include "genesis/rendering/shaders/ParticleShader.hpp"
@@ -55,7 +55,7 @@ private:
     std::shared_ptr<TextShader> textShader;
     std::shared_ptr<ParticleShader> particleShader;
 
-    std::shared_ptr<WorldTexture> texturePack;
+    std::shared_ptr<TextureAtlas> texturePack;
     std::shared_ptr<FontAtlas> fontAtlas;
 
     std::shared_ptr<PhysicsWorld> physicsController;
