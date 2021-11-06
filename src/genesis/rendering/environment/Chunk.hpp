@@ -16,11 +16,11 @@ namespace genesis {
 // Y'know what, that's fucking brilliant.
 // We only need one model anyway. The chunk's chunkMap is intended to only consist of
 // the "blocks" (I say blocks, it's not properly 3D to justify that)
-typedef std::vector<std::vector<std::shared_ptr<Entity>>> FlatMap;
+typedef std::vector<std::vector<int>> FlatMap;
 typedef std::map<int, FlatMap> ChunkMap;
 // }}}
 
-class Chunk : public Renderable {
+class Chunk : public Entity {
 public:
     static constexpr int CHUNK_SIZE = 16;
 
@@ -33,9 +33,9 @@ public:
 
     void render();
 
-    void erase(int x, int y, int z = 0);
-    std::shared_ptr<Entity> get(int x, int y, int z = 0);
-    void set(std::shared_ptr<Entity> e, int x, int y, int z = 0);
+    //void erase(int x, int y, int z = 0);
+    //std::shared_ptr<Entity> get(int x, int y, int z = 0);
+    //void set(int tile, int x, int y, int z = 0);
 
     auto getX() {
         return chunkX;

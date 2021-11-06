@@ -11,11 +11,11 @@ namespace genesis {
 
 TextEntity::TextEntity(const std::string& text, float x, float y, float scale, const glm::vec4& color)
         : color(color) {
-
+    model = std::make_shared<Model>();
     initializeCollider(std::make_shared<Rectangle>(0, 0, 0, 0, 0));
 
-    model.mode = GL_DYNAMIC_DRAW;
-    model.createVAO();
+    model->mode = GL_DYNAMIC_DRAW;
+    model->createVAO();
     regenerateVertices(text, x, y, scale);
     glBindVertexArray(0);
 }
@@ -84,14 +84,14 @@ void TextEntity::regenerateVertices(const std::string& text, float x, float y, f
     Entity::position = glm::vec3{ sourceX * 2.0 / Settings::instance->getInt("width") - 1, (sourceY + firstLineOffset) * 2.0 / Settings::instance->getInt("height") - 1, 0 };
     this->collider->setDims(maxX - sourceX, maxY - sourceY);
     this->collider->update(*this);
-    this->model.createVBO(0, 2, points);
-    this->model.createVBO(1, 2, uv);
+    this->model->createVBO(0, 2, points);
+    this->model->createVBO(1, 2, uv);
 
-    this->model.vertices = points.size() / 2;
+    this->model->vertices = points.size() / 2;
 }
 
 void TextEntity::render() {
-    model.render();
+    model->render();
 }
 
 } // namespace genesis

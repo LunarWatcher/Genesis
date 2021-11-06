@@ -32,9 +32,16 @@ protected:
     bool hasIndexBuffer = false;
 
     void createVAO();
-
-    Model() = default;
 public:
+    /**
+     * While public, DO NOT USE to construct models in any other context
+     * than proper classes needing to use this to induce their own
+     * model creation systems.
+     *
+     * Unless you're a class depending on an instance of Model, DO NOT
+     * use this constructor. You WILL shoot yourself in the foot.
+     */
+    Model() = default;
     Model(const VertexArray& vertices, const AttributeInit& attribInitFunc, int vertSize = 3, GLenum mode = GL_STATIC_DRAW);
 
     virtual ~Model();

@@ -102,10 +102,9 @@ void Perlin2DNoiseGenerator::generateChunk(genesis::ChunkMap& ref, int chunkX, i
     int rx = 0, rz = 0;
     for (double z = chunkY + STEP_DISTANCE; z <= chunkY + 16 * STEP_DISTANCE; z += STEP_DISTANCE) {
         for (double x = chunkX + STEP_DISTANCE; x <= chunkX + 16 * STEP_DISTANCE; x += STEP_DISTANCE) {
-            int y = clampPerlin(perlin(x, z));
-            ref[y][rz][rx] = std::make_shared<genesis::Entity>(rawObject,
-                glm::vec3{chunkX * genesis::Chunk::CHUNK_SIZE + rx, chunkY * genesis::Chunk::CHUNK_SIZE + rz, -3});
-            rx++;
+            //int y = clampPerlin(perlin(x, z));
+
+            //rx++;
         }
         rx = 0;
         rz++;
@@ -113,7 +112,7 @@ void Perlin2DNoiseGenerator::generateChunk(genesis::ChunkMap& ref, int chunkX, i
 }
 // }}}
 // DumbGenerator {{{
-void DumbGenerator::generateChunk(genesis::ChunkMap& ref, int chunkX, int chunkY) {
+void DumbGenerator::generateChunk(genesis::ChunkMap& ref, int, int) {
     auto tile = genesis::Renderer::getInstance().getTexturePack()->getModel(genesis::WorldTile::GRASS);
     // We pick 0 as the primary level
     auto& activeLevel = ref[0];
@@ -124,8 +123,7 @@ void DumbGenerator::generateChunk(genesis::ChunkMap& ref, int chunkX, int chunkY
         activeLevel[z].resize(genesis::Chunk::CHUNK_SIZE);
 
         for (int x = 0; x < genesis::Chunk::CHUNK_SIZE; ++x) {
-            activeLevel[z][x] = std::make_shared<genesis::Entity>(
-                tile, glm::vec3{chunkX * genesis::Chunk::CHUNK_SIZE + x, chunkY * genesis::Chunk::CHUNK_SIZE + z, 0});
+            activeLevel[z][x] = 0;
         }
     }
 }

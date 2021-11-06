@@ -9,6 +9,8 @@ namespace genesis {
 
 Chunk::Chunk(int chunkX, int chunkY) : chunkX(chunkX), chunkY(chunkY) {
     Renderer::getInstance().getSceneByType<WorldController>()->getNoiseGenerator()->generateChunk(this->chunkMap, chunkX, chunkY);
+
+    //this->model = std::make_shared
 }
 
 void Chunk::render() {
@@ -16,11 +18,13 @@ void Chunk::render() {
         return;
     auto& currLevel = chunkMap.at(Renderer::getInstance().getCamera()->getActiveY());
 
+
+
     for (auto& vec : currLevel) {
         for (auto& entity : vec) {
-            if (entity == nullptr)
-                continue;
-            entity->render();
+            if (entity != -1) {
+
+            }
         }
     }
 }

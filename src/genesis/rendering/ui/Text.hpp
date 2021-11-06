@@ -11,7 +11,6 @@ namespace genesis {
 class TextEntity : public Entity {
 private:
     static inline std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
-    Model model;
     glm::vec4 color;
     glm::mat4 position;
 
