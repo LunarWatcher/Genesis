@@ -28,6 +28,8 @@ private:
     ChunkMap chunkMap;
     int chunkX, chunkY;
 
+    void regenerateVertices();
+
 public:
     Chunk(int chunkX, int chunkY);
 

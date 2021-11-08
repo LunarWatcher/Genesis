@@ -84,7 +84,7 @@ void Model::createVBO(unsigned int attribNumber, int coordSize, GLsizeiptr size)
 void Model::render() {
     glBindVertexArray(this->vaoID);
     if (hasIndexBuffer) {
-        glDrawElements(renderType, vertices, GL_UNSIGNED_INT, 0);
+        glDrawElements(renderType, indices, GL_UNSIGNED_INT, 0);
     } else {
         glDrawArrays(renderType, 0, vertices);
     }

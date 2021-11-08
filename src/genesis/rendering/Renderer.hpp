@@ -17,6 +17,7 @@
 
 #include "genesis/math/physics/PhysicsWorld.hpp"
 #include "spdlog/logger.h"
+#include "spdlog/spdlog.h"
 
 #include <iostream>
 #include <memory>

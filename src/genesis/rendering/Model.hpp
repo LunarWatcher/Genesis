@@ -31,7 +31,6 @@ protected:
 
     bool hasIndexBuffer = false;
 
-    void createVAO();
 public:
     /**
      * While public, DO NOT USE to construct models in any other context
@@ -76,11 +75,14 @@ public:
      */
     virtual void createVBO(unsigned int attribNumber, int coordSize, GLsizeiptr size);
 
+    void createVAO();
+
     void setRenderType(GLenum renderType) {
         this->renderType = renderType;
     }
 
     friend class TextEntity;
+    friend class Chunk;
 };
 
 } // namespace genesis

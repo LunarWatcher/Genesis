@@ -24,7 +24,6 @@ private:
     std::map<WorldTile, std::shared_ptr<Model>> models;
     std::vector<std::vector<GLfloat>> uvCoordinates;
 
-    std::pair<int, int> decodeCoordinates(int offset);
 public:
     TextureAtlas(const std::string& sourceFile);
 
@@ -34,6 +33,8 @@ public:
         // right there, Olivia :blobthinksmart:
         return models[type];
     }
+
+    std::pair<int, int> decodeCoordinates(int offset);
 };
 
 } // namespace genesis
