@@ -28,8 +28,6 @@ inline const std::vector<GLfloat> cube = {
     1.0f, 1.0f, -1.0f,
 };
 
-// TODO: create a cache of possible cube indices based on which sides are free.
-
 inline const std::vector<GLint> fullCubeIndices = {
     // Front
     0, 1, 3,
@@ -38,18 +36,17 @@ inline const std::vector<GLint> fullCubeIndices = {
     4, 5, 7,
     7, 5, 6,
     // Top
-    0, 3, 4,
-    7, 4, 3,
+    4, 0, 7,
+    7, 0, 3,
     // Bottom
-    5, 2, 1,
-    5, 6, 2,
+    1, 5, 2,
+    2, 5, 6,
     // Right
-    7, 3, 2,
-    6, 7, 2,
+    3, 2, 7,
+    7, 2, 6,
     // left
-    0, 4, 5,
-    5, 1, 0,
-
+    4, 5, 0,
+    0, 5, 1
 };
 
 // I'm not convinced this is the best way to go about this.
