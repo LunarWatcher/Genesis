@@ -7,9 +7,3 @@ repos:
         exclude: .clang-format
       - id: end-of-file-fixer
       - id: trailing-whitespace
-  - repo: https://github.com/pocc/pre-commit-hooks
-    rev: v1.3.4
-    hooks:
-      - id: clang-tidy
-
-      #- id: include-what-you-use

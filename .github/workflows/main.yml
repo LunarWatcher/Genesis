@@ -23,10 +23,10 @@ jobs:
           sudo ln -s /usr/bin/clang-tidy-11 /usr/bin/clang-tidy
       - name: Run hooks
         run: |
-          python3 -m pip install pre-commit conan
+          python3 -m pip install pre-commit
           # clang-tidy needs a compilation database
           # No one cares what type it is
-          mkdir build && cd build && cmake .. -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=1 && make && cd ..
-          cp build/compile_commands.json .
+          #mkdir build && cd build && cmake .. -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=1 && make && cd ..
+          #cp build/compile_commands.json .
           pre-commit run --all-files
   # TODO: tests? Dunno how, games aren't easily testable
