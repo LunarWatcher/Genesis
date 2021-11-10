@@ -21,10 +21,12 @@ void Chunk::regenerateVertices() {
     std::vector<GLfloat> points = Constants::cube;
 
     model->createVBO(0, 3, points);
-    auto uv = Renderer::getInstance().getTexturePack()->generateFromPosition(
+    auto uvSource = Renderer::getInstance().getTexturePack()->generateFromPosition(
         Renderer::getInstance().getTexturePack()->decodeCoordinates((int) WorldTile::GRASS)
     );
-    uv.insert(uv.end(), uv.begin(), uv.end());
+    auto uv = uvSource;
+    for (int i = 0; i < 6; ++i)
+        uv.insert(uv.end(), uvSource.begin(), uvSource.end());
     model->createVBO(1, 2, uv);
     model->bindIndexBuffer(Constants::fullCubeIndices);
     model->vertices = points.size();

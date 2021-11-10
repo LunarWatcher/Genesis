@@ -27,7 +27,6 @@ Renderer::Renderer() {
         throw std::runtime_error("Failed to initialize GLFW");
     }
 
-    glfwWindowHint(GLFW_SAMPLES, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
     glfwWindowHint(GLFW_RESIZABLE, false);
@@ -56,8 +55,11 @@ Renderer::Renderer() {
 
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
     glEnable(GL_PROGRAM_POINT_SIZE);
     glEnable(GL_MULTISAMPLE);
+
+    glEnable(GL_LINE_SMOOTH);
 
 #ifdef API_DEBUG
     glEnable(GL_DEBUG_OUTPUT);
