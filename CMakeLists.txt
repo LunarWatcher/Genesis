@@ -21,10 +21,9 @@ endif()
 
 include(${CMAKE_BINARY_DIR}/conan.cmake)
 
-conan_cmake_configure (REQUIRES nlohmann_json/3.10.2 glfw/3.3.4 glew/2.2.0
+conan_cmake_configure (REQUIRES nlohmann_json/3.10.4 glfw/3.3.5 glew/2.2.0
                         openal/1.21.1 glm/0.9.9.8
-                        freetype/2.10.4
-
+                        freetype/2.11.1
                         spdlog/1.9.2
                         GENERATORS cmake)
 conan_cmake_autodetect (settings)
