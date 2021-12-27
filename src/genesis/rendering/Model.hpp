@@ -49,6 +49,14 @@ public:
 
     virtual void bindIndexBuffer(const IndexArray& indexBuffer);
     /**
+     * Initializes the index buffer with a predetermined size.
+     *
+     * To initialize or update the data later, use bindIndexBuffer(IndexArray).
+     * That function doesn't recreate unless necessary
+     */
+    virtual void bindIndexBuffer(GLsizeiptr size);
+
+    /**
      * Creates a VBO using the class-level mode
      */
     virtual void createVBO(unsigned int attribNumber, int coordSize, const VertexArray& data);

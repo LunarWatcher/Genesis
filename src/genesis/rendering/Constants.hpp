@@ -88,5 +88,18 @@ constexpr int MAX_OVERWORLD_HEIGHT = 32;
 constexpr int MAX_UNDERGROUND_HEIGHT = 32;
 constexpr int FLAT_COMPENSATION_FACTOR = 12;
 
+namespace Chunks {
+static constexpr int CHUNK_SIZE = 16;
+static constexpr int CHUNK_HEIGHT = 64;
+
+
+static constexpr int WORST_CASE_SIZE = Constants::Chunks::CHUNK_SIZE * CHUNK_SIZE * CHUNK_HEIGHT // amount of cubes
+                     * 24 // Multiplied by the number of vertices in a cube
+                     / 8; // Divided by 1/2^3, which gives us the worst case rendering: alternating cubes on every layer.
+                           // admittedly a bit higher, because we can simplify away certain vertices, but for V1
+                           // when I have absolutely no clue what I'm doing... it's good enough.
+
+}
+
 } // namespace Constants
 } // namespace genesis

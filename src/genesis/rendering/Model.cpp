@@ -26,12 +26,26 @@ Model::~Model() {
 
 void Model::bindIndexBuffer(const IndexArray& indexBuffer) {
     this->indices = indexBuffer.size();
+    if (!hasIndexBuffer) {
+        this->hasIndexBuffer = true;
+        GLuint vboId = 0;
+        glGenBuffers(1, &vboId);
+        vbos[-1] = vboId;
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbos[-1]);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexBuffer.size() * sizeof(GLint), indexBuffer.data(), mode);
+    } else {
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vbos.at(-1));
+        glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, indexBuffer.size() * sizeof(GLint), indexBuffer.data());
+    }
+}
+
+void Model::bindIndexBuffer(GLsizeiptr size) {
     this->hasIndexBuffer = true;
     GLuint vboId = 0;
     glGenBuffers(1, &vboId);
     vbos[-1] = vboId;
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vboId);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexBuffer.size() * sizeof(GLint), indexBuffer.data(), mode);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, size * sizeof(GLint), 0, GL_DYNAMIC_DRAW);
 }
 
 void Model::createVAO() {
@@ -62,7 +76,8 @@ void Model::createVBO(unsigned int attribNumber, int coordSize, const VertexArra
         auto vbo = this->vbos.at(attribNumber);
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
 
-        glBufferData(GL_ARRAY_BUFFER, data.size() * sizeof(GLfloat), &data[0], mode);
+        glBufferSubData(GL_ARRAY_BUFFER, 0, data.size() * sizeof(GLfloat), data.data());
+        //glBufferData(GL_ARRAY_BUFFER, data.size() * sizeof(GLfloat), data.data(), GL_DYNAMIC_DRAW);
         glVertexAttribPointer(attribNumber, coordSize, GL_FLOAT, false, 0, (void*) 0);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     }

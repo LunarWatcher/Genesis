@@ -21,9 +21,6 @@ typedef std::map<int, FlatMap> ChunkMap;
 // }}}
 
 class Chunk : public Entity {
-public:
-    static constexpr int CHUNK_SIZE = 16;
-
 private:
     ChunkMap chunkMap;
     int chunkX, chunkY;

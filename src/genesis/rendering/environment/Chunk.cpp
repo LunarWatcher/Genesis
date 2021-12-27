@@ -12,6 +12,10 @@ Chunk::Chunk(int chunkX, int chunkY) : Entity(std::make_shared<Model>(), glm::ve
     Renderer::getInstance().getSceneByType<WorldController>()->getNoiseGenerator()->generateChunk(this->chunkMap, chunkX, chunkY);
     model->mode = GL_DYNAMIC_DRAW;
     model->createVAO();
+    // when we create the VBO, we want to
+    model->createVBO(0, 3, 3 * Constants::Chunks::WORST_CASE_SIZE);
+    model->createVBO(1, 2, 2 * Constants::Chunks::WORST_CASE_SIZE);
+    model->bindIndexBuffer(2 * Constants::Chunks::WORST_CASE_SIZE);
 
     regenerateVertices();
     glBindVertexArray(0);
@@ -19,8 +23,8 @@ Chunk::Chunk(int chunkX, int chunkY) : Entity(std::make_shared<Model>(), glm::ve
 
 void Chunk::regenerateVertices() {
     std::vector<GLfloat> points = Constants::cube;
+    model->createVBO(0, 3, points, GL_DYNAMIC_DRAW);
 
-    model->createVBO(0, 3, points);
     auto uvSource = Renderer::getInstance().getTexturePack()->generateFromPosition(
         Renderer::getInstance().getTexturePack()->decodeCoordinates((int) WorldTile::GRASS)
     );
@@ -36,7 +40,6 @@ void Chunk::render() {
     if (!chunkMap.contains(Renderer::getInstance().getCamera()->getActiveY()))
         return;
     auto& currLevel = chunkMap.at(Renderer::getInstance().getCamera()->getActiveY());
-
     Entity::render();
 }
 
