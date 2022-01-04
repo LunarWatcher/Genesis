@@ -16,17 +16,26 @@ Chunk::Chunk(int chunkX, int chunkY) : Entity(std::make_shared<Model>(), glm::ve
     model->createVBO(0, 3, 3 * Constants::Chunks::WORST_CASE_SIZE);
     model->createVBO(1, 2, 2 * Constants::Chunks::WORST_CASE_SIZE);
     model->bindIndexBuffer(2 * Constants::Chunks::WORST_CASE_SIZE);
-
+    for (int x = 0; x < Constants::Chunks::CHUNK_SIZE; ++x) {
+        for (int y = 0; y < Constants::Chunks::CHUNK_SIZE; ++y) {
+            this->chunkMap.at(0).at(y).at(x) = "genesis:dirt";
+        }
+    }
     regenerateVertices();
     glBindVertexArray(0);
 }
 
 void Chunk::regenerateVertices() {
     std::vector<GLfloat> points = Constants::cube;
+    for (int x = 0; x < Constants::Chunks::CHUNK_SIZE; ++x) {
+        for (int y = 0; y < Constants::Chunks::CHUNK_SIZE; ++y) {
+
+        }
+    }
     model->createVBO(0, 3, points, GL_DYNAMIC_DRAW);
 
     auto uvSource = Renderer::getInstance().getTexturePack()->generateFromPosition(
-        Renderer::getInstance().getTexturePack()->decodeCoordinates((int) WorldTile::GRASS)
+        Renderer::getInstance().getTexturePack()->decodeCoordinates("genesis:grass")
     );
     auto uv = uvSource;
     for (int i = 0; i < 6; ++i)

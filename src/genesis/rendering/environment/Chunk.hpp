@@ -16,7 +16,7 @@ namespace genesis {
 // Y'know what, that's fucking brilliant.
 // We only need one model anyway. The chunk's chunkMap is intended to only consist of
 // the "blocks" (I say blocks, it's not properly 3D to justify that)
-typedef std::vector<std::vector<int>> FlatMap;
+typedef std::vector<std::vector<std::string>> FlatMap;
 typedef std::map<int, FlatMap> ChunkMap;
 // }}}
 

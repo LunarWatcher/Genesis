@@ -7,33 +7,36 @@
 
 namespace genesis {
 
-enum class WorldTile {
-    // Ground {{{
-    GRASS = 0, //
-    STONE = 1, //
-    // }}}
-    // Entities {{{
-    COLONIST_A = 12 * 16,
-    // }}}
+struct TextureMetadata {
+    /**
+     * Refers to the relative offset within the texture atlas.
+     */
+    int tileId;
+
+    /**
+     * Contains the underlying model for the texture.
+     */
+    std::shared_ptr<Model> model;
 };
 
 class TextureAtlas : public Texture {
 private:
     int atlasUnits;
 
-    std::map<WorldTile, std::shared_ptr<Model>> models;
+    std::map<std::string, TextureMetadata> models;
     std::vector<std::vector<GLfloat>> uvCoordinates;
 
 public:
     TextureAtlas(const std::string& sourceFile);
 
-    std::shared_ptr<Model> getModel(WorldTile type) {
+    std::shared_ptr<Model> getModel(const std::string& type) {
         // map takes care of returning a nullptr if the tile doesn't exist
         // But it shouldn't ever trigger a type that doesn't exist. Fucking bigbrain
         // right there, Olivia :blobthinksmart:
-        return models[type];
+        return models[type].model;
     }
 
+    std::pair<int, int> decodeCoordinates(const std::string& textureID);
     std::pair<int, int> decodeCoordinates(int offset);
 };
 
