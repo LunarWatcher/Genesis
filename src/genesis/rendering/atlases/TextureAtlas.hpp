@@ -10,8 +10,12 @@ namespace genesis {
 struct TextureMetadata {
     /**
      * Refers to the relative offset within the texture atlas.
+     *
+     * Not sure if we need to keep this in the long run.
      */
     int tileId;
+
+    std::vector<GLfloat> uvCoordinates;
 
     /**
      * Contains the underlying model for the texture.
@@ -24,20 +28,16 @@ private:
     int atlasUnits;
 
     std::map<std::string, TextureMetadata> models;
-    std::vector<std::vector<GLfloat>> uvCoordinates;
 
 public:
     TextureAtlas(const std::string& sourceFile);
 
-    std::shared_ptr<Model> getModel(const std::string& type) {
+    const TextureMetadata& getTextureMetadata(const std::string& type) {
         // map takes care of returning a nullptr if the tile doesn't exist
         // But it shouldn't ever trigger a type that doesn't exist. Fucking bigbrain
         // right there, Olivia :blobthinksmart:
-        return models[type].model;
+        return models[type];
     }
-
-    std::pair<int, int> decodeCoordinates(const std::string& textureID);
-    std::pair<int, int> decodeCoordinates(int offset);
 };
 
 } // namespace genesis

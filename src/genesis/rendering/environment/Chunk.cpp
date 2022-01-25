@@ -34,9 +34,8 @@ void Chunk::regenerateVertices() {
     }
     model->createVBO(0, 3, points, GL_DYNAMIC_DRAW);
 
-    auto uvSource = Renderer::getInstance().getTexturePack()->generateFromPosition(
-        Renderer::getInstance().getTexturePack()->decodeCoordinates("genesis:grass")
-    );
+    auto uvSource = Renderer::getInstance().getTexturePack()->getTextureMetadata("genesis:grass").uvCoordinates;
+
     auto uv = uvSource;
     for (int i = 0; i < 6; ++i)
         uv.insert(uv.end(), uvSource.begin(), uvSource.end());
