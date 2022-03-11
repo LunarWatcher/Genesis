@@ -48,7 +48,6 @@ void Chunk::regenerateVertices() {
 
             size_t offset = indices.size() / Constants::squareIndices.size() * (m + 1);
 
-            std::cout << offset << std::endl;
             for (size_t i = 0; i < Constants::squareIndices.size(); ++i) {
                 indices.push_back(Constants::squareIndices.at(i) + offset);
             }
