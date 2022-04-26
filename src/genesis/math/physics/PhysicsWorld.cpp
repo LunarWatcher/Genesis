@@ -16,6 +16,7 @@ void PhysicsWorld::tick() {
 
 void PhysicsWorld::clickElement(double x, double y) {
     glm::vec2 worldCoords = Renderer::getInstance().getCamera()->convertToWorld(x, y);
+    spdlog::info("XY: {}, {}", worldCoords.x, worldCoords.y);
     for (auto& scene : Renderer::getInstance().getActiveSceneStack()) {
         for (auto& controller : scene->getEntityControllers()) {
             if (controller->hasCollision(worldCoords)) {
