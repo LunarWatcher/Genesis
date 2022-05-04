@@ -19,17 +19,21 @@ WorldController::WorldController() : generator(std::make_shared<perlin::DumbGene
 }
 
 void WorldController::generate() {
+    // TODO: hook these up to an option or something.
+    // Might be worth doing a scaling factor (i.e. this is a medium world, small worlds are these mulitplied by 0.5, large is multiplied by 2, huge by 4, or
+    // something. Idk, figure it out, future me)
+    // TODO: add disk caching and sane world generation
+    int xChunks = 30;
+    int yChunks = 20;
     entityControllers.push_back(std::make_shared<PlayerCamp>());
-    //entityControllers[0]->addEntity(
-        //std::make_shared<Entity>(Renderer::getInstance().getTexturePack()->getModel(WorldTile::COLONIST_A),
-            //glm::vec3{2, 2, 0.1}, glm::vec3{0, 0, 0}, 1));
+    // I don't know how the coordinate systems should work
 
-    //auto chunk = std::make_shared<Chunk>(-1, 0);
-
-    //this->chunks.push_back(chunk);
-    auto chunk2 = std::make_shared<Chunk>(0, 0);
-
-    this->chunks.push_back(chunk2);
+    for (long long x = -xChunks / 2; x <= xChunks / 2; ++x) {
+        for (long long y = -yChunks / 2; y <= yChunks; ++y) {
+            auto chunk = std::make_shared<Chunk>(x, y);
+            chunks.push_back(chunk);
+        }
+    }
 
 }
 

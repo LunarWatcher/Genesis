@@ -39,7 +39,7 @@ Settings::Settings() {
             }
         }
     } else {
-        if(!hasFolder && !fs::create_directory(home, ".genesis")) {
+        if(!hasFolder && !fs::create_directory(home / ".genesis")) {
             throw std::runtime_error("Failed to create settings directory");
         }
     }
