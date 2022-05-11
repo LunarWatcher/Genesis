@@ -1,4 +1,5 @@
 #include "PhysicsWorld.hpp"
+#include "genesis/math/physics/Ray.hpp"
 #include "genesis/rendering/Renderer.hpp"
 #include "spdlog/spdlog.h"
 
@@ -15,15 +16,14 @@ void PhysicsWorld::tick() {
 }
 
 void PhysicsWorld::clickElement(double x, double y) {
-    glm::vec2 worldCoords = Renderer::getInstance().getCamera()->convertToWorld(x, y);
-    spdlog::info("XY: {}, {}", worldCoords.x, worldCoords.y);
-    for (auto& scene : Renderer::getInstance().getActiveSceneStack()) {
-        for (auto& controller : scene->getEntityControllers()) {
-            if (controller->hasCollision(worldCoords)) {
-                break;
-            }
-        }
-    }
+    std::shared_ptr<Entity> touched = Ray::doesIntersect(Ray::normalizeScreenCoords(x, y));
+    //for (auto& scene : Renderer::getInstance().getActiveSceneStack()) {
+        //for (auto& controller : scene->getEntityControllers()) {
+            //if (controller->hasCollision(worldCoords)) {
+                //break;
+            //}
+        //}
+    //}
 
 }
 

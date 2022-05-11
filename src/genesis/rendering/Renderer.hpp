@@ -62,6 +62,7 @@ private:
     std::shared_ptr<PhysicsWorld> physicsController;
 
     std::shared_ptr<InputManager> inputManager;
+
     /**
      * Vector of active scenes.
      *
