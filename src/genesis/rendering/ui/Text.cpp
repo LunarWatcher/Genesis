@@ -1,4 +1,5 @@
 #include "Text.hpp"
+#include "genesis/math/physics/Ray.hpp"
 #include "genesis/math/physics/Rectangle.hpp"
 #include "genesis/rendering/Renderer.hpp"
 #include "genesis/conf/Settings.hpp"
@@ -81,7 +82,11 @@ void TextEntity::regenerateVertices(const std::string& text, float x, float y, f
         // x is incremented either way, largely to enable spaces
         x += (characterData->advanceX >> 6) * scale;
     }
-    Entity::position = glm::vec3{ sourceX * 2.0 / Settings::instance->getInt("width") - 1, (sourceY + firstLineOffset) * 2.0 / Settings::instance->getInt("height") - 1, 0 };
+    Entity::position = glm::vec3{
+        Ray::normalizeScreenCoords(sourceX, sourceY + firstLineOffset),
+        //sourceX * 2.0 / Settings::instance->getInt("width") - 1,
+        //1.0 - (sourceY + firstLineOffset) * 2.0 / Settings::instance->getInt("height"),
+        0 };
     this->collider->setDims(maxX - sourceX, maxY - sourceY);
     this->collider->update(*this);
     this->model->createVBO(0, 2, points);

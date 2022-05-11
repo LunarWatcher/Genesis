@@ -11,6 +11,7 @@
 
 namespace genesis {
 
+
 /**
  * Controls a system of entities, which can be considered to be equal to a team.
  *

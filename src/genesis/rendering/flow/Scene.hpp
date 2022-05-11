@@ -8,7 +8,12 @@ namespace genesis {
 class Scene : public PhysicsController {
 protected:
     bool _isActive;
+    bool _usesOrtho = false;
+
 public:
+    Scene() = default;
+    Scene(bool _usesOrtho) : _usesOrtho(_usesOrtho) {}
+
     virtual ~Scene() = default;
 
     virtual void render() = 0;
@@ -25,6 +30,13 @@ public:
 
     bool isActive() const { return _isActive; }
     void setActive(bool active) { _isActive = active; }
+
+    // Whether or not the scene is a UI scene
+    // Returns true if the scene uses an orthographic projection,
+    // false if it uses a perspective projection.
+    virtual bool usesOrtho() {
+        return _usesOrtho;
+    }
 };
 
 }

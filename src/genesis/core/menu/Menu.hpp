@@ -29,6 +29,7 @@ public:
     void tick() override;
 
     const std::vector<std::shared_ptr<EntityController>>& getEntityControllers() override;
+
 };
 
 }

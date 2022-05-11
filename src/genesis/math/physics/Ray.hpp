@@ -8,26 +8,44 @@ namespace genesis {
 
 namespace Ray {
 
-glm::vec2 normalizeScreenCoords(double x, double y) {
+// TODO: move to source file
+inline glm::vec2 normalizeScreenCoords(double x, double y) {
     return {
         (2.0 * x) / Settings::instance->getInt("height") - 1.0,
         1.0 - (2.0 * y) / Settings::instance->getInt("height")
     };
 }
 
-std::shared_ptr<Entity> doesIntersect(const glm::vec2& normalizedScreenCoords) {
+inline void traceClick(const glm::vec2& rawCoords, const glm::vec2& normalizedScreenCoords) {
     Renderer& renderer = Renderer::getInstance();
-
-    glm::vec4 rayClip(normalizedScreenCoords, -1.0, 1.0);
 
     auto& stack = renderer.getActiveSceneStack();
 
     for (auto& scene : stack) {
-        //glm::vec4 eyeRay = glm::inverse(scene->)
+        if (!scene->usesOrtho()) {
+
+            glm::vec4 rayClip(normalizedScreenCoords, -1.0, 1.0);
+            glm::vec4 eyeRay = glm::inverse(renderer.getCamera()->getPerspectiveMatrix()) * rayClip;
+            eyeRay.z = -1.0;
+            eyeRay.w = 0.0;
+
+            glm::vec3 worldRay = (glm::inverse(renderer.getCamera()->getViewMatrix()) * eyeRay);
+            worldRay = glm::normalize(worldRay);
+
+            spdlog::info("XYZ: {}, {}, {}", worldRay.x, worldRay.y, worldRay.z);
+        } else {
+            spdlog::info("Attempting collision check");
+            for (auto& controller : scene->getEntityControllers()) {
+                if (controller->hasCollision(normalizedScreenCoords)) {
+                    spdlog::info("Match");
+                    goto outer;
+                }
+            }
+        }
         scene.get();
     }
 
-    return nullptr;
+outer:;
 }
 
 }

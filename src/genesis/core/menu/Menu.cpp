@@ -6,7 +6,7 @@
 namespace genesis {
 
 // MenuScene {{{
-MenuScene::MenuScene() {
+MenuScene::MenuScene() : Scene(true) {
     auto uiController = std::make_shared<MenuController>();
     this->entityControllers.push_back(uiController);
 }
