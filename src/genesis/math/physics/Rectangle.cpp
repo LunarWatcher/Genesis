@@ -15,7 +15,7 @@ bool Rectangle::collidesWith(const Rectangle &other, bool anyZ) {
     return aW >= other.x
         && bW >= x
         && aH >= other.y
-        && bH >= y;
+        && bH <= y;
 }
 
 

@@ -4,6 +4,8 @@
 #include "genesis/rendering/Renderer.hpp"
 #include "genesis/conf/Settings.hpp"
 
+#include "genesis/rendering/debug/DebugScene.hpp"
+
 #include "spdlog/spdlog.h"
 
 #include <iostream>
@@ -26,7 +28,7 @@ void TextEntity::regenerateVertices(const std::string& text, float x, float y, f
     const float sourceX = x;
     const float sourceY = y;
     float firstLineOffset = -9999;
-    float maxX = -9999, maxY = -9999;
+    float maxX = sourceX, maxY = sourceY;
 
     // Convert the string. Utility for dealing with unicode
     // Purely future-compatible at this time, however. While unicode is supported
@@ -83,20 +85,27 @@ void TextEntity::regenerateVertices(const std::string& text, float x, float y, f
         x += (characterData->advanceX >> 6) * scale;
     }
     Entity::position = glm::vec3{
-        Ray::normalizeScreenCoords(sourceX, sourceY + firstLineOffset),
+        sourceX,
+        sourceY + firstLineOffset,
         //sourceX * 2.0 / Settings::instance->getInt("width") - 1,
         //1.0 - (sourceY + firstLineOffset) * 2.0 / Settings::instance->getInt("height"),
         0 };
     this->collider->setDims(maxX - sourceX, maxY - sourceY);
     this->collider->update(*this);
+
     this->model->createVBO(0, 2, points);
     this->model->createVBO(1, 2, uv);
 
     this->model->vertices = points.size() / 2;
+    regenerateTransMatrix();
+
+    Renderer::getInstance().getDebugScene()->debugRect(
+        std::static_pointer_cast<Rectangle>(this->collider)
+    );
 }
 
-void TextEntity::render() {
-    model->render();
-}
+//void TextEntity::render() {
+    //model->render();
+//}
 
 } // namespace genesis

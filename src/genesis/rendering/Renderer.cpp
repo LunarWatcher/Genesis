@@ -10,6 +10,7 @@
 #include "genesis/conf/Settings.hpp"
 
 #include "genesis/core/menu/Menu.hpp"
+#include "genesis/rendering/debug/DebugScene.hpp"
 
 #include <chrono>
 #include <codecvt>
@@ -69,10 +70,12 @@ Renderer::Renderer() {
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
 
+    debugScene = std::make_shared<DebugScene>();
     initGame();
     initFonts();
 
     auto menu = std::make_shared<MenuScene>();
+
     transition(menu);
     logger->info("Initialized menu");
 }
@@ -87,6 +90,7 @@ void Renderer::initGame() {
 
 
     this->textureShader = std::make_shared<DefaultShader>();
+    this->primitiveShader = std::make_shared<DefaultShader>("primitive");
     this->textShader = std::make_shared<TextShader>();
     this->particleShader = std::make_shared<ParticleShader>();
 
@@ -194,6 +198,8 @@ void Renderer::transition(const std::shared_ptr<Scene>& scene) {
     }
     activeSceneStack.clear();
     activeSceneStack.push_back(scene);
+
+    activeSceneStack.push_back(debugScene);
 }
 
 void Renderer::add(const std::shared_ptr<Scene>& scene) {

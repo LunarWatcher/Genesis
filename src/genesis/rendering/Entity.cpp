@@ -12,8 +12,11 @@ void Entity::tick() {
 }
 
 void Entity::render() {
+    if (Shader::getActive() == nullptr) {
+        throw std::runtime_error("Shader not activated prior to render");
+    }
     regenerateTransMatrix();
-    Renderer::getInstance().getTextureShader()->loadTransMatrix(this->transMatrix);
+    Shader::getActive()->loadTransMatrix(this->transMatrix);
     model->render();
 }
 

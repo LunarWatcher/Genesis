@@ -8,6 +8,7 @@ namespace genesis {
 TextShader::TextShader() : Shader("text") {
     textColor = this->getUniformLocation("textColor");
     orthoMatrix = this->getUniformLocation("orthoMatrix");
+    transform = this->getUniformLocation("transMatrix");
 
     apply();
     loadTextColor({0.0, 0.0, 0.0, 1.0});
@@ -21,6 +22,10 @@ void TextShader::loadTextColor(const glm::vec4& mVec) {
 
 void TextShader::loadOrthoMatrix(const glm::mat4& matrix) {
     glUniformMatrix4fv(this->orthoMatrix, 1, GL_FALSE, glm::value_ptr(matrix));
+}
+
+void TextShader::loadTransMatrix(const glm::mat4& matrix) {
+    glUniformMatrix4fv(this->transform, 1, GL_FALSE, glm::value_ptr(matrix));
 }
 
 } // namespace genesis

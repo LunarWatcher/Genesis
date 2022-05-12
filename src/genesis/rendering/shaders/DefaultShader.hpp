@@ -15,8 +15,9 @@ private:
 
 public:
     DefaultShader();
+    DefaultShader(const std::string& source);
 
-    void loadTransMatrix(const glm::mat4& matrix);
+    void loadTransMatrix(const glm::mat4& matrix) override;
     void loadViewMatrix(glm::mat4 matrix);
     void loadProjectionMatrix(glm::mat4 matrix);
 };

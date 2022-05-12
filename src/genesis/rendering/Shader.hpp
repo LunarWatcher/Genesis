@@ -3,11 +3,16 @@
 #include "GL/glew.h"
 #include <string>
 #include <vector>
+#include <stdexcept>
+
+#include "glm/glm.hpp"
 
 namespace genesis {
 
 class Shader {
 protected:
+    static inline Shader* active = nullptr;
+
     GLuint programID;
     GLint getUniformLocation(const std::string& uniformName);
 
@@ -22,12 +27,23 @@ public:
     void compileShader(int shaderID, const std::string& shaderSource);
     void createProgram(const std::vector<int>& shaderIDs);
 
+
+    virtual void loadTransMatrix(const glm::mat4&) {
+        throw std::runtime_error("loadTransMatrix called but not implemented.");
+    }
+
     virtual void apply() {
+        active = this;
         glUseProgram(programID);
     }
 
     virtual void stop() {
+        active = nullptr;
         glUseProgram(0);
+    }
+
+    static Shader* getActive() {
+        return active;
     }
 };
 

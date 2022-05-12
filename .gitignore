@@ -436,3 +436,6 @@ FodyWeavers.xsd
 *.exe
 *.out
 *.app
+
+# Exceptions
+!src/genesis/rendering/debug/

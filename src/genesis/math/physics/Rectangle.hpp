@@ -16,6 +16,12 @@ public:
 
     void setDims(const double& width, const double& height) override;
     void update(const Entity& e) override;
+
+    double getX() { return x; }
+    double getY() { return y; }
+    double getZ() { return z; }
+    double getWidth() { return width; }
+    double getHeight() { return height; }
 };
 
 }

@@ -19,7 +19,7 @@ private:
 public:
     TextEntity(const std::string& text, float x, float y, float scale = 1, const glm::vec4& color = {1, 0, 0, 1});
 
-    void render() override;
+    //void render() override;
 
     // Text setting
     // The ones involving position are gonna need to be altered if a matrix is used

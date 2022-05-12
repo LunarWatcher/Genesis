@@ -6,6 +6,7 @@ set (SOURCE_FILES
     # }}}
     # Scenes {{{
     genesis/core/menu/Menu.cpp
+    genesis/rendering/debug/DebugScene.cpp
     # }}}
     # Shaders {{{
     genesis/rendering/shaders/DefaultShader.cpp
@@ -48,6 +49,7 @@ set (SOURCE_FILES
     genesis/math/Perlin.cpp
     # Physics {{{
     genesis/math/physics/Rectangle.cpp
+    genesis/rendering/objects/Primitive.cpp
     genesis/math/physics/PhysicsWorld.cpp
     genesis/math/physics/PhysicsController.cpp
     # }}}
@@ -73,6 +75,7 @@ set (resources
     shaders/default.frag shaders/default.vert
     shaders/text.frag shaders/text.vert
     shaders/particle.frag shaders/particle.vert
+    shaders/primitive.frag shaders/primitive.vert
     # }}}
     images/programmer.png
 )

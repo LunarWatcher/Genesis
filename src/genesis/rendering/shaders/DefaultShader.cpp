@@ -12,7 +12,8 @@
 
 namespace genesis {
 
-DefaultShader::DefaultShader() : Shader("default") {
+DefaultShader::DefaultShader() : DefaultShader("default") {}
+DefaultShader::DefaultShader(const std::string& shader) : Shader(shader) {
     transform = this->getUniformLocation("transMatrix");
     view = this->getUniformLocation("viewMatrix");
     projection = this->getUniformLocation("projectionMatrix");

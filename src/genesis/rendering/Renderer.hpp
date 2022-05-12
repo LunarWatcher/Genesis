@@ -44,6 +44,8 @@ inline void GLAPIENTRY MessageCallback(
 namespace genesis {
 
 class WorldController;
+class DebugScene;
+
 class Renderer {
 private:
     static std::shared_ptr<spdlog::logger> logger;
@@ -53,6 +55,7 @@ private:
     std::shared_ptr<Camera> camera;
 
     std::shared_ptr<DefaultShader> textureShader;
+    std::shared_ptr<DefaultShader> primitiveShader;
     std::shared_ptr<TextShader> textShader;
     std::shared_ptr<ParticleShader> particleShader;
 
@@ -76,6 +79,7 @@ private:
      * Essentially, suspended scenes are still considered active
      */
     std::vector<std::shared_ptr<Scene>> activeSceneStack;
+    std::shared_ptr<DebugScene> debugScene;
 
     double delta;
 
@@ -142,6 +146,14 @@ public:
 
     auto getTextShader() {
         return textShader;
+    }
+
+    auto getPrimitiveShader() { 
+        return primitiveShader;
+    }
+
+    auto getDebugScene() {
+        return debugScene;
     }
 
     template <typename T>
