@@ -5,10 +5,10 @@ namespace genesis {
 Primitive::Primitive(float x, float y, float z, float width, float height)
     : Entity(std::make_shared<Model>(
         std::vector<GLfloat>{
-            0.0f, height, 0.0f,
-            0.0f, 0.0f, 0.0f,
-            width, 0.0f, 0.0f,
-            width, height, 0.0f
+            x, y + height, z,
+            x, y, z,
+            x + width, y, z,
+            x + width, y + height, z
         },
         [](Model* m) {
             m->setRenderType(GL_LINE_LOOP);

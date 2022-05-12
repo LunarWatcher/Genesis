@@ -86,7 +86,7 @@ void TextEntity::regenerateVertices(const std::string& text, float x, float y, f
     }
     Entity::position = glm::vec3{
         sourceX,
-        sourceY + firstLineOffset,
+        sourceY,
         //sourceX * 2.0 / Settings::instance->getInt("width") - 1,
         //1.0 - (sourceY + firstLineOffset) * 2.0 / Settings::instance->getInt("height"),
         0 };
@@ -104,8 +104,8 @@ void TextEntity::regenerateVertices(const std::string& text, float x, float y, f
     );
 }
 
-//void TextEntity::render() {
-    //model->render();
-//}
+void TextEntity::render() {
+    model->render();
+}
 
 } // namespace genesis

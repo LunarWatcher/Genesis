@@ -63,7 +63,9 @@ Camera::Camera() {
 
 void Camera::regenerateCameraMatrix() {
     this->matrix
-        = glm::lookAt(this->position, glm::vec3{this->position.x, this->position.y, 0}, glm::vec3{0.0f, 1.0f, 0.0f});
+        = glm::lookAt(this->position,
+                      glm::vec3{this->position.x, this->position.y, 0},
+                      glm::vec3{0.0f, 1.0f, 0.0f});
 }
 
 void Camera::setYLayer(int newLayer) {
