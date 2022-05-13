@@ -34,7 +34,6 @@ inline void traceClick(const glm::vec2& rawCoords, const glm::vec2& normalizedSc
 
             spdlog::info("XYZ: {}, {}, {}", worldRay.x, worldRay.y, worldRay.z);
         } else {
-            spdlog::info("Attempting collision check");
             for (auto& controller : scene->getEntityControllers()) {
                 if (controller->hasCollision(rawCoords)) {
                     spdlog::info("Match");

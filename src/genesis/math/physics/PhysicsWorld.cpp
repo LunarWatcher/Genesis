@@ -19,13 +19,6 @@ void PhysicsWorld::tick() {
 void PhysicsWorld::clickElement(double x, double y) {
     Ray::traceClick({x, Settings::instance->getInt("height") - y},
         Ray::normalizeScreenCoords(x, y));
-    //for (auto& scene : Renderer::getInstance().getActiveSceneStack()) {
-        //for (auto& controller : scene->getEntityControllers()) {
-            //if (controller->hasCollision(worldCoords)) {
-                //break;
-            //}
-        //}
-    //}
 
 }
 

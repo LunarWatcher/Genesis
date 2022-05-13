@@ -13,9 +13,9 @@ bool Rectangle::collidesWith(const Rectangle &other, bool anyZ) {
            bW = other.x + other.width,
            bH = other.y + other.height;
     return other.x >= x
-        && other.y <= y
+        && other.y >= y
         && other.x <= aW
-        && other.y >= bH;
+        && other.y <= aH;
 }
 
 

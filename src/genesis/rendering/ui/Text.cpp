@@ -27,7 +27,7 @@ void TextEntity::regenerateVertices(const std::string& text, float x, float y, f
     // Cache variable to store the leftmost x for newline operations
     const float sourceX = x;
     const float sourceY = y;
-    float firstLineOffset = -9999;
+    float firstLineOffset = 9999;
     float maxX = sourceX, maxY = sourceY;
 
     // Convert the string. Utility for dealing with unicode
@@ -37,7 +37,6 @@ void TextEntity::regenerateVertices(const std::string& text, float x, float y, f
 
     // Raw data
     VertexArray points, uv;
-    bool firstLine = true;
 
     for (auto& character : wide) {
         // Look for a character
@@ -50,7 +49,6 @@ void TextEntity::regenerateVertices(const std::string& text, float x, float y, f
         // This is the only character to modify y and reset x atm.
         // That is gonna change when text wrapping is implemented
         if (character == L'\n') {
-            firstLine = false;
             y -= (characterData->advanceY >> 6) * scale;
             x = sourceX;
             continue;
@@ -58,6 +56,9 @@ void TextEntity::regenerateVertices(const std::string& text, float x, float y, f
 
         // Only render characters with textures
         if (characterData->textureX != -1 && characterData->textureY != -1) {
+            if (points.empty()) {
+                y -= characterData->bitmapHeight;
+            }
             float xPos = x + characterData->bitmapLeft * scale;
             float yPos = y - (characterData->bitmapHeight - characterData->bitmapTop) * scale;
 
@@ -66,7 +67,6 @@ void TextEntity::regenerateVertices(const std::string& text, float x, float y, f
 
             maxX = std::max(maxX, xPos + width);
             maxY = std::max(maxY, yPos + height);
-            if (firstLine) firstLineOffset = std::max(firstLineOffset, yPos);
 
             // clang-format off
             points.insert(points.end(), {
@@ -86,11 +86,11 @@ void TextEntity::regenerateVertices(const std::string& text, float x, float y, f
     }
     Entity::position = glm::vec3{
         sourceX,
-        sourceY,
+        y,
         //sourceX * 2.0 / Settings::instance->getInt("width") - 1,
         //1.0 - (sourceY + firstLineOffset) * 2.0 / Settings::instance->getInt("height"),
         0 };
-    this->collider->setDims(maxX - sourceX, maxY - sourceY);
+    this->collider->setDims(maxX - sourceX, maxY - y);
     this->collider->update(*this);
 
     this->model->createVBO(0, 2, points);
@@ -99,9 +99,9 @@ void TextEntity::regenerateVertices(const std::string& text, float x, float y, f
     this->model->vertices = points.size() / 2;
     regenerateTransMatrix();
 
-    Renderer::getInstance().getDebugScene()->debugRect(
-        std::static_pointer_cast<Rectangle>(this->collider)
-    );
+    //Renderer::getInstance().getDebugScene()->debugRect(
+        //std::static_pointer_cast<Rectangle>(this->collider)
+    //);
 }
 
 void TextEntity::render() {
