@@ -27,7 +27,6 @@ void TextEntity::regenerateVertices(const std::string& text, float x, float y, f
     // Cache variable to store the leftmost x for newline operations
     const float sourceX = x;
     const float sourceY = y;
-    float firstLineOffset = 9999;
     float maxX = sourceX, maxY = sourceY;
 
     // Convert the string. Utility for dealing with unicode
@@ -87,8 +86,6 @@ void TextEntity::regenerateVertices(const std::string& text, float x, float y, f
     Entity::position = glm::vec3{
         sourceX,
         y,
-        //sourceX * 2.0 / Settings::instance->getInt("width") - 1,
-        //1.0 - (sourceY + firstLineOffset) * 2.0 / Settings::instance->getInt("height"),
         0 };
     this->collider->setDims(maxX - sourceX, maxY - y);
     this->collider->update(*this);
@@ -99,9 +96,7 @@ void TextEntity::regenerateVertices(const std::string& text, float x, float y, f
     this->model->vertices = points.size() / 2;
     regenerateTransMatrix();
 
-    //Renderer::getInstance().getDebugScene()->debugRect(
-        //std::static_pointer_cast<Rectangle>(this->collider)
-    //);
+
 }
 
 void TextEntity::render() {
