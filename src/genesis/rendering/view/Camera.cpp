@@ -76,26 +76,4 @@ void Camera::setYLayer(int newLayer) {
     this->activeYLayer = newLayer;
 }
 
-glm::vec2 Camera::convertToWorld(double mouseX, double mouseY) {
-    GLfloat z;
-
-    GLfloat x = mouseX,
-          y = 576 - mouseY;
-
-    // TODO: make this shit better. See also text.frag
-    // Read: Fuck alpha, this shit breaks when there's alpha
-    glReadPixels(x, y, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &z);
-
-    return glm::vec2{
-        glm::unProject(
-            glm::vec3{
-                x, y, z
-            },
-            this->matrix,
-            this->perspectiveMatrix,
-            glm::vec4{0, 0, 1024.0, 576.0}
-        )
-    };
-}
-
 } // namespace genesis

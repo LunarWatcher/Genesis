@@ -19,7 +19,7 @@ private:
      * Changing the up vector should affect camera rotation, but that's probably an unnecessary
      * feature.
      */
-    glm::vec3 position = {1, 1, 5};
+    glm::vec3 position = {0, 0, 5};
     glm::mat4 matrix;
 
     glm::mat4 orthoMatrix;
@@ -32,12 +32,15 @@ public:
     Camera();
 
     void regenerateCameraMatrix();
-    glm::vec2 convertToWorld(double mouseX, double mouseY);
 
     void setYLayer(int newLayer);
 
     int getActiveY() {
         return activeYLayer;
+    }
+
+    const glm::vec3& getPosition() {
+        return position;
     }
 
     const glm::mat4 getViewMatrix() {

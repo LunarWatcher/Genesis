@@ -26,14 +26,18 @@ void WorldController::generate() {
     int xChunks = 30;
     int yChunks = 20;
     entityControllers.push_back(std::make_shared<PlayerCamp>());
+    // TODO: add a chunk controller, though I'm not sure how we want to do that.
+    // It's heavily state-dependent, but I think we're good as long as all the chunks have collisions.
+
     // I don't know how the coordinate systems should work
 
-    for (long long x = -xChunks / 2; x <= xChunks / 2; ++x) {
-        for (long long y = -yChunks / 2; y <= yChunks; ++y) {
-            auto chunk = std::make_shared<Chunk>(x, y);
-            chunks.push_back(chunk);
-        }
-    }
+    chunks.push_back(std::make_shared<Chunk>(0, 0));
+    //for (long long x = -xChunks / 2; x <= xChunks / 2; ++x) {
+        //for (long long y = -yChunks / 2; y <= yChunks; ++y) {
+            //auto chunk = std::make_shared<Chunk>(x, y);
+            //chunks.push_back(chunk);
+        //}
+    //}
 
 }
 

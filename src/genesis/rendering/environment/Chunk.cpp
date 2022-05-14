@@ -7,23 +7,31 @@
 #include "genesis/rendering/shaders/DefaultShader.hpp"
 #include <algorithm>
 
+#include "genesis/math/physics/Rectangle.hpp"
+#include "genesis/rendering/debug/DebugScene.hpp"
+
 namespace genesis {
 
-Chunk::Chunk(int chunkX, int chunkY) : Entity(std::make_shared<Model>(), glm::vec3{chunkX * 16, chunkY * 16, 0}), chunkX(chunkX), chunkY(chunkY) {
+Chunk::Chunk(int chunkX, int chunkY) : Entity(std::make_shared<Model>(), glm::vec3{chunkX * Constants::Chunks::CHUNK_SIZE, chunkY * Constants::Chunks::CHUNK_SIZE, 0}), chunkX(chunkX), chunkY(chunkY) {
     Renderer::getInstance().getSceneByType<WorldController>()->getNoiseGenerator()->generateChunk(this->chunkMap, chunkX, chunkY);
     model->mode = GL_DYNAMIC_DRAW;
     model->createVAO();
     // when we create the VBO, we want to
-    model->createVBO(0, 3, 3 * Constants::Chunks::WORST_CASE_SIZE);
-    model->createVBO(1, 2, 2 * Constants::Chunks::WORST_CASE_SIZE);
-    model->bindIndexBuffer(2 * Constants::Chunks::WORST_CASE_SIZE);
+    model->createVBO(0, 3, 3ll * Constants::Chunks::WORST_CASE_SIZE);
+    model->createVBO(1, 2, 2ll * Constants::Chunks::WORST_CASE_SIZE);
+    model->bindIndexBuffer(2ll * Constants::Chunks::WORST_CASE_SIZE);
     for (int x = 0; x < Constants::Chunks::CHUNK_SIZE; ++x) {
         for (int y = 0; y < Constants::Chunks::CHUNK_SIZE; ++y) {
             this->chunkMap.at(0).at(y).at(x) = "genesis:dirt";
         }
     }
+    
     regenerateVertices();
     glBindVertexArray(0);
+
+    initializeCollider(std::make_shared<Rectangle>(0, 0, 0, Constants::Chunks::CHUNK_SIZE, Constants::Chunks::CHUNK_SIZE));
+    collider->update(*this);
+    Renderer::getInstance().getDebugScene()->debugRect(std::static_pointer_cast<Rectangle>(collider));
 }
 
 void Chunk::regenerateVertices() {
