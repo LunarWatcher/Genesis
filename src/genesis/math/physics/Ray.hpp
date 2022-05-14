@@ -37,14 +37,13 @@ inline void traceClick(const glm::vec2& rawCoords, const glm::vec2& normalizedSc
             for (auto& controller : scene->getEntityControllers()) {
                 if (controller->hasCollision(rawCoords)) {
                     spdlog::info("Match");
-                    goto outer;
+                    return;
                 }
             }
         }
         scene.get();
     }
 
-outer:;
 }
 
 }
