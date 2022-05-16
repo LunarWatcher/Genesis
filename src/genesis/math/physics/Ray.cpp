@@ -29,21 +29,33 @@ void Ray::traceClick(const glm::vec2& rawCoords, const glm::vec2& normalizedScre
             worldRay = glm::normalize(worldRay);
 
             spdlog::info("Base XYZ: {}, {}, {}", worldRay.x, worldRay.y, worldRay.z);
+            // this is deceptively simple, but not in any way flexible.
+            // We assume raycasting only is performed for our world, where the z is discrete anyway, and it's mostly tiled.
+            // We just need to find the difference:
+            // This is a real nasty hack taking advantage of how this particular world works.
+            // This isn't true raycasting per se, but it's good enough for converting to world coordinates.
+            //
+            // The hack here is that z = 0 is representative for the current layer. There's only one layer rendered at a time,
+            // so we can use:
+            //   camPos.z + n * worldRay.z = ground.z = 0
+            //   n * worldRay.z = -camPos.z => n = -camPos.z / worldRay.z
+            //
+            // If you're here to copy code for your own game (at least give me a footnote in the acknowledgements if you do),
+            // this is a nasty hack based on an assumption about this spcific game.
+            // Because everything is at z = 0, the above equation works.
+            // In other cases, you have to determine the z manually with the raycasting process. Depending on the game, the math
+            // for that ranges from trivial elementary school math to shit there's several papers about.
+            //
+            // Mind the minus, though! Dropping it breaks the math.
+            double dist = -renderer.getCamera()->getPosition().z / worldRay.z;
 
-            for (int i = 0; i < 20; ++i) {
-                // get a point on the ray
-                glm::vec3 coords = renderer.getCamera()->getPosition() + ((float) i) * worldRay;
-                spdlog::info("XYZ: {}, {}, {}", coords.x, coords.y, coords.z);
+            glm::vec3 coords = renderer.getCamera()->getPosition() + ((float) dist) * worldRay;
+            //spdlog::info("XYZ: {}, {}, {}", coords.x, coords.y, coords.z);
 
-                for (auto& controller : scene->getEntityControllers()) {
-                    if (controller->hasCollision(coords)) {
-                        spdlog::info("Match");
-                        return;
-                    }
-                }
-                if (coords.z <= 0) {
-                    spdlog::info("Terminating");
-                    break;
+            for (auto& controller : scene->getEntityControllers()) {
+                if (controller->hasCollision(coords)) {
+                    spdlog::info("Match");
+                    return;
                 }
             }
 
