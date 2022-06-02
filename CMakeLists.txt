@@ -1,12 +1,9 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.15)
 project(Genesis)
 
 if ( ${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR} )
     message( FATAL_ERROR "In-source builds not allowed. Please make a new directory and run CMake from there, or use the -B argument." )
 endif()
-
-
-set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL")
 
 set (CMAKE_CXX_STANDARD 20)
 
@@ -44,8 +41,8 @@ if (NOT WIN32)
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-volatile")
 
 else()
-    set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
-    # I _think_ CMAKE should be able to figure out windows flags wrt. frameworks
+
+    # As of CMake 3.15, no manual MSVC framework options have to be set
     set (CMAKE_CXX_FLAGS_DEBUG "/Zi")
 endif()
 
