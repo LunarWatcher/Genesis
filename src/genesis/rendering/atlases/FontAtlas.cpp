@@ -56,8 +56,14 @@ FontAtlas::FontAtlas(const std::string& font) {
         this->characterMap[mChar] = Character{
             face->glyph->advance.x, //
             face->glyph->advance.y, //
+#ifndef _WIN32
             face->glyph->bitmap.width, //
             face->glyph->bitmap.rows, //
+#else
+            // Fuck you Windows
+            static_cast<int>(face->glyph->bitmap.width),
+            static_cast<int>(face->glyph->bitmap.rows),
+#endif
             face->glyph->bitmap_left, //
             face->glyph->bitmap_top, //
             hasDimensions ? x : -1, hasDimensions ? y : -1 //
@@ -86,15 +92,15 @@ FontAtlas::FontAtlas(const std::string& font) {
 }
 
 std::vector<float> FontAtlas::generateUVCoords(const Character& chr) {
-    double x = chr.textureX;
-    double y = chr.textureY;
-    double width = chr.bitmapWidth;
-    double height = chr.bitmapHeight;
+    float x = chr.textureX;
+    float y = chr.textureY;
+    float width = chr.bitmapWidth;
+    float height = chr.bitmapHeight;
 
-    double reX = ((double) x) / DIMENSIONS;
-    double reY = ((double) y) / DIMENSIONS;
-    double newX = ((double) x + width) / DIMENSIONS;
-    double newY = ((double) y + height) / DIMENSIONS;
+    float reX = ((float) x) / DIMENSIONS;
+    float reY = ((float) y) / DIMENSIONS;
+    float newX = ((float) x + width) / DIMENSIONS;
+    float newY = ((float) y + height) / DIMENSIONS;
     // reX += 1.0 / DIMENSIONS;
     // reY += 1.0 / DIMENSIONS;
     // newX -= 1.0 / DIMENSIONS;

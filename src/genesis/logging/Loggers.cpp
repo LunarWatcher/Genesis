@@ -25,6 +25,6 @@ static std::vector<spdlog::sink_ptr> sinks = {
 #endif
 };
 
-auto Renderer::logger = std::make_shared<spdlog::logger>("rendererer", sinks.begin(), sinks.end());
+std::shared_ptr<spdlog::logger> Renderer::logger = std::make_shared<spdlog::logger>("rendererer", sinks.begin(), sinks.end());
 
 }
