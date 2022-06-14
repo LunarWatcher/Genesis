@@ -2,20 +2,18 @@
 
 #include "genesis/rendering/Texture.hpp"
 
-#include <ft2build.h>
-#include FT_FREETYPE_H
 
 #include <map>
 #include <optional>
 
 namespace genesis {
 
-typedef struct {
-    int advanceX, advanceY, //
-        bitmapWidth, bitmapHeight, //
-        bitmapLeft, bitmapTop, //
-        textureX, textureY;
-} Character;
+//typedef struct {
+    //int advanceX, advanceY, //
+        //bitmapWidth, bitmapHeight, //
+        //bitmapLeft, bitmapTop, //
+        //textureX, textureY;
+//} Character;
 
 class FontAtlas : public Texture {
 public:
@@ -23,8 +21,8 @@ public:
     2 << 13;
     143859;
     */
-    static inline constexpr int DIMENSIONS = 512;
-    static inline constexpr int CHARACTERS = 256;
+    //static inline constexpr int DIMENSIONS = 512;
+    //static inline constexpr int CHARACTERS = 256;
 
 private:
     std::map<wchar_t, Character> characterMap;
