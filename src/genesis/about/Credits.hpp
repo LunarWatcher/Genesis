@@ -1,5 +1,8 @@
 #pragma once
 
+#include <string>
+#include <vector>
+
 namespace genesis {
 
 enum class ProductCategory {
@@ -14,7 +17,7 @@ typedef struct {
     const std::string url;
     const std::string author;
 
-    const ThirdPartyCategory category;
+    const ProductCategory category;
 } ProductEntry;
 
 typedef struct {
@@ -31,7 +34,7 @@ static inline std::vector<ProductEntry> assets {
         "freeware",
         "https://www.fontspace.com/gamepixies-font-f42493",
         "Heaven Castro Studios",
-        ContributionCategory::FONT
+        ProductCategory::FONT
     },
     // TODO: populate with libraries
 };

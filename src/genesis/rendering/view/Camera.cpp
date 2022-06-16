@@ -22,22 +22,22 @@ Camera::Camera() {
         0, // no modifiers
         [this](InputManager&, int action) {
             if (action != 0)
-                this->position.y += 10.0f * Renderer::getInstance().getDelta();
+                this->position.y += 10.0 * Renderer::getInstance().getDelta();
             return false;
         });
     inputManager->registerKeyCallback(GLFW_KEY_A, 0, [this](InputManager&, int action) {
         if (action != 0)
-            this->position.x -= 10.0f * Renderer::getInstance().getDelta();
+            this->position.x -= 10.0 * Renderer::getInstance().getDelta();
         return false;
     });
     inputManager->registerKeyCallback(GLFW_KEY_S, 0, [this](InputManager&, int action) {
         if (action != 0)
-            this->position.y -= 10.0f * Renderer::getInstance().getDelta();
+            this->position.y -= 10.0 * Renderer::getInstance().getDelta();
         return false;
     });
     inputManager->registerKeyCallback(GLFW_KEY_D, 0, [this](InputManager&, int action) {
         if (action != 0)
-            this->position.x += 10.0f * Renderer::getInstance().getDelta();
+            this->position.x += 10.0 * Renderer::getInstance().getDelta();
         return false;
     });
     /*

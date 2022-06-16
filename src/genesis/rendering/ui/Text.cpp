@@ -29,6 +29,7 @@ void TextEntity::regenerateVertices(const std::string& text, float x, float y, f
     const float sourceY = y;
     float maxX = sourceX, maxY = sourceY;
 
+    // TODO: replace with string views
     // Convert the string. Utility for dealing with unicode
     // Purely future-compatible at this time, however. While unicode is supported
     // on paper, the entirety of unicode isn't loaded into memory.
@@ -48,21 +49,22 @@ void TextEntity::regenerateVertices(const std::string& text, float x, float y, f
         // This is the only character to modify y and reset x atm.
         // That is gonna change when text wrapping is implemented
         if (character == L'\n') {
-            y -= (characterData->advanceY >> 6) * scale;
+            //y -= (characterData-> >> 6) * scale;
+            y -= 60; // TODO: Fix
             x = sourceX;
             continue;
         }
 
         // Only render characters with textures
-        if (characterData->textureX != -1 && characterData->textureY != -1) {
+        if (characterData->x != -1 && characterData->y != -1) {
             if (points.empty()) {
-                y -= characterData->bitmapHeight;
+                y -= characterData->height;
             }
-            float xPos = x + characterData->bitmapLeft * scale;
-            float yPos = y - (characterData->bitmapHeight - characterData->bitmapTop) * scale;
+            float xPos = x ;
+            float yPos = y ;
 
-            float width = characterData->bitmapWidth * scale;
-            float height = characterData->bitmapHeight * scale;
+            float width = characterData->width * scale;
+            float height = characterData->height * scale;
 
             maxX = std::max(maxX, xPos + width);
             maxY = std::max(maxY, yPos + height);
@@ -76,12 +78,12 @@ void TextEntity::regenerateVertices(const std::string& text, float x, float y, f
                 xPos, yPos,
                 xPos + width, yPos,
             });
-            std::vector<float> tmp = Renderer::getInstance().getFontAtlas()->generateUVCoords(*characterData);
+            std::vector<float> tmp = characterData->uvCoordinates;
             uv.insert(uv.end(), tmp.begin(), tmp.end());
             // clang-format on
         }
         // x is incremented either way, largely to enable spaces
-        x += (characterData->advanceX >> 6) * scale;
+        x += characterData->xAdvance * scale;
     }
     Entity::position = glm::vec3{
         sourceX,

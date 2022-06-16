@@ -2,18 +2,12 @@
 
 #include "genesis/rendering/Texture.hpp"
 
+#include "stc/FntParser.hpp"
 
 #include <map>
 #include <optional>
 
 namespace genesis {
-
-//typedef struct {
-    //int advanceX, advanceY, //
-        //bitmapWidth, bitmapHeight, //
-        //bitmapLeft, bitmapTop, //
-        //textureX, textureY;
-//} Character;
 
 class FontAtlas : public Texture {
 public:
@@ -25,18 +19,18 @@ public:
     //static inline constexpr int CHARACTERS = 256;
 
 private:
-    std::map<wchar_t, Character> characterMap;
+    stc::FntParser::FntInfo font;
 
 public:
-    explicit FontAtlas(const std::string& font = "/usr/share/fonts/truetype/ubuntu/Ubuntu-R.ttf");
+    //explicit FontAtlas(const std::string& font = "/usr/share/fonts/truetype/ubuntu/Ubuntu-R.ttf");
+    FontAtlas();
 
-    std::optional<Character> getCharacter(wchar_t chr) {
-        if (characterMap.contains(chr))
-            return characterMap.at(chr);
+    std::optional<stc::FntParser::FntCharInfo> getCharacter(int chr) {
+        if (font.characters.contains(chr))
+            return font.characters.at(chr);
         return {};
     }
 
-    std::vector<GLfloat> generateUVCoords(const Character& chr);
 };
 
 } // namespace genesis

@@ -23,6 +23,8 @@ namespace genesis {
 Renderer::Renderer() {
     INSTANCE = this;
 
+    glfwSetErrorCallback(GLFWDebug::GLFWCallback);
+
     glewExperimental = true;
     if (!glfwInit()) {
         throw std::runtime_error("Failed to initialize GLFW");
@@ -37,7 +39,6 @@ Renderer::Renderer() {
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_SAMPLES, 4);
 
-    glfwSwapInterval(1);
 
     this->window = glfwCreateWindow(Settings::instance->getInt("width"),
         Settings::instance->getInt("height"),
@@ -53,6 +54,8 @@ Renderer::Renderer() {
     if (glewInit() != GLEW_OK) {
         throw std::runtime_error("Failed to initialize glew");
     }
+
+    glfwSwapInterval(1);
 
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

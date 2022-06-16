@@ -43,6 +43,14 @@ inline void GLAPIENTRY MessageCallback(
 
 namespace genesis {
 
+namespace GLFWDebug {
+
+inline void GLFWCallback(int code, const char* error) {
+    spdlog::error("GLFW error {}: {}", code, error);
+}
+
+}
+
 class WorldController;
 class DebugScene;
 
