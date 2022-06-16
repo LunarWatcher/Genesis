@@ -80,6 +80,9 @@ set (resources
     shaders/primitive.frag shaders/primitive.vert
     # }}}
     images/programmer.png
+
+    fonts/gamepixies.fnt
+    fonts/gamepixies_0.png
 )
 
 foreach(resource IN LISTS resources)

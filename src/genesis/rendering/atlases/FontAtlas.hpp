@@ -31,6 +31,8 @@ public:
         return {};
     }
 
+    const decltype(font)& getFont() { return font; }
+
 };
 
 } // namespace genesis

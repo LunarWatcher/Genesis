@@ -49,6 +49,7 @@ void InputManager::onMousePressed(int button, int action, int mods) {
     // And then check if there's dragging or some shit like that
     // iDunno
     Renderer::getInstance().getPhysicsEngine()->clickElement(x, y);
+    std::cout << "At: " << x << "; " << (576 - y) << std::endl;
 }
 
 void InputManager::onMouseMoved(double, double) {

@@ -17,7 +17,9 @@ namespace genesis {
 FontAtlas::FontAtlas() : font(stc::FntParser::loadAndParseFnt("fonts/gamepixies.fnt")) {
     glActiveTexture(GL_TEXTURE0);
 
-    auto file = font.pages.at(0).c_str();
+
+    auto tmp = "fonts/" + font.pages.at(0);
+    auto file = tmp.c_str();
 
     unsigned char* source = stbi_load(file, &width, &height, &comp, STBI_rgb_alpha);
 

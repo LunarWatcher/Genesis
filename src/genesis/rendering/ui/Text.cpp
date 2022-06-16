@@ -28,8 +28,8 @@ void TextEntity::regenerateVertices(const std::string& text, float x, float y, f
     const float sourceX = x;
     const float sourceY = y;
     float maxX = sourceX, maxY = sourceY;
+    float minY = y;
 
-    // TODO: replace with string views
     // Convert the string. Utility for dealing with unicode
     // Purely future-compatible at this time, however. While unicode is supported
     // on paper, the entirety of unicode isn't loaded into memory.
@@ -38,58 +38,56 @@ void TextEntity::regenerateVertices(const std::string& text, float x, float y, f
     // Raw data
     VertexArray points, uv;
 
+    const auto& font = Renderer::getInstance().getFontAtlas()->getFont();
+
     for (auto& character : wide) {
+        // Special handling: newlines
+        // This is the only character to modify y and reset x atm.
+        // That is gonna change when text wrapping is implemented
+        if (character == L'\n') {
+            y -= font.lineHeight * scale;
+            x = sourceX;
+            continue;
+        }
+
         // Look for a character
         auto characterData = Renderer::getInstance().getFontAtlas()->getCharacter(character);
 
         if (!characterData) {
             continue;
         }
-        // Special handling: newlines
-        // This is the only character to modify y and reset x atm.
-        // That is gonna change when text wrapping is implemented
-        if (character == L'\n') {
-            //y -= (characterData-> >> 6) * scale;
-            y -= 60; // TODO: Fix
-            x = sourceX;
-            continue;
-        }
 
-        // Only render characters with textures
-        if (characterData->x != -1 && characterData->y != -1) {
-            if (points.empty()) {
-                y -= characterData->height;
-            }
-            float xPos = x ;
-            float yPos = y ;
+        float xPos = x + characterData->xOffset * scale;
+        float yPos = y + (font.base - characterData->height - characterData->yOffset) * scale; //+ (characterData->height + characterData->yOffset) * scale;
 
-            float width = characterData->width * scale;
-            float height = characterData->height * scale;
+        float width = characterData->width * scale;
+        float height = characterData->height * scale;
 
-            maxX = std::max(maxX, xPos + width);
-            maxY = std::max(maxY, yPos + height);
+        maxX = std::max(maxX, xPos + width);
+        maxY = std::max(maxY, yPos + height);
+        minY = std::min(minY, yPos);
 
-            // clang-format off
-            points.insert(points.end(), {
-                xPos, yPos + height,
-                xPos, yPos,
-                xPos + width, yPos + height,
-                xPos + width, yPos + height,
-                xPos, yPos,
-                xPos + width, yPos,
-            });
-            std::vector<float> tmp = characterData->uvCoordinates;
-            uv.insert(uv.end(), tmp.begin(), tmp.end());
-            // clang-format on
-        }
+        // clang-format off
+        points.insert(points.end(), {
+            xPos, yPos + height,
+            xPos, yPos,
+            xPos + width, yPos + height,
+            xPos + width, yPos + height,
+            xPos, yPos,
+            xPos + width, yPos,
+        });
+        std::vector<float> tmp = characterData->uvCoordinates;
+        uv.insert(uv.end(), tmp.begin(), tmp.end());
+        // clang-format on
+
         // x is incremented either way, largely to enable spaces
         x += characterData->xAdvance * scale;
     }
     Entity::position = glm::vec3{
         sourceX,
-        y,
+        minY,
         0 };
-    this->collider->setDims(maxX - sourceX, maxY - y);
+    this->collider->setDims(maxX - sourceX, maxY - minY);
     this->collider->update(*this);
 
     this->model->createVBO(0, 2, points);
