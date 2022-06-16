@@ -12,7 +12,8 @@ class TextEntity : public Entity {
 private:
     static inline std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
     glm::vec4 color;
-    glm::mat4 position;
+    glm::vec2 pos;
+    float scale;
 
     void regenerateVertices(const std::string& text, float x, float y, float scale);
 
@@ -26,8 +27,7 @@ public:
     // instead.
     // Depends on how much text-related
     void setText(const std::string& text);
-    void setText(const std::string& text, float x, float y);
-    void setText(const std::string& text, float x, float y, float scale);
+
 };
 
 } // namespace genesis

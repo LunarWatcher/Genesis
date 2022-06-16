@@ -64,7 +64,7 @@ void Model::createVBO(unsigned int attribNumber, int coordSize, const VertexArra
         vbos[attribNumber] = vboID;
         glBindBuffer(GL_ARRAY_BUFFER, vboID);
 
-        glBufferData(GL_ARRAY_BUFFER, data.size() * sizeof(GLfloat), data.data(), mode);
+        glBufferData(GL_ARRAY_BUFFER, (long long) data.size() * sizeof(GLfloat), data.data(), mode);
         // these only need to be enabled once
         glEnableVertexAttribArray(attribNumber);
         glVertexAttribPointer(attribNumber, coordSize, GL_FLOAT, GL_FALSE, 0, (void*) 0);
@@ -76,7 +76,7 @@ void Model::createVBO(unsigned int attribNumber, int coordSize, const VertexArra
         auto vbo = this->vbos.at(attribNumber);
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
 
-        glBufferSubData(GL_ARRAY_BUFFER, 0, data.size() * sizeof(GLfloat), data.data());
+        glBufferSubData(GL_ARRAY_BUFFER, 0, (long long) data.size() * sizeof(GLfloat), data.data());
         //glBufferData(GL_ARRAY_BUFFER, data.size() * sizeof(GLfloat), data.data(), GL_DYNAMIC_DRAW);
         glVertexAttribPointer(attribNumber, coordSize, GL_FLOAT, false, 0, (void*) 0);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -89,7 +89,7 @@ void Model::createVBO(unsigned int attribNumber, int coordSize, GLsizeiptr size)
     vbos[attribNumber] = vboID;
     glBindBuffer(GL_ARRAY_BUFFER, vboID); // NOLINT
 
-    glBufferData(GL_ARRAY_BUFFER, size * sizeof(GLfloat), nullptr, GL_DYNAMIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, (long long) size * sizeof(GLfloat), nullptr, GL_DYNAMIC_DRAW);
     // These only need to be enabled once
     glEnableVertexAttribArray(attribNumber);
     glVertexAttribPointer(attribNumber, coordSize, GL_FLOAT, GL_FALSE, 0, (void*) 0);

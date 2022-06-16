@@ -41,6 +41,7 @@ const std::vector<std::shared_ptr<EntityController>>& MenuScene::getEntityContro
 // MenuController {{{
 MenuController::MenuController() {
     auto play = std::make_shared<TextEntity>("Play", 200, 200, 1, glm::vec4{ 1.0, 0.0, 1.0, 1.0 });
+    play->setText("This is sparta");
     play->ID = BTN_PLAY;
 
     entities.push_back(play);

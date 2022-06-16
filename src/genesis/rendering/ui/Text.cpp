@@ -13,7 +13,7 @@
 namespace genesis {
 
 TextEntity::TextEntity(const std::string& text, float x, float y, float scale, const glm::vec4& color)
-        : color(color) {
+        : color(color), pos(x, y), scale(scale) {
     model = std::make_shared<Model>();
     initializeCollider(std::make_shared<Rectangle>(0, 0, 0, 0, 0));
 
@@ -28,6 +28,7 @@ void TextEntity::regenerateVertices(const std::string& text, float x, float y, f
     const float sourceX = x;
     const float sourceY = y;
     float maxX = sourceX, maxY = sourceY;
+    // This has to be included to make sure rectangles can expand south
     float minY = y;
 
     // Convert the string. Utility for dealing with unicode
@@ -45,7 +46,7 @@ void TextEntity::regenerateVertices(const std::string& text, float x, float y, f
         // This is the only character to modify y and reset x atm.
         // That is gonna change when text wrapping is implemented
         if (character == L'\n') {
-            y -= font.lineHeight * scale;
+            y -= (float) font.lineHeight * scale;
             x = sourceX;
             continue;
         }
@@ -57,11 +58,11 @@ void TextEntity::regenerateVertices(const std::string& text, float x, float y, f
             continue;
         }
 
-        float xPos = x + characterData->xOffset * scale;
-        float yPos = y + (font.base - characterData->height - characterData->yOffset) * scale; //+ (characterData->height + characterData->yOffset) * scale;
+        float xPos = x + (float) characterData->xOffset * scale;
+        float yPos = y + (float) (font.base - characterData->height - characterData->yOffset) * scale; //+ (characterData->height + characterData->yOffset) * scale;
 
-        float width = characterData->width * scale;
-        float height = characterData->height * scale;
+        float width = (float) characterData->width * scale;
+        float height = (float) characterData->height * scale;
 
         maxX = std::max(maxX, xPos + width);
         maxY = std::max(maxY, yPos + height);
@@ -81,7 +82,7 @@ void TextEntity::regenerateVertices(const std::string& text, float x, float y, f
         // clang-format on
 
         // x is incremented either way, largely to enable spaces
-        x += characterData->xAdvance * scale;
+        x += (float) characterData->xAdvance * scale;
     }
     Entity::position = glm::vec3{
         sourceX,
@@ -90,6 +91,13 @@ void TextEntity::regenerateVertices(const std::string& text, float x, float y, f
     this->collider->setDims(maxX - sourceX, maxY - minY);
     this->collider->update(*this);
 
+    // TODO: account for changing text after the fact.
+    // With the current system, the buffer has to be smaller than
+    // the initial text to work, which isn't stonks.
+    // This is easily fixable, but requires some changes
+    // to the underlying class.
+    // Particularly, "createOrReallocate" has to be used.
+    // glBufferSubData is NOT an option for this.
     this->model->createVBO(0, 2, points);
     this->model->createVBO(1, 2, uv);
 
@@ -101,6 +109,10 @@ void TextEntity::regenerateVertices(const std::string& text, float x, float y, f
 
 void TextEntity::render() {
     model->render();
+}
+
+void TextEntity::setText(const std::string& newText) {
+    regenerateVertices(newText, pos.x, pos.y, scale);
 }
 
 } // namespace genesis
