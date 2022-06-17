@@ -28,7 +28,6 @@ void Ray::traceClick(const glm::vec2& rawCoords, const glm::vec2& normalizedScre
             glm::vec3 worldRay = (glm::inverse(viewMatrix) * eyeRay);
             worldRay = glm::normalize(worldRay);
 
-            spdlog::info("Base XYZ: {}, {}, {}", worldRay.x, worldRay.y, worldRay.z);
             // this is deceptively simple, but not in any way flexible.
             // We assume raycasting only is performed for our world, where the z is discrete anyway, and it's mostly tiled.
             // We just need to find the difference:
@@ -50,7 +49,6 @@ void Ray::traceClick(const glm::vec2& rawCoords, const glm::vec2& normalizedScre
             double dist = -renderer.getCamera()->getPosition().z / worldRay.z;
 
             glm::vec3 coords = renderer.getCamera()->getPosition() + ((float) dist) * worldRay;
-            //spdlog::info("XYZ: {}, {}, {}", coords.x, coords.y, coords.z);
 
             for (auto& controller : scene->getEntityControllers()) {
                 if (controller->hasCollision(coords)) {
@@ -67,7 +65,6 @@ void Ray::traceClick(const glm::vec2& rawCoords, const glm::vec2& normalizedScre
                 }
             }
         }
-        scene.get();
     }
 
 }
