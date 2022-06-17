@@ -59,6 +59,10 @@ set (SOURCE_FILES
     # Logging {{{
     genesis/logging/Loggers.cpp
     # }}}
+
+    # Meta {{{
+    genesis/meta/Stb.cpp
+    # }}}
 )
 
 add_library(genesissrc STATIC ${SOURCE_FILES})
