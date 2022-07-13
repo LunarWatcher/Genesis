@@ -33,10 +33,18 @@ public:
     TextureAtlas(const std::string& sourceFile);
 
     const TextureMetadata& getTextureMetadata(const std::string& type) {
+        // Dear past me,
+        // fuck you.
+        // This shit's a reference, not a pointer. Must've been valid at one point, but
+        // not anymore.
+        // Hostile regards,
+        // future you
+        // ---
         // map takes care of returning a nullptr if the tile doesn't exist
         // But it shouldn't ever trigger a type that doesn't exist. Fucking bigbrain
         // right there, Olivia :blobthinksmart:
-        return models[type];
+        //return models[type];
+        return models.at(type);
     }
 };
 

@@ -1,5 +1,7 @@
 #pragma once
+
 #include "genesis/controls/InputManager.hpp"
+#include "genesis/rendering/Constants.hpp"
 #include "genesis/rendering/Shader.hpp"
 #include "genesis/rendering/shaders/DefaultShader.hpp"
 #include "glm/ext/vector_float3.hpp"
@@ -25,7 +27,8 @@ private:
     glm::mat4 orthoMatrix;
     glm::mat4 perspectiveMatrix;
 
-    int activeYLayer = 0;
+    // We'll eventually be generating this based on the player's spawn position
+    int activeYLayer = Constants::Chunks::CHUNK_SEA_LEVEL + 1;
 
 
 public:

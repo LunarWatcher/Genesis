@@ -1,5 +1,6 @@
 #include "WorldController.hpp"
 
+#include "genesis/core/game/entities/Colonist.hpp"
 #include "genesis/rendering/Constants.hpp"
 #include "genesis/rendering/Entity.hpp"
 #include "genesis/rendering/Model.hpp"
@@ -9,6 +10,7 @@
 #include "genesis/world/PlayerCamp.hpp"
 
 #include <chrono>
+#include <memory>
 #include <functional>
 #include <iostream>
 #include <thread>
@@ -23,9 +25,16 @@ void WorldController::generate() {
     // Might be worth doing a scaling factor (i.e. this is a medium world, small worlds are these mulitplied by 0.5, large is multiplied by 2, huge by 4, or
     // something. Idk, figure it out, future me)
     // TODO: add disk caching and sane world generation
-    int xChunks = 30;
-    int yChunks = 20;
+    int xChunks = 5;
+    int yChunks = 5;
     entityControllers.push_back(std::make_shared<PlayerCamp>());
+
+    auto& controller = entityControllers.back();
+    controller->addEntity(
+        std::make_shared<Colonist>("genesis:colonist_a", "Sparta",
+            glm::vec3{0, 0, 0.1}, 69)
+    );
+
     // TODO: add a chunk controller, though I'm not sure how we want to do that.
     // It's heavily state-dependent, but I think we're good as long as all the chunks have collisions.
 
@@ -51,11 +60,11 @@ void WorldController::render() {
     inst.getTextureShader()->apply();
     inst.getTexturePack()->bind();
 
-    for (auto& controller : this->entityControllers)
-        controller->render();
-
     for (auto& chunk : this->chunks)
         chunk->render();
+
+    for (auto& controller : this->entityControllers)
+        controller->render();
 
     inst.getTexturePack()->unbind();
     inst.getTextureShader()->stop();

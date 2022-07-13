@@ -16,6 +16,16 @@ void initializeLogging() {
 }
 
 int main() {
+#ifdef _WIN32
+    try {
+#endif
     genesis::Renderer renderer;
     renderer.run();
+#ifdef _WIN32
+    } catch (const std::exception& e) {
+        std::cerr << "Exception caught: " << e.what() << std::endl;
+    } catch (const char* e) {
+        std::cerr << "Char exception caught: " << e << std::endl;
+    }
+#endif
 }

@@ -24,8 +24,8 @@
 #include <vector>
 #include <type_traits>
 
-#include <ft2build.h>
-#include FT_FREETYPE_H
+//#include <ft2build.h>
+//#include FT_FREETYPE_H
 
 #ifdef API_DEBUG
 // Used for debugging OpenGL API calls
@@ -45,6 +45,7 @@ namespace genesis {
 
 namespace GLFWDebug {
 
+// Don't think this needs to be enable-only; this has a lot of applications.
 inline void GLFWCallback(int code, const char* error) {
     spdlog::error("GLFW error {}: {}", code, error);
 }
@@ -91,7 +92,7 @@ private:
 
     double delta;
 
-    FT_Library fontLibrary;
+    //FT_Library fontLibrary;
 
     // Scene management {{{
     int activeScene = 0;
@@ -136,9 +137,9 @@ public:
         return fontAtlas;
     }
 
-    FT_Library& getFontLibrary() {
-        return fontLibrary;
-    }
+    //FT_Library& getFontLibrary() {
+        //return fontLibrary;
+    //}
 
     static Renderer& getInstance() {
         return *INSTANCE;

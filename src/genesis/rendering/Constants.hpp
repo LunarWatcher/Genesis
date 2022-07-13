@@ -91,6 +91,7 @@ constexpr int FLAT_COMPENSATION_FACTOR = 12;
 namespace Chunks {
 static constexpr int CHUNK_SIZE = 16;
 static constexpr int CHUNK_HEIGHT = 64;
+static constexpr int CHUNK_SEA_LEVEL = 20;
 
 
 static constexpr int WORST_CASE_SIZE = Constants::Chunks::CHUNK_SIZE * CHUNK_SIZE * CHUNK_HEIGHT // amount of cubes

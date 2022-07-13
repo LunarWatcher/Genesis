@@ -101,10 +101,8 @@ void TextEntity::regenerateVertices(const std::string& text, float x, float y, f
     this->model->createVBO(0, 2, points);
     this->model->createVBO(1, 2, uv);
 
-    this->model->vertices = points.size() / 2;
+    this->model->vertices = static_cast<GLsizei>(points.size()) / 2;
     regenerateTransMatrix();
-
-
 }
 
 void TextEntity::render() {

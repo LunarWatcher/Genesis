@@ -25,7 +25,7 @@ protected:
     GLenum mode = GL_STATIC_DRAW;
     GLenum renderType = GL_TRIANGLES;
 
-    size_t vertices, indices = -1;
+    GLsizei vertices, indices = -1;
     GLuint vaoID;
     std::map<unsigned int, GLuint> vbos;
 
@@ -41,7 +41,7 @@ public:
      * use this constructor. You WILL shoot yourself in the foot.
      */
     Model() = default;
-    Model(const VertexArray& vertices, const AttributeInit& attribInitFunc, int vertSize = 3, GLenum mode = GL_STATIC_DRAW);
+    Model(const VertexArray& vertices, const AttributeInit& attribInitFunc = nullptr, int vertSize = 3, GLenum mode = GL_STATIC_DRAW);
 
     virtual ~Model();
 

@@ -40,11 +40,7 @@ Camera::Camera() {
             this->position.x += 10.0 * Renderer::getInstance().getDelta();
         return false;
     });
-    /*
-    // This changes which map level is currently active.
-    // This code is not gonna be used until I figure out perlin, so I'm commenting it out.
-    // I'd like to get the game going, not spend hours and hours on figuring out noise
-    // this early. At least give me a chance to work on some AI first :dontfeelsoblob:
+
     inputManager->registerKeyCallback(GLFW_KEY_K, 0, [this](InputManager&, int action) {
         if (action == 1) {
             this->activeYLayer += 1;
@@ -58,7 +54,6 @@ Camera::Camera() {
         }
         return true;
     });
-    */
 }
 
 void Camera::regenerateCameraMatrix() {
@@ -69,10 +64,11 @@ void Camera::regenerateCameraMatrix() {
 }
 
 void Camera::setYLayer(int newLayer) {
-    // TODO: Check which should be <= and which should be < given the environment
-    // or >/>= or whatever
-    if (newLayer <= Constants::MAX_UNDERGROUND_HEIGHT || newLayer >= Constants::MAX_OVERWORLD_HEIGHT)
+    // Possibly not super stonks for future use, but fuck it. Worked for minecraft, why not for me?
+    if (newLayer < 1 || newLayer >= Constants::Chunks::CHUNK_HEIGHT) {
+        // Throw?
         return;
+    }
     this->activeYLayer = newLayer;
 }
 

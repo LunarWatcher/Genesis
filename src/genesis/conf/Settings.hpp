@@ -14,10 +14,15 @@ namespace genesis {
 class Settings {
 private:
     static inline std::map<std::string, std::any> defaultConf = {
+        // Visuals {{{
         {"width", 1024},
         {"height", 576},
+        {"fullscreen", false},
+        {"renderDist", 3},
+        // }}}
+        // Audio {{{
         {"volume", 100},
-        {"fullscreen", false}
+        // }}}
     };
 
 public:

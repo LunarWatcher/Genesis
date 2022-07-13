@@ -44,6 +44,12 @@ set (SOURCE_FILES
     # Game {{{
     genesis/world/EntityController.cpp
     genesis/world/PlayerCamp.cpp
+    # Entities {{{
+    genesis/core/game/entities/Colonist.cpp
+    # }}}
+    # World generation {{{
+    genesis/core/game/generation/WorldGenerator.cpp
+    # }}}
     # }}}
     # Math {{{
     genesis/math/Perlin.cpp

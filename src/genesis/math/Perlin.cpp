@@ -81,10 +81,7 @@ int Perlin2DNoiseGenerator::clampPerlin(double perlinInput) {
 void Perlin2DNoiseGenerator::generateChunk(genesis::ChunkMap& ref, int chunkX, int chunkY) {
     constexpr double STEP_DISTANCE = 1.0 / genesis::Constants::Chunks::CHUNK_SIZE;
 
-    auto rawObject = std::make_shared<genesis::Model>(genesis::Constants::square, [&](genesis::Model* model) {
-        model->bindIndexBuffer(genesis::Constants::squareIndices);
-        model->createVBO(1, 2, genesis::Renderer::getInstance().getTexturePack()->generateFromPosition(0, 12, 64, 64));
-    });
+    auto rawObject = genesis::Renderer::getInstance().getTexturePack()->getTextureMetadata("genesis:grass").model;
 
     for (size_t y = 0; y < genesis::Constants::MAX_OVERWORLD_HEIGHT; ++y) {
         auto& cLevel = ref[y];
@@ -114,16 +111,18 @@ void Perlin2DNoiseGenerator::generateChunk(genesis::ChunkMap& ref, int chunkX, i
 // DumbGenerator {{{
 void DumbGenerator::generateChunk(genesis::ChunkMap& ref, int, int) {
     auto tile = genesis::Renderer::getInstance().getTexturePack()->getTextureMetadata("genesis:grass").model;
-    // We pick 0 as the primary level
-    auto& activeLevel = ref[0];
     // resize y to match the chunk size
-    activeLevel.resize(genesis::Constants::Chunks::CHUNK_SIZE);
-    for (int z = 0; z < genesis::Constants::Chunks::CHUNK_SIZE; ++z) {
-        // and resize the x coords for a given y
-        activeLevel[z].resize(genesis::Constants::Chunks::CHUNK_SIZE);
+    for (int z = 0; z < genesis::Constants::Chunks::CHUNK_HEIGHT; ++z) {
+        auto& activeLevel = ref[z];
 
-        for (int x = 0; x < genesis::Constants::Chunks::CHUNK_SIZE; ++x) {
-            activeLevel[z][x] = "";
+        activeLevel.resize(genesis::Constants::Chunks::CHUNK_SIZE);
+        for (int y = 0; y < genesis::Constants::Chunks::CHUNK_SIZE; ++y) {
+            // and resize the x coords for a given y
+            activeLevel[y].resize(genesis::Constants::Chunks::CHUNK_SIZE);
+
+            for (int x = 0; x < genesis::Constants::Chunks::CHUNK_SIZE; ++x) {
+                activeLevel[y][x] = "";
+            }
         }
     }
 }
