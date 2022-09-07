@@ -5,6 +5,11 @@ if ( ${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR} )
     message( FATAL_ERROR "In-source builds not allowed. Please make a new directory and run CMake from there, or use the -B argument." )
 endif()
 
+if (NOT CMAKE_BUILD_TYPE)
+    # Make explicit flags redundant for release builds
+    set(CMAKE_BUILD_TYPE Release)
+endif()
+
 set (CMAKE_CXX_STANDARD 20)
 
 if(NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")
