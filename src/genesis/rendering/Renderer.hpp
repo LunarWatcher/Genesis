@@ -52,7 +52,7 @@ inline void GLFWCallback(int code, const char* error) {
 
 }
 
-class WorldController;
+class World;
 class DebugScene;
 
 class Renderer {

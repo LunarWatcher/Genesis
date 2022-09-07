@@ -35,7 +35,7 @@ set (SOURCE_FILES
     genesis/rendering/environment/Chunk.cpp
     # }}}
     # Core {{{
-    genesis/core/WorldController.cpp
+    genesis/core/game/World.cpp
     genesis/conf/Settings.cpp
     # }}}
     # Controls {{{
@@ -95,10 +95,18 @@ set (resources
     fonts/gamepixies_0.png
 )
 
-foreach(resource IN LISTS resources)
-    configure_file(./res/${resource}
-        ${CMAKE_BINARY_DIR}/${resource} COPYONLY)
-endforeach()
+add_custom_target(resources
+    COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_BINARY_DIR}/fonts
+    COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_BINARY_DIR}/shaders
+    COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_BINARY_DIR}/images
+    COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/src/res/fonts ${CMAKE_BINARY_DIR}/fonts
+    COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/src/res/images ${CMAKE_BINARY_DIR}/images
+    COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/src/res/shaders ${CMAKE_BINARY_DIR}/shaders
+    COMMENT "Copying resources"
+)
+
+
 # }}}
 
+add_dependencies(genesissrc resources)
 target_link_libraries(genesis genesissrc)

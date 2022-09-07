@@ -6,26 +6,26 @@
 #include "genesis/rendering/flow/Scene.hpp"
 
 #include "genesis/math/Perlin.hpp"
+#include <string>
 
 namespace genesis {
 
 class Chunk;
-// TODO: rename.
-// The fuck were you thinking?
-// WorldController?
-// I mean, sure, but wtf??
-class WorldController : public Scene {
+
+class World : public Scene {
 private:
-    static inline WorldController* INSTANCE = nullptr;
+    static inline World* INSTANCE = nullptr;
+
+    std::shared_ptr<perlin::NoiseGenerator> generator;
+
+    // Game state
+    std::string civilisationName;
 
     std::vector<std::shared_ptr<Chunk>> chunks;
     std::vector<std::shared_ptr<EntityController>> entityControllers;
-    std::shared_ptr<perlin::NoiseGenerator> generator;
 
 public:
-    WorldController();
-
-    void generate();
+    World();
 
     void render() override;
     void tick() override;
@@ -35,6 +35,8 @@ public:
     }
 
     const std::vector<std::shared_ptr<EntityController>>& getEntityControllers() override;
+
+    friend class WorldGenerator;
 };
 
 } // namespace genesis

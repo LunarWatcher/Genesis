@@ -3,7 +3,8 @@
 #include "GLFW/glfw3.h"
 
 #include "Shader.hpp"
-#include "genesis/core/WorldController.hpp"
+#include "genesis/core/game/World.hpp"
+#include "genesis/core/game/generation/WorldGenerator.hpp"
 #include "genesis/rendering/Texture.hpp"
 #include "genesis/rendering/atlases/FontAtlas.hpp"
 #include "shaders/DefaultShader.hpp"
@@ -220,10 +221,7 @@ void Renderer::pop(const std::shared_ptr<Scene>& scene) {
 
 void Renderer::createGame() {
     logger->info("Creating game.");
-    auto wc = std::make_shared<WorldController>();
-
-    transition(wc);
-    wc->generate();
+    WorldGenerator::newWorld(3, 3, "The Great Roman Empire");
 }
 
 // }}}

@@ -1,5 +1,5 @@
 #include "Chunk.hpp"
-#include "genesis/core/WorldController.hpp"
+#include "genesis/core/game/World.hpp"
 #include "genesis/math/Perlin.hpp"
 #include "genesis/rendering/Constants.hpp"
 #include "genesis/rendering/Renderer.hpp"
@@ -13,7 +13,7 @@
 namespace genesis {
 
 Chunk::Chunk(int chunkX, int chunkY) : Entity(std::make_shared<Model>(), glm::vec3{chunkX * Constants::Chunks::CHUNK_SIZE, chunkY * Constants::Chunks::CHUNK_SIZE, 0}), chunkX(chunkX), chunkY(chunkY) {
-    Renderer::getInstance().getSceneByType<WorldController>()->getNoiseGenerator()->generateChunk(this->chunkMap, chunkX, chunkY);
+    Renderer::getInstance().getSceneByType<World>()->getNoiseGenerator()->generateChunk(this->chunkMap, chunkX, chunkY);
     model->mode = GL_DYNAMIC_DRAW;
     model->createVAO();
     // when we create the VBO, we want to allocate the entire thing in VRAM.
@@ -73,15 +73,15 @@ void Chunk::regenerateVertices() {
         }
     }
 
-    model->createVBO(1, 2, uv);
     model->vertices = static_cast<GLint>(points.size());
     model->createVBO(0, 3, points, GL_DYNAMIC_DRAW);
+    model->createVBO(1, 2, uv);
     model->bindIndexBuffer(indices);
 }
 
 void Chunk::render() {
     // Nasty hack, use better caching
-    regenerateVertices();
+    //regenerateVertices();
     // we actually don't need to do much here for now; all the rendering is handled via the pre-cached mesh
     Entity::render();
 }

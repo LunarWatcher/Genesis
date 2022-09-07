@@ -19,9 +19,14 @@ FontAtlas::FontAtlas() : font(stc::FntParser::loadAndParseFnt("fonts/gamepixies.
 
 
     auto tmp = "fonts/" + font.pages.at(0);
+
     auto file = tmp.c_str();
 
     unsigned char* source = stbi_load(file, &width, &height, &comp, STBI_rgb_alpha);
+
+    if (source == nullptr) {
+        throw std::runtime_error("Failed to load image file (" + tmp + ")");
+    }
 
     glGenTextures(1, &this->textureId);
     glBindTexture(GL_TEXTURE_2D, textureId);
