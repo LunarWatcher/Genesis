@@ -5,28 +5,22 @@ on:
   pull_request:
     branches: [ master ]
 jobs:
-  pre-commit:
-    if: "!contains(github.event.head_commit.message, '[skip-ci]')"
+  tests:
+    # TODO: set up a test matrix
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
         with:
           submodules: true
       - uses: actions/setup-python@v2
+      - uses: LunarWatcher/install-conan@master
       - name: Set up clang tidy
         run: |
-          sudo apt install clang-tidy-11 libgl-dev libglu1-mesa-dev
-          # Y u do dis to meh?
-          # As much as I love clang, I hate that it doesn't even try to set a generic file name (i.e. clang-tidy instead of
-          # clang-tidy-11, clang++ instead of clang++-11, clang-format instead of clang-format-11, etc.).
-          # Symlinks are cheap anyway
-          sudo ln -s /usr/bin/clang-tidy-11 /usr/bin/clang-tidy
-      - name: Run hooks
+          sudo apt install libgl-dev libglu1-mesa-dev
+
+      - name: Run tests
         run: |
-          python3 -m pip install pre-commit
-          # clang-tidy needs a compilation database
-          # No one cares what type it is
-          #mkdir build && cd build && cmake .. -DCMAKE_BUILD_TYPE=Debug -DCMAKE_EXPORT_COMPILE_COMMANDS=1 && make && cd ..
-          #cp build/compile_commands.json .
-          pre-commit run --all-files
-  # TODO: tests? Dunno how, games aren't easily testable
+          mkdir build && cd build
+          cmake ..
+          make -j 4
+          ./bin/tests
