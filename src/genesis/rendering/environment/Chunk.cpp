@@ -35,7 +35,7 @@ Chunk::Chunk(int chunkX, int chunkY) : Entity(std::make_shared<Model>(), glm::ve
 
 void Chunk::regenerateVertices() {
 
-
+    glBindVertexArray(model->vaoID);
     std::vector<GLfloat> uv;
     std::vector<GLfloat> points;
     std::vector<int> indices;
@@ -74,14 +74,12 @@ void Chunk::regenerateVertices() {
     }
 
     model->vertices = static_cast<GLint>(points.size());
-    model->createVBO(0, 3, points, GL_DYNAMIC_DRAW);
-    model->createVBO(1, 2, uv);
+    model->createOrSubdataVBO(0, 3, points);
+    model->createOrSubdataVBO(1, 2, uv);
     model->bindIndexBuffer(indices);
 }
 
 void Chunk::render() {
-    // Nasty hack, use better caching
-    //regenerateVertices();
     // we actually don't need to do much here for now; all the rendering is handled via the pre-cached mesh
     Entity::render();
 }

@@ -59,7 +59,8 @@ public:
     /**
      * Creates a VBO using the class-level mode
      */
-    virtual void createVBO(unsigned int attribNumber, int coordSize, const VertexArray& data);
+    virtual void createOrSubdataVBO(unsigned int attribNumber, int coordSize, const VertexArray& data);
+    virtual void createOrResizeVBO(unsigned int attribNumber, int coordSize, const VertexArray& data);
 
     /**
      * Creates a VBO using a different mode than that defined in the class.

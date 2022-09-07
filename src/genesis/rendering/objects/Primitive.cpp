@@ -16,7 +16,7 @@ Primitive::Primitive(float x, float y, float z, float width, float height)
             m->bindIndexBuffer({
                 0, 1, 2, 3
             });
-            m->createVBO(1, 4, {
+            m->createOrSubdataVBO(1, 4, {
                 0, 0, 0, 1,
                 0, 0, 0, 1,
                 0, 0, 0, 1,

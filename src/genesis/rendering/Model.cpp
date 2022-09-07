@@ -10,7 +10,7 @@ namespace genesis {
 Model::Model(const VertexArray& vertices, const std::function<void(Model*)>& attribInitFunc, int coordSize, GLenum mode)
         : mode(mode) {
     createVAO();
-    createVBO(0, coordSize, vertices); // NOLINT
+    createOrSubdataVBO(0, coordSize, vertices); // NOLINT
     if (attribInitFunc) {
         attribInitFunc(this);
     }
@@ -55,22 +55,9 @@ void Model::createVAO() {
     glBindVertexArray(vaoID);
 }
 
-void Model::createVBO(unsigned int attribNumber, int coordSize, const VertexArray& data) {
-    createVBO(attribNumber, coordSize, data, this->mode); // NOLINT
-}
-
-void Model::createVBO(unsigned int attribNumber, int coordSize, const VertexArray& data, GLenum mode) {
+void Model::createOrSubdataVBO(unsigned int attribNumber, int coordSize, const VertexArray& data) {
     if (!vbos.contains(attribNumber)) {
-        GLuint vboID = 0;
-        glGenBuffers(1, &vboID);
-        vbos[attribNumber] = vboID;
-        glBindBuffer(GL_ARRAY_BUFFER, vboID);
-
-        glBufferData(GL_ARRAY_BUFFER, static_cast<GLsizeiptr>(data.size() * sizeof(GLfloat)), data.data(), mode);
-        // these only need to be enabled once
-        glEnableVertexAttribArray(attribNumber);
-        glVertexAttribPointer(attribNumber, coordSize, GL_FLOAT, GL_FALSE, 0, (void*) 0);
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        createVBO(attribNumber, coordSize, data, this->mode); // NOLINT
     } else {
         if (mode != GL_DYNAMIC_DRAW) {
             throw std::runtime_error("Attempted to reuse attribute " + std::to_string(attribNumber) + " (current size: " + std::to_string(vbos.size()) + ")");
@@ -79,10 +66,41 @@ void Model::createVBO(unsigned int attribNumber, int coordSize, const VertexArra
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
 
         glBufferSubData(GL_ARRAY_BUFFER, 0, static_cast<GLsizeiptr>(data.size() * sizeof(GLfloat)), data.data());
-        //glBufferData(GL_ARRAY_BUFFER, data.size() * sizeof(GLfloat), data.data(), GL_DYNAMIC_DRAW);
         glVertexAttribPointer(attribNumber, coordSize, GL_FLOAT, false, 0, (void*) 0);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
+}
+
+void Model::createOrResizeVBO(unsigned int attribNumber, int coordSize, const VertexArray &data) {
+    if (!vbos.contains(attribNumber)) {
+        createVBO(attribNumber, coordSize, data, this->mode); // NOLINT
+    } else {
+        if (mode != GL_DYNAMIC_DRAW) {
+            throw std::runtime_error("Attempted to reuse attribute " + std::to_string(attribNumber) + " (current size: " + std::to_string(vbos.size()) + ")");
+        }
+        auto vbo = this->vbos.at(attribNumber);
+        glBindBuffer(GL_ARRAY_BUFFER, vbo);
+
+        glBufferData(GL_ARRAY_BUFFER, static_cast<GLsizeiptr>(data.size() * sizeof(GLfloat)), data.data(), GL_DYNAMIC_DRAW);
+        glVertexAttribPointer(attribNumber, coordSize, GL_FLOAT, false, 0, (void*) 0);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+    }
+}
+
+void Model::createVBO(unsigned int attribNumber, int coordSize, const VertexArray& data, GLenum mode) {
+    if (vbos.contains(attribNumber)) {
+        throw std::runtime_error("VBO already registered");
+    }
+    GLuint vboID = 0;
+    glGenBuffers(1, &vboID);
+    vbos[attribNumber] = vboID;
+    glBindBuffer(GL_ARRAY_BUFFER, vboID);
+
+    glBufferData(GL_ARRAY_BUFFER, static_cast<GLsizeiptr>(data.size() * sizeof(GLfloat)), data.data(), mode);
+    // these only need to be enabled once
+    glEnableVertexAttribArray(attribNumber);
+    glVertexAttribPointer(attribNumber, coordSize, GL_FLOAT, GL_FALSE, 0, (void*) 0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
 void Model::createVBO(unsigned int attribNumber, int coordSize, GLsizeiptr size) {

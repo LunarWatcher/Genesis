@@ -25,7 +25,7 @@ TextureAtlas::TextureAtlas(const std::string& sourceFile)
                 genesis::Constants::square,
                 [&](Model* ptr) {
                     ptr->bindIndexBuffer(genesis::Constants::squareIndices);
-                    ptr->createVBO(1, 2, uv);
+                    ptr->createOrSubdataVBO(1, 2, uv);
                 }
             )
         };

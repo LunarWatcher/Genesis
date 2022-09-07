@@ -24,6 +24,7 @@ TextEntity::TextEntity(const std::string& text, float x, float y, float scale, c
 }
 
 void TextEntity::regenerateVertices(const std::string& text, float x, float y, float scale) {
+    glBindVertexArray(model->vaoID);
     // Cache variable to store the leftmost x for newline operations
     const float sourceX = x;
     const float sourceY = y;
@@ -98,8 +99,8 @@ void TextEntity::regenerateVertices(const std::string& text, float x, float y, f
     // to the underlying class.
     // Particularly, "createOrReallocate" has to be used.
     // glBufferSubData is NOT an option for this.
-    this->model->createVBO(0, 2, points);
-    this->model->createVBO(1, 2, uv);
+    this->model->createOrResizeVBO(0, 2, points);
+    this->model->createOrResizeVBO(1, 2, uv);
 
     this->model->vertices = static_cast<GLsizei>(points.size()) / 2;
     regenerateTransMatrix();
