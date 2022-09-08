@@ -14,6 +14,9 @@ jobs:
           submodules: true
       - uses: actions/setup-python@v2
       - uses: LunarWatcher/install-conan@master
+      - name: Preparation
+        run: |
+          sudo apt update
       - name: Run tests
         run: |
           conan config set tools.system.package_manager:mode=install
