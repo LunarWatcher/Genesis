@@ -20,6 +20,7 @@ jobs:
 
       - name: Run tests
         run: |
+          conan config set tools.system.package_manager:mode=install
           mkdir build && cd build
           cmake ..
           make -j 4
