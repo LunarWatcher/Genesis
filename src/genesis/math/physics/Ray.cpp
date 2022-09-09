@@ -52,15 +52,18 @@ void Ray::traceClick(const glm::vec2& rawCoords, const glm::vec2& normalizedScre
 
             for (auto& controller : scene->getEntityControllers()) {
                 if (controller->hasCollision(coords)) {
-                    spdlog::info("Match");
+                    //spdlog::info("Match");
                     return;
                 }
             }
 
         } else {
+            // Ortho viewports use the raw coordinates, i.e. pixel coords rather than OpenGL coords.
+            // No transformation needed because it's all on one y-level, so shove it straight through
+            // the collision checking system
             for (auto& controller : scene->getEntityControllers()) {
                 if (controller->hasCollision(rawCoords)) {
-                    spdlog::info("Match");
+                    //spdlog::info("Match");
                     return;
                 }
             }

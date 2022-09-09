@@ -50,6 +50,13 @@ set (SOURCE_FILES
     # World generation {{{
     genesis/core/game/generation/WorldGenerator.cpp
     # }}}
+    # Object types {{{
+    genesis/core/game/objects/Container.cpp
+    genesis/core/game/items/Inventory.cpp
+    # }}}
+    # Objects {{{
+    genesis/core/game/objects/Caravan.cpp
+    # }}}
     # }}}
     # Math {{{
     genesis/math/Perlin.cpp
