@@ -8,10 +8,15 @@ TextureAtlas::TextureAtlas(const std::string& sourceFile)
         : Texture(sourceFile, 64, 64),
         atlasUnits(width / atlasTileWidth) {
     // temporary map metadata. This will eventually need to be outsourced somewhere else
+    // Maybe. I don't know, modding is so far into the future that it's probably not worth
+    // adding support for necessary bits until I need it.
     std::map<int, std::string> temporaryMetadata {
-        {0, "genesis:grass"},
-        {1, "genesis:stone"},
-        {12 * 16, "genesis:colonist_a"}
+        {0 * 16 + 0, "genesis:grass"},
+        {0 * 16 + 1, "genesis:stone"},
+
+        {12 * 16 + 0, "genesis:colonist_a"},
+
+        {14 * 16 + 0, "genesis:caravan"},
     };
 
     for (auto& [tilePos, tileIdentifier] : temporaryMetadata) {

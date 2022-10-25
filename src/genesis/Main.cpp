@@ -26,6 +26,8 @@ int main() {
         std::cerr << "Exception caught: " << e.what() << std::endl;
     } catch (const char* e) {
         std::cerr << "Char exception caught: " << e << std::endl;
+    } catch (const std::string& e) {
+        std::cerr << "String exception caught: " << e << std::endl;
     }
 #endif
 }
