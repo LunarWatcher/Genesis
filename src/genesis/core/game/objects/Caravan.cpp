@@ -2,7 +2,7 @@
 
 namespace genesis {
 
-Caravan::Caravan() : Container("genesis:caravan", 24) {
+Caravan::Caravan() : Inventory(24) {
 
 }
 

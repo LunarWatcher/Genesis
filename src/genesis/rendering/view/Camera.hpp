@@ -21,7 +21,7 @@ private:
      * Changing the up vector should affect camera rotation, but that's probably an unnecessary
      * feature.
      */
-    glm::vec3 position = {0, 0, 5};
+    glm::vec3 position = {0, 0, 7};
     glm::mat4 matrix;
 
     glm::mat4 orthoMatrix;

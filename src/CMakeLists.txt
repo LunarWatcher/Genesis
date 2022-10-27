@@ -51,8 +51,9 @@ set (SOURCE_FILES
     genesis/core/game/generation/WorldGenerator.cpp
     # }}}
     # Object types {{{
-    genesis/core/game/objects/Container.cpp
     genesis/core/game/items/Inventory.cpp
+
+    genesis/core/game/chunks/Tile.hpp
     # }}}
     # Objects {{{
     genesis/core/game/objects/Caravan.cpp

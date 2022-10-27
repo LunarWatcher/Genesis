@@ -11,7 +11,7 @@ struct TextureMetadata {
     /**
      * Refers to the relative offset within the texture atlas.
      *
-     * Not sure if we need to keep this in the long run.
+     * Primarily intended for future use as an identifier within the atlas.
      */
     int tileId;
 
@@ -28,6 +28,7 @@ private:
     int atlasUnits;
 
     std::map<std::string, TextureMetadata> models;
+    std::map<int, std::string> tileIDToString;
 
 public:
     TextureAtlas(const std::string& sourceFile);
