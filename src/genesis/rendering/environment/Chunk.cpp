@@ -1,4 +1,5 @@
 #include "Chunk.hpp"
+#include "genesis/core/data/DataHelper.hpp"
 #include "genesis/core/game/World.hpp"
 #include "genesis/math/Perlin.hpp"
 #include "genesis/rendering/Constants.hpp"
@@ -23,7 +24,8 @@ Chunk::Chunk(int chunkX, int chunkY) : Entity(std::make_shared<Model>(), glm::ve
     model->bindIndexBuffer(2ll * Constants::Chunks::WORST_CASE_SIZE);
     for (int x = 0; x < Constants::Chunks::CHUNK_SIZE; ++x) {
         for (int y = 0; y < Constants::Chunks::CHUNK_SIZE; ++y) {
-            this->chunkMap.at(Constants::Chunks::CHUNK_SEA_LEVEL).at(y).at(x) = "genesis:grass";
+            this->chunkMap.at(Constants::Chunks::CHUNK_SEA_LEVEL).at(y).at(x) = DataHelper::getInstance()->getTileGenerator("genesis:grass")
+                ->generateTile();
         }
     }
     regenerateVertices();
@@ -50,11 +52,11 @@ void Chunk::regenerateVertices() {
     for (int x = 0; x < Constants::Chunks::CHUNK_SIZE; ++x) {
         for (int y = 0; y < Constants::Chunks::CHUNK_SIZE; ++y) {
             // This nasty shit opens some FOV weirdness
-            bool baseIsEmpty = baseTiles.at(y).at(x).empty();
-            if (baseIsEmpty && floorTiles.at(y).at(x).empty()) continue;
+            bool baseIsEmpty = baseTiles.at(y).at(x) == nullptr;
+            if (baseIsEmpty && floorTiles.at(y).at(x) == nullptr) continue;
             auto tile = baseIsEmpty ? floorTiles.at(y).at(x) : baseTiles.at(y).at(x);
 
-            auto& uvSource = Renderer::getInstance().getTexturePack()->getTextureMetadata(tile).uvCoordinates;
+            auto& uvSource = Renderer::getInstance().getTexturePack()->getTextureMetadata(tile->tileID).uvCoordinates;
 
             std::vector<GLfloat> blockVertices;
             for (size_t i = 0; i < Constants::square.size(); i += 3) {

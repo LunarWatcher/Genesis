@@ -1,11 +1,16 @@
 #include "Tile.hpp"
-#include "genesis/core/metadata/TileMetadata.hpp"
 
 namespace genesis {
 
-Tile::Tile(unsigned int atlasID, unsigned int lightEmission) 
-    : atlasID(atlasID), lightEmission(lightEmission) {
-
+Tile::Tile(int atlasID, const std::string& tileID, bool isTextureSolid,
+           bool isObjectSolid, int lightEmission,
+           int blastResistance,
+           int miningResistance) : atlasID(atlasID),
+        tileID(tileID), isTextureSolid(isTextureSolid),
+        isObjectSolid(isObjectSolid),
+        lightEmission(lightEmission),
+        blastResistance(blastResistance),
+        miningResistance(miningResistance) {
 }
 
 }

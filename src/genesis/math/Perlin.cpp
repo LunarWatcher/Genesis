@@ -110,7 +110,6 @@ void Perlin2DNoiseGenerator::generateChunk(genesis::ChunkMap& ref, int chunkX, i
 // }}}
 // DumbGenerator {{{
 void DumbGenerator::generateChunk(genesis::ChunkMap& ref, int, int) {
-    auto tile = genesis::Renderer::getInstance().getTexturePack()->getTextureMetadata("genesis:grass").model;
     // resize y to match the chunk size
     for (int z = 0; z < genesis::Constants::Chunks::CHUNK_HEIGHT; ++z) {
         auto& activeLevel = ref[z];
@@ -121,7 +120,7 @@ void DumbGenerator::generateChunk(genesis::ChunkMap& ref, int, int) {
             activeLevel[y].resize(genesis::Constants::Chunks::CHUNK_SIZE);
 
             for (int x = 0; x < genesis::Constants::Chunks::CHUNK_SIZE; ++x) {
-                activeLevel[y][x] = "";
+                activeLevel[y][x] = nullptr;
             }
         }
     }

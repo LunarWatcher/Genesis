@@ -33,10 +33,19 @@ set (SOURCE_FILES
     # }}}
     # Environment {{{
     genesis/rendering/environment/Chunk.cpp
+    genesis/core/game/chunks/Tile.cpp
+
+    genesis/core/game/chunks/TileGenerator.cpp
+    genesis/core/game/chunks/tilegen/TerrainTileGenerator.cpp
+    genesis/core/game/chunks/tilegen/ContainerTileGenerator.cpp
+
+    genesis/core/game/chunks/tiles/ContainerTile.cpp
     # }}}
     # Core {{{
     genesis/core/game/World.cpp
     genesis/conf/Settings.cpp
+
+    genesis/core/data/DataHelper.cpp
     # }}}
     # Controls {{{
     genesis/controls/InputManager.cpp
@@ -52,8 +61,6 @@ set (SOURCE_FILES
     # }}}
     # Object types {{{
     genesis/core/game/items/Inventory.cpp
-
-    genesis/core/game/chunks/Tile.hpp
     # }}}
     # Objects {{{
     genesis/core/game/objects/Caravan.cpp

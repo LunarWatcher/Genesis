@@ -1,19 +1,12 @@
 #pragma once
 
+#include "genesis/core/game/chunks/Tile.hpp"
 #include <memory>
-#include <string>
 
 namespace genesis {
 
-/**
- * Base class for all the tile objects.
- * Contains methods for stuff:tm:, and default tile metadata.
- *
- * This class is additionally used for "dumb" environment tiles, such
- * as ground, walls, etc.
- */
-class Tile {
-public:
+class TileGenerator {
+protected:
     // The ID of the texture to use
     const int atlasID;
     const std::string tileID;
@@ -36,17 +29,27 @@ public:
 
     // Currently unused, and uses an undetermined value scheme.
     const int miningResistance = 0;
-
-    Tile(int atlasID, const std::string& tileID, bool isTextureSolid,
+public:
+    TileGenerator(const std::string& tileID, bool isTextureSolid,
          bool isObjectSolid, int lightEmission,
          int blastResistance,
          int miningResistance);
-    virtual ~Tile() = default;
 
-    virtual void tick() {}
-    virtual void destroy() {}
-    virtual void onPlayerInteraction() {}
+    virtual ~TileGenerator() = default;
 
+    /**
+     * Called when a new tile is created manually, such as when a tile is placed.
+     */
+    virtual std::shared_ptr<Tile> createTile() = 0;
+
+    /**
+     * Same as createTile() by default, but this is only ever called by worldgen.
+     * Should be overridden by special tiles that do more than just create the tile.
+     */
+    virtual std::shared_ptr<Tile> generateTile() { return createTile(); };
+
+    const std::string& getStringID() { return tileID; }
+    const int& getAtlasID() { return atlasID; }
 };
 
-} // namespace genesis
+}
