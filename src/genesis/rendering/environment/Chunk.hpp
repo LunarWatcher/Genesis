@@ -3,7 +3,12 @@
 #include "genesis/core/game/chunks/Tile.hpp"
 #include "genesis/rendering/Entity.hpp"
 
+#ifdef __APPLE__
+#include <OpenGL/gl.h>
+#else
 #include <GL/gl.h>
+#endif
+
 #include <map>
 #include <memory>
 #include <string>
