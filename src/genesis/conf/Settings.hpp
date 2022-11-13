@@ -5,15 +5,16 @@
 #include <any>
 #include <memory>
 
+#include "nlohmann/json.hpp"
 #include "stc/Environment.hpp"
 
 namespace genesis {
 
-#define GETTER(type, name) type get##name(const std::string& key) { return std::any_cast<type>(conf.at(key)); }
+#define GETTER(type, name) type get##name(const std::string& key) { return conf.at(key); }
 
 class Settings {
 private:
-    static inline std::map<std::string, std::any> defaultConf = {
+    static inline nlohmann::json defaultConf = {
         // Visuals {{{
         {"width", 1024},
         {"height", 576},
@@ -25,9 +26,11 @@ private:
         // }}}
     };
 
+    fs::path confPath;
+
 public:
 
-    std::map<std::string, std::any> conf;
+    nlohmann::json conf;
     fs::path home;
     static std::shared_ptr<Settings> instance;
 

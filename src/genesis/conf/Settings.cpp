@@ -4,6 +4,8 @@
 #include <stdexcept>
 #include <iostream>
 
+#include "genesis/rendering/Constants.hpp"
+
 #if !defined(_WIN32) && !defined(_WIN64)
     #include <pwd.h>
     // Used for getuid
@@ -18,8 +20,10 @@ namespace genesis {
 std::shared_ptr<Settings> Settings::instance = std::make_shared<Settings>();
 
 Settings::Settings() {
-    auto home = fs::path(stc::getHome());
+    home = Constants::isTest ? fs::path("./") : stc::getHome();
+    // TODO: find a better way to manage data dirs. Maybe a shared class for all filesystem resources?
     bool hasFolder = fs::exists(home / ".genesis/");
+    confPath = home / ".genesis" / "settings.json";
 
     // Standards:tm:
     // Also avoids problems if keys aren't stored
@@ -27,23 +31,22 @@ Settings::Settings() {
     conf = defaultConf;
 
     // I still can't get over how cool this operator is :D
-    if (hasFolder && fs::exists(home / ".genesis/settings.confl")) {
-        std::ifstream stream(home / ".genesis/settings.confl");
-        std::string line = "";
-        while (std::getline(stream, line)) {
-            if (auto idx = line.find('='); idx != std::string::npos) {
-                std::string key = line.substr(0, idx);
-                std::string value = line.substr(idx + 1);
-            } else {
-                throw std::runtime_error("Malformed config at: " + line);
-            }
-        }
+    if (hasFolder && fs::exists(confPath)) {
+        std::ifstream stream(confPath);
+        nlohmann::json tmp;
+
+        stream >> tmp;
+        conf.update(tmp, true);
     } else {
         if(!hasFolder && !fs::create_directory(home / ".genesis")) {
             throw std::runtime_error("Failed to create settings directory");
         }
     }
+}
 
+void Settings::save() {
+    std::ofstream f(confPath);
+    f << conf << std::endl;
 }
 
 }

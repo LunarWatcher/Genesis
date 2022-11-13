@@ -1,7 +1,5 @@
 add_executable(tests src/TestRunner.cpp
     src/SettingsTest.cpp
-
-    src/physics/ClickTests.cpp
 )
 
 # Catch2 {{{

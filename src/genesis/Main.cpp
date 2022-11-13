@@ -7,6 +7,8 @@
 
 #include <iostream>
 
+const bool genesis::Constants::isTest = false;
+
 void initializeLogging() {
     // Might as well wrap this to a default.
     std::string envVal = stc::getEnv("SPDLOG_LEVEL", "info");
