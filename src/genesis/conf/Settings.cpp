@@ -33,6 +33,10 @@ Settings::Settings() {
     // I still can't get over how cool this operator is :D
     if (hasFolder && fs::exists(confPath)) {
         std::ifstream stream(confPath);
+        // This intermediate step is required to make sure the json is
+        // updated and not overriden.
+        // This ensures defaults are respected if the config lacks
+        // defaults, most notably as a consequence of updates.
         nlohmann::json tmp;
 
         stream >> tmp;
