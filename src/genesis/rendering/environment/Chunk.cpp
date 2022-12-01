@@ -35,6 +35,12 @@ void Chunk::regenerateVertices() {
     glBindVertexArray(model->vaoID);
     std::vector<GLfloat> uv;
     std::vector<GLfloat> points;
+
+    // Alpha fuckery; Stuff has to be sorted, which is hard to do in a mesh like this.
+    // I imagine there's still consequences down the line for doing this, particularly with
+    // 3D-ish graphics later down the line, but fuck you future me, not my problem. Deal with it
+    std::vector<GLfloat> latePoints, lateUV;
+
     std::vector<int> indices;
 
     // What the fuck
@@ -44,50 +50,53 @@ void Chunk::regenerateVertices() {
     auto& baseTiles = chunkMap.at(baseLevel);
     auto& floorTiles = chunkMap.at(baseLevel - 1);
 
-    // Because alpha fucking sucks, this entire thing has to be iterated twice because sorting order.
-    for (int c = 0; c < 2; ++c) {
-        // I hate myself for being inconsistent with which axis is the depth axis
-        for (int x = 0; x < Constants::Chunks::CHUNK_SIZE; ++x) {
-            for (int y = 0; y < Constants::Chunks::CHUNK_SIZE; ++y) {
-                // This nasty shit opens some FOV weirdness
 
-                std::vector<std::pair<int, std::vector<GLfloat>>> uvs;
+    // I hate myself for being inconsistent with which axis is the depth axis
+    for (int x = 0; x < Constants::Chunks::CHUNK_SIZE; ++x) {
+        for (int y = 0; y < Constants::Chunks::CHUNK_SIZE; ++y) {
+            // This nasty shit opens some FOV weirdness
 
-                auto baseTile = baseTiles.at(y).at(x);
-                if (baseTile == nullptr && floorTiles.at(y).at(x) == nullptr) continue;
+            std::vector<std::pair<int, std::vector<GLfloat>>> uvs;
 
-                // First sweet; floor.
-                if (c == 0 && (baseTile == nullptr || !baseTile->isTextureSolid)) {
-                    auto floorTile = floorTiles.at(y).at(x);
-                    auto uvSource = Renderer::getInstance().getTexturePack()->getTextureMetadata(floorTile->tileID).uvCoordinates;
-                    uvs.push_back({0, uvSource});
+            auto baseTile = baseTiles.at(y).at(x);
+            if (baseTile == nullptr && floorTiles.at(y).at(x) == nullptr) continue;
+
+            // First sweet; floor.
+            if (baseTile == nullptr || !baseTile->isTextureSolid) {
+                auto floorTile = floorTiles.at(y).at(x);
+                auto uvSource = Renderer::getInstance().getTexturePack()->getTextureMetadata(floorTile->tileID).uvCoordinates;
+                uvs.push_back({0, uvSource});
+            }
+            // Check floor tiles first to exploit ordering for indexing
+            if (baseTile != nullptr) {
+                auto uvSource = Renderer::getInstance().getTexturePack()->getTextureMetadata(baseTile->tileID).uvCoordinates;
+                uvs.push_back({1, uvSource});
+            }
+
+            for (auto& [yOffset, uvSource] : uvs) {
+                auto& pointRef = yOffset == 1 ? latePoints : points;
+                auto& uvRef = yOffset == 1 ? lateUV : uv;
+
+                std::vector<GLfloat> blockVertices;
+                for (size_t i = 0; i < Constants::square.size(); i += 3) {
+                    blockVertices.push_back(Constants::square.at(i) + (GLfloat) x);
+                    blockVertices.push_back(Constants::square.at(i + 1) + (GLfloat) y);
+                    blockVertices.push_back(Constants::square.at(i + 2) + yOffset);
                 }
-                // Check floor tiles first to exploit ordering for indexing
-                if (baseTile != nullptr && c == 1) {
-                    auto uvSource = Renderer::getInstance().getTexturePack()->getTextureMetadata(baseTile->tileID).uvCoordinates;
-                    uvs.push_back({1, uvSource});
+
+                size_t offset = indices.size() / Constants::squareIndices.size() * (m + 1);
+
+                for (size_t i = 0; i < Constants::squareIndices.size(); ++i) {
+                    indices.push_back(static_cast<GLint>(Constants::squareIndices.at(i) + offset));
                 }
-
-                for (auto& [yOffset, uvSource] : uvs) {
-
-                    std::vector<GLfloat> blockVertices;
-                    for (size_t i = 0; i < Constants::square.size(); i += 3) {
-                        blockVertices.push_back(Constants::square.at(i) + (GLfloat) x);
-                        blockVertices.push_back(Constants::square.at(i + 1) + (GLfloat) y);
-                        blockVertices.push_back(Constants::square.at(i + 2) + yOffset);
-                    }
-
-                    size_t offset = indices.size() / Constants::squareIndices.size() * (m + 1);
-
-                    for (size_t i = 0; i < Constants::squareIndices.size(); ++i) {
-                        indices.push_back(static_cast<GLint>(Constants::squareIndices.at(i) + offset));
-                    }
-                    points.insert(points.end(), blockVertices.begin(), blockVertices.end());
-                    uv.insert(uv.end(), uvSource.begin(), uvSource.end());
-                }
+                pointRef.insert(pointRef.end(), blockVertices.begin(), blockVertices.end());
+                uvRef.insert(uvRef.end(), uvSource.begin(), uvSource.end());
             }
         }
     }
+
+    uv.insert(uv.end(), lateUV.begin(), lateUV.end());
+    points.insert(points.end(), latePoints.begin(), latePoints.end());
 
     model->vertices = static_cast<GLint>(points.size());
     model->createOrSubdataVBO(0, 3, points);
