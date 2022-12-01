@@ -22,12 +22,7 @@ Chunk::Chunk(int chunkX, int chunkY) : Entity(std::make_shared<Model>(), glm::ve
     model->createVBO(0, 3, 3ll * Constants::Chunks::WORST_CASE_SIZE);
     model->createVBO(1, 2, 2ll * Constants::Chunks::WORST_CASE_SIZE);
     model->bindIndexBuffer(2ll * Constants::Chunks::WORST_CASE_SIZE);
-    for (int x = 0; x < Constants::Chunks::CHUNK_SIZE; ++x) {
-        for (int y = 0; y < Constants::Chunks::CHUNK_SIZE; ++y) {
-            this->chunkMap.at(Constants::Chunks::CHUNK_SEA_LEVEL).at(y).at(x) = DataHelper::getInstance()->getTileGenerator("genesis:grass")
-                ->generateTile();
-        }
-    }
+
     regenerateVertices();
     glBindVertexArray(0);
 
@@ -49,29 +44,48 @@ void Chunk::regenerateVertices() {
     auto& baseTiles = chunkMap.at(baseLevel);
     auto& floorTiles = chunkMap.at(baseLevel - 1);
 
-    for (int x = 0; x < Constants::Chunks::CHUNK_SIZE; ++x) {
-        for (int y = 0; y < Constants::Chunks::CHUNK_SIZE; ++y) {
-            // This nasty shit opens some FOV weirdness
-            bool baseIsEmpty = baseTiles.at(y).at(x) == nullptr;
-            if (baseIsEmpty && floorTiles.at(y).at(x) == nullptr) continue;
-            auto tile = baseIsEmpty ? floorTiles.at(y).at(x) : baseTiles.at(y).at(x);
+    // Because alpha fucking sucks, this entire thing has to be iterated twice because sorting order.
+    for (int c = 0; c < 2; ++c) {
+        // I hate myself for being inconsistent with which axis is the depth axis
+        for (int x = 0; x < Constants::Chunks::CHUNK_SIZE; ++x) {
+            for (int y = 0; y < Constants::Chunks::CHUNK_SIZE; ++y) {
+                // This nasty shit opens some FOV weirdness
 
-            auto& uvSource = Renderer::getInstance().getTexturePack()->getTextureMetadata(tile->tileID).uvCoordinates;
+                std::vector<std::pair<int, std::vector<GLfloat>>> uvs;
 
-            std::vector<GLfloat> blockVertices;
-            for (size_t i = 0; i < Constants::square.size(); i += 3) {
-                blockVertices.push_back(Constants::square.at(i) + (GLfloat) x);
-                blockVertices.push_back(Constants::square.at(i + 1) + (GLfloat) y);
-                blockVertices.push_back(Constants::square.at(i + 2) + (baseIsEmpty ? 0.0f : 1.0f));
+                auto baseTile = baseTiles.at(y).at(x);
+                if (baseTile == nullptr && floorTiles.at(y).at(x) == nullptr) continue;
+
+                // First sweet; floor.
+                if (c == 0 && (baseTile == nullptr || !baseTile->isTextureSolid)) {
+                    auto floorTile = floorTiles.at(y).at(x);
+                    auto uvSource = Renderer::getInstance().getTexturePack()->getTextureMetadata(floorTile->tileID).uvCoordinates;
+                    uvs.push_back({0, uvSource});
+                }
+                // Check floor tiles first to exploit ordering for indexing
+                if (baseTile != nullptr && c == 1) {
+                    auto uvSource = Renderer::getInstance().getTexturePack()->getTextureMetadata(baseTile->tileID).uvCoordinates;
+                    uvs.push_back({1, uvSource});
+                }
+
+                for (auto& [yOffset, uvSource] : uvs) {
+
+                    std::vector<GLfloat> blockVertices;
+                    for (size_t i = 0; i < Constants::square.size(); i += 3) {
+                        blockVertices.push_back(Constants::square.at(i) + (GLfloat) x);
+                        blockVertices.push_back(Constants::square.at(i + 1) + (GLfloat) y);
+                        blockVertices.push_back(Constants::square.at(i + 2) + yOffset);
+                    }
+
+                    size_t offset = indices.size() / Constants::squareIndices.size() * (m + 1);
+
+                    for (size_t i = 0; i < Constants::squareIndices.size(); ++i) {
+                        indices.push_back(static_cast<GLint>(Constants::squareIndices.at(i) + offset));
+                    }
+                    points.insert(points.end(), blockVertices.begin(), blockVertices.end());
+                    uv.insert(uv.end(), uvSource.begin(), uvSource.end());
+                }
             }
-
-            size_t offset = indices.size() / Constants::squareIndices.size() * (m + 1);
-
-            for (size_t i = 0; i < Constants::squareIndices.size(); ++i) {
-                indices.push_back(static_cast<GLint>(Constants::squareIndices.at(i) + offset));
-            }
-            points.insert(points.end(), blockVertices.begin(), blockVertices.end());
-            uv.insert(uv.end(), uvSource.begin(), uvSource.end());
         }
     }
 
@@ -82,8 +96,26 @@ void Chunk::regenerateVertices() {
 }
 
 void Chunk::render() {
+    // This is horribly inefficient
+
+    regenerateVertices();
     // we actually don't need to do much here for now; all the rendering is handled via the pre-cached mesh
     Entity::render();
+}
+
+int Chunk::getTopY(int x, int z) {
+
+    for (auto y = Constants::MAX_OVERWORLD_HEIGHT; y >= -Constants::MAX_UNDERGROUND_HEIGHT; --y) {
+        if (chunkMap.contains(y) && chunkMap.at(y).at(x).at(z) != nullptr) {
+            return y;
+        }
+    }
+    // Should never happen
+    return -1;
+}
+
+void Chunk::set(std::shared_ptr<Tile> tile, int x, int z, int y) {
+    chunkMap.at(y).at(x).at(z) = tile;
 }
 
 } // namespace genesis

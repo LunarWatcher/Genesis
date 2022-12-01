@@ -21,6 +21,7 @@ private:
     // Game state
     std::string civilisationName;
 
+    // TODO: replace with a different container. Vectors aren't really a good idea for this.
     std::vector<std::shared_ptr<Chunk>> chunks;
     std::vector<std::shared_ptr<EntityController>> entityControllers;
 
@@ -33,6 +34,11 @@ public:
     std::shared_ptr<perlin::NoiseGenerator> getNoiseGenerator() {
         return generator;
     }
+
+    /**
+     * Returns world coordinates as chunk coords, and coords within the chunk
+     */
+    std::pair<std::pair<int, int>, std::pair<int, int>> convertToChunkSpace(int tileX, int tileZ);
 
     const std::vector<std::shared_ptr<EntityController>>& getEntityControllers() override;
 

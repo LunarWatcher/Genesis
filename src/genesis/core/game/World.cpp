@@ -45,4 +45,17 @@ const std::vector<std::shared_ptr<EntityController>>& World::getEntityController
     return entityControllers;
 }
 
+std::pair<std::pair<int, int>, std::pair<int, int>> World::convertToChunkSpace(int tileX, int tileZ) {
+    return {
+        {
+            std::floor(tileX / Constants::Chunks::CHUNK_SIZE),
+            std::floor(tileZ / Constants::Chunks::CHUNK_SIZE),
+        },
+        {
+            tileX % Constants::Chunks::CHUNK_SIZE,
+            tileZ % Constants::Chunks::CHUNK_SIZE
+        }
+    };
+}
+
 } // namespace genesis

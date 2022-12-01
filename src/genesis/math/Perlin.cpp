@@ -1,4 +1,5 @@
 #include "Perlin.hpp"
+#include "genesis/core/data/DataHelper.hpp"
 #include "genesis/rendering/Constants.hpp"
 #include "genesis/rendering/Entity.hpp"
 #include "genesis/rendering/Renderer.hpp"
@@ -111,7 +112,7 @@ void Perlin2DNoiseGenerator::generateChunk(genesis::ChunkMap& ref, int chunkX, i
 // DumbGenerator {{{
 void DumbGenerator::generateChunk(genesis::ChunkMap& ref, int, int) {
     // resize y to match the chunk size
-    for (int z = 0; z < genesis::Constants::Chunks::CHUNK_HEIGHT; ++z) {
+    for (int z = -genesis::Constants::MAX_UNDERGROUND_HEIGHT; z <= genesis::Constants::MAX_OVERWORLD_HEIGHT; ++z) {
         auto& activeLevel = ref[z];
 
         activeLevel.resize(genesis::Constants::Chunks::CHUNK_SIZE);
@@ -122,6 +123,13 @@ void DumbGenerator::generateChunk(genesis::ChunkMap& ref, int, int) {
             for (int x = 0; x < genesis::Constants::Chunks::CHUNK_SIZE; ++x) {
                 activeLevel[y][x] = nullptr;
             }
+        }
+    }
+    // "noise"
+    for (int x = 0; x < genesis::Constants::Chunks::CHUNK_SIZE; ++x) {
+        for (int y = 0; y < genesis::Constants::Chunks::CHUNK_SIZE; ++y) {
+            ref.at(genesis::Constants::Chunks::CHUNK_SEA_LEVEL).at(y).at(x) = genesis::DataHelper::getInstance()->getTileGenerator("genesis:grass")
+                ->generateTile();
         }
     }
 }

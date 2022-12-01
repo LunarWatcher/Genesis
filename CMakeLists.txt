@@ -44,9 +44,7 @@ if (NOT WIN32)
     # and is the only source of the warning at this time
     # TODO: find the equivalent for Windoze
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-volatile")
-
 else()
-
     # As of CMake 3.15, no manual MSVC framework options have to be set
     set (CMAKE_CXX_FLAGS_DEBUG "/Zi")
 endif()

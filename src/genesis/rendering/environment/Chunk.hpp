@@ -3,6 +3,7 @@
 #include "genesis/core/game/chunks/Tile.hpp"
 #include "genesis/rendering/Entity.hpp"
 
+// God damn apple
 #ifdef __APPLE__
 #include <OpenGL/gl.h>
 #else
@@ -30,6 +31,7 @@ class Chunk : public Entity {
 private:
     ChunkMap chunkMap;
     int chunkX, chunkY;
+    int lastTileLevel = -9999;
 
     void regenerateVertices();
 
@@ -40,7 +42,14 @@ public:
 
     //void erase(int x, int y, int z = 0);
     //std::shared_ptr<Entity> get(int x, int y, int z = 0);
-    //void set(int tile, int x, int y, int z = 0);
+    void set(std::shared_ptr<Tile> tile, int x, int z, int y = 0);
+    
+    /**
+     * Gets the top y for a given tile within the chunk.
+     *
+     * Note: requires chunk-relative coords
+     */
+    int getTopY(int x, int y);
 
     auto getX() {
         return chunkX;
@@ -48,6 +57,7 @@ public:
     auto getY() {
         return chunkY;
     }
+    friend class WorldGenerator;
 };
 
 } // namespace genesis
