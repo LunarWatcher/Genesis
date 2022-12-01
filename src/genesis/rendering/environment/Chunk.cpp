@@ -61,7 +61,7 @@ void Chunk::regenerateVertices() {
             auto baseTile = baseTiles.at(y).at(x);
             if (baseTile == nullptr && floorTiles.at(y).at(x) == nullptr) continue;
 
-            // First sweet; floor.
+            // First sweep; floor.
             if (baseTile == nullptr || !baseTile->isTextureSolid) {
                 auto floorTile = floorTiles.at(y).at(x);
                 auto uvSource = Renderer::getInstance().getTexturePack()->getTextureMetadata(floorTile->tileID).uvCoordinates;
