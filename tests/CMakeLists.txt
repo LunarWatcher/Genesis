@@ -1,5 +1,6 @@
 add_executable(tests src/TestRunner.cpp
     src/SettingsTest.cpp
+    src/DateTests.cpp
 )
 
 # Catch2 {{{

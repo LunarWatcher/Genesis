@@ -19,6 +19,13 @@ Chunk::Chunk(int chunkX, int chunkY) : Entity(std::make_shared<Model>(), glm::ve
     model->createVAO();
     // when we create the VBO, we want to allocate the entire thing in VRAM.
     // A lot of this will be unused, but whatever. I have no idea what I'm doing, this is good enough.
+    // Future me here; no. I'm fucking stupid.
+    //
+    // Even with 3D, the plan is discrete 3D, so later-wise rendering. This means three layers are rendered at most, making the worst case every tile being rendered
+    // due to some other transparency mechanics.
+    //
+    // Even then, I should probably do something about the rendering system wrt. transparency, seeing as OpenGL is ass at dealing with it.
+    // OpenGL is so bad at transparency that if you weren't paying attention, you'd think Stack Overflow was involved.
     model->createVBO(0, 3, 3ll * Constants::Chunks::WORST_CASE_SIZE);
     model->createVBO(1, 2, 2ll * Constants::Chunks::WORST_CASE_SIZE);
     model->bindIndexBuffer(2ll * Constants::Chunks::WORST_CASE_SIZE);
@@ -39,6 +46,10 @@ void Chunk::regenerateVertices() {
     // Alpha fuckery; Stuff has to be sorted, which is hard to do in a mesh like this.
     // I imagine there's still consequences down the line for doing this, particularly with
     // 3D-ish graphics later down the line, but fuck you future me, not my problem. Deal with it
+    // Alternatively, I could just do this in layers and disregard whether or not something needs to be rendered.
+    // It's inefficient, sure, but if it's just bound to like three layers, that isn't too big a sacrifice. 
+    //
+    // There's definitely overhead to address here, however.
     std::vector<GLfloat> latePoints, lateUV;
 
     std::vector<int> indices;
