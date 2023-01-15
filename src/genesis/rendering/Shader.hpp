@@ -27,7 +27,7 @@ public:
     void compileShader(int shaderID, const std::string& shaderSource);
     void createProgram(const std::vector<int>& shaderIDs);
 
-
+    // Why isn't this pure virtual?
     virtual void loadTransMatrix(const glm::mat4&) {
         throw std::runtime_error("loadTransMatrix called but not implemented.");
     }
