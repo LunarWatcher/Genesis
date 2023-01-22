@@ -48,7 +48,6 @@ set (SOURCE_FILES
     genesis/core/data/DataHelper.cpp
     genesis/core/game/generation/RNGesus.cpp
 
-    genesis/core/game/log/Date.cpp
     # }}}
     # Controls {{{
     genesis/controls/InputManager.cpp

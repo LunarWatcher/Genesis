@@ -4,7 +4,6 @@
 #include "genesis/core/game/items/Item.hpp"
 #include "genesis/rendering/Entity.hpp"
 
-#include "genesis/core/game/log/Date.hpp"
 
 namespace genesis {
 
@@ -18,7 +17,6 @@ public:
     // Colonist attributes {{{
     std::string colonistName;
     
-    Date birthDate;
     size_t age;
 
     unsigned int hitpoints;
