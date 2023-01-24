@@ -1,4 +1,6 @@
 cmake_minimum_required(VERSION 3.15)
+cmake_policy(SET CMP0091 NEW)
+
 project(Genesis)
 
 if ( ${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR} )
@@ -37,7 +39,6 @@ if (NOT WIN32)
 else()
     # As of CMake 3.15, no manual MSVC framework options have to be set
     set (CMAKE_CXX_FLAGS_DEBUG "/Zi")
-    set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 endif()
 
 conan_cmake_configure (REQUIRES nlohmann_json/3.11.2 glfw/3.3.8 glew/2.2.0
