@@ -21,16 +21,6 @@ endif()
 
 include(${CMAKE_BINARY_DIR}/conan.cmake)
 
-conan_cmake_configure (REQUIRES nlohmann_json/3.11.2 glfw/3.3.8 glew/2.2.0
-                        openal/1.22.2 glm/cci.20220420
-                        #freetype/2.11.1
-                        spdlog/1.10.0
-                        GENERATORS cmake)
-conan_cmake_autodetect (settings)
-conan_cmake_install (PATH_OR_REFERENCE . BUILD missing SETTINGS ${settings})
-
-include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-conan_basic_setup()
 
 set (CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DAPI_DEBUG")
 
@@ -47,7 +37,19 @@ if (NOT WIN32)
 else()
     # As of CMake 3.15, no manual MSVC framework options have to be set
     set (CMAKE_CXX_FLAGS_DEBUG "/Zi")
+    set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 endif()
+
+conan_cmake_configure (REQUIRES nlohmann_json/3.11.2 glfw/3.3.8 glew/2.2.0
+                        openal/1.22.2 glm/cci.20220420
+                        #freetype/2.11.1
+                        spdlog/1.10.0
+                        GENERATORS cmake)
+conan_cmake_autodetect (settings)
+conan_cmake_install (PATH_OR_REFERENCE . BUILD missing SETTINGS ${settings})
+
+include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+conan_basic_setup()
 
 add_subdirectory(src)
 add_subdirectory(tests)
