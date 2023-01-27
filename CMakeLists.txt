@@ -18,8 +18,16 @@ if(NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")
                 "${CMAKE_BINARY_DIR}/conan.cmake"
                 TLS_VERIFY ON)
 endif()
-
 include(${CMAKE_BINARY_DIR}/conan.cmake)
+
+find_package(Git)
+if (EXISTS ${GIT_EXECUTABLE})
+    message(STATUS "Checking if Git submodules are initialised...")
+    execute_process(COMMAND ${GIT_EXECUTABLE} submodule update --init --recursive)
+    execute_process(COMMAND ${GIT_EXECUTABLE} submodule update)
+else()
+    message(WARNING "GIT_EXECUTABLE isn't saved. Make sure you have Git on your path")
+endif()
 
 
 set (CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DAPI_DEBUG")
@@ -54,10 +62,10 @@ add_subdirectory(src)
 add_subdirectory(tests)
 
 add_custom_target(run
-    COMMAND bin/genesis
+    COMMAND genesis
     DEPENDS genesis
-    COMMENT "Run the game")
+    COMMENT "Run genesis")
 add_custom_target(test
-    COMMAND bin/tests
+    COMMAND tests
     DEPENDS tests
-    COMMENT "Test the game")
+    COMMENT "Test genesis")
