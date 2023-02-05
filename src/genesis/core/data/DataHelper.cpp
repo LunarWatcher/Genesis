@@ -21,6 +21,15 @@ DataHelper::DataHelper() {
     };
 }
 
+void DataHelper::registerTileGenerator(const std::string &tileID, std::shared_ptr<TileGenerator> generator) {
+    if (generator == nullptr) {
+        tileGenerators.erase(tileGenerators.find(tileID));
+        return;
+    }
+
+    tileGenerators[tileID] = generator;
+}
+
 DataHelper* DataHelper::getInstance() {
     if (instance == nullptr) {
         instance = new DataHelper();

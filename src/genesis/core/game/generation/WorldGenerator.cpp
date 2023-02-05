@@ -1,5 +1,7 @@
 #include "WorldGenerator.hpp"
 
+#include "genesis/core/game/generation/RNGesus.hpp"
+
 #include "genesis/core/data/DataHelper.hpp"
 #include "genesis/rendering/Renderer.hpp"
 #include "genesis/world/PlayerCamp.hpp"
@@ -18,10 +20,7 @@ std::shared_ptr<World> WorldGenerator::newWorld(int xChunks, int yChunks, const 
 
     auto& controller = world->entityControllers.back();
     controller->addEntity(
-        std::make_shared<Colonist>("genesis:colonist_a", "Sparta",
-            glm::vec3{1, 0, 1.0},
-            25 // semi-random age; idk, 25 seems like a reasonable age for our first citizens
-        )
+        RNGesus::generateColonist(world, {1, 0, 1})
     );
 
     // TODO: add a ChunkController as well. This is deeper down the world management rabbit hole

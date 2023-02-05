@@ -6,6 +6,8 @@
 #include <memory>
 #include <string>
 
+#include <functional>
+
 namespace genesis {
 
 class DataHelper {
@@ -13,8 +15,9 @@ private:
     std::map<std::string, std::shared_ptr<TileGenerator>> tileGenerators;
 
     static inline DataHelper* instance;
-public:
+
     DataHelper();
+public:
 
     std::shared_ptr<TileGenerator> getTileGenerator(const std::string& tile) {
         return tileGenerators.at(tile);

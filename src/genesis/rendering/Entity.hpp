@@ -34,6 +34,7 @@ protected:
     void regenerateTransMatrix();
 
     Entity() = default;
+
 public:
     long long ID = -1;
 
