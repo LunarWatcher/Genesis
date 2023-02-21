@@ -65,7 +65,6 @@ set (SOURCE_FILES
     # Math {{{
     genesis/math/Perlin.cpp
     # Physics {{{
-    genesis/math/physics/Rectangle.cpp
     genesis/rendering/objects/Primitive.cpp
     genesis/math/physics/PhysicsController.cpp
 

@@ -34,7 +34,7 @@ Chunk::Chunk(int chunkX, int chunkY) : Entity(std::make_shared<Model>(), glm::ve
     glBindVertexArray(0);
 
     initializeCollider(std::make_shared<Rectangle>(0, 0, 0, Constants::Chunks::CHUNK_SIZE, Constants::Chunks::CHUNK_SIZE));
-    collider->update(*this);
+    collider->update(position);
 }
 
 void Chunk::regenerateVertices() {

@@ -90,7 +90,7 @@ void TextEntity::regenerateVertices(const std::string& text, float x, float y, f
         minY,
         0 };
     this->collider->setDims(maxX - sourceX, maxY - minY);
-    this->collider->update(*this);
+    this->collider->update(position);
 
     // TODO: account for changing text after the fact.
     // With the current system, the buffer has to be smaller than

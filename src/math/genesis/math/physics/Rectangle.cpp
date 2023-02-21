@@ -1,7 +1,6 @@
 #include "Rectangle.hpp"
 
-#include "genesis/rendering/Entity.hpp"
-#include "spdlog/spdlog.h"
+#include <glm/glm.hpp>
 
 namespace genesis {
 
@@ -24,8 +23,7 @@ void Rectangle::setDims(const double& width, const double& height) {
     this->height = height;
 }
 
-void Rectangle::update(const Entity& e) {
-    auto& pos = e.getPosition();
+void Rectangle::update(const glm::vec3& pos) {
     this->x = pos.x;
     this->y = pos.y;
     this->z = pos.z;
