@@ -3,8 +3,8 @@
 #include "GL/glew.h"
 #include "GLFW/glfw3.h"
 
-#include "Model.hpp"
-#include "Renderable.hpp"
+#include "genesis/rendering/Model.hpp"
+#include "genesis/rendering/Renderable.hpp"
 
 #include "genesis/rendering/atlases/FontAtlas.hpp"
 #include "genesis/rendering/atlases/TextureAtlas.hpp"

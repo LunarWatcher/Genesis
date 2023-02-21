@@ -1,7 +1,5 @@
 #pragma once
 
-#include "genesis/rendering/shaders/DefaultShader.hpp"
-
 namespace genesis {
 
 class Renderable {

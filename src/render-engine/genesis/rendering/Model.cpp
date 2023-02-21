@@ -3,8 +3,6 @@
 #include <stdexcept>
 #include <vector>
 
-#include "ui/Text.hpp"
-
 namespace genesis {
 
 Model::Model(const VertexArray& vertices, const std::function<void(Model*)>& attribInitFunc, int coordSize, GLenum mode)

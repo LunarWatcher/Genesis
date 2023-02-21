@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Collider.hpp"
+#include "genesis/math/physics/Collider.hpp"
 
 namespace genesis {
 

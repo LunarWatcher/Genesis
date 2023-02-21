@@ -1,6 +1,6 @@
 set (SOURCE_FILES
     # Rendering {{{
-    genesis/rendering/Model.cpp genesis/rendering/Shader.cpp
+    genesis/rendering/Shader.cpp
     genesis/rendering/Renderer.cpp
     # }}}
     # Scenes {{{
@@ -13,7 +13,6 @@ set (SOURCE_FILES
     genesis/rendering/shaders/ParticleShader.cpp
     # }}}
     # Textures {{{
-    genesis/rendering/Texture.cpp
     genesis/rendering/atlases/TextureAtlas.cpp
     genesis/rendering/atlases/FontAtlas.cpp
     # }}}
@@ -88,8 +87,7 @@ set (SOURCE_FILES
 )
 
 add_library(genesis-core STATIC ${SOURCE_FILES})
-target_link_libraries(genesis-core PUBLIC genesis-deps)
-target_include_directories(genesis-core PUBLIC genesis-deps)
+target_link_libraries(genesis-core PUBLIC genesis-deps genesis-rendering genesis-math)
 
 # Executable dependencies {{{
 target_include_directories(genesis-core PUBLIC ${CONAN_INCLUDE_DIRS})

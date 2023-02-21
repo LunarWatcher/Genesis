@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Model.hpp"
+#include "genesis/rendering/Model.hpp"
 #include "genesis/rendering/Renderable.hpp"
 #include "glm/matrix.hpp"
 #include "glm/vec3.hpp"

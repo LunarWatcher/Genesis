@@ -1,6 +1,8 @@
 #pragma once
 
 #include "genesis/rendering/Model.hpp"
+#include <glm/glm.hpp>
+
 namespace genesis {
 
 struct Particle {
