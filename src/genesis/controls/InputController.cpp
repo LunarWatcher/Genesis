@@ -1,4 +1,4 @@
-#include "InputManager.hpp"
+#include "InputController.hpp"
 #include "GLFW/glfw3.h"
 #include "genesis/rendering/Renderer.hpp"
 #include <iostream>
@@ -6,7 +6,7 @@
 
 namespace genesis {
 
-void InputManager::onKeyPressed(int key, int, int action, int mods) {
+void InputController::onKeyPressed(int key, int, int action, int mods) {
     if (action == GLFW_REPEAT) {
         return;
     }
@@ -14,7 +14,7 @@ void InputManager::onKeyPressed(int key, int, int action, int mods) {
     keys[fwd] = action == GLFW_PRESS;
 }
 
-bool InputManager::registerKeyCallback(int key, int mods, const InputCallback& callback) {
+bool InputController::registerKeyCallback(int key, int mods, const InputCallback& callback) {
     if (callback == nullptr) {
         throw std::runtime_error("Cannot register a null callback");
     }
@@ -28,7 +28,7 @@ bool InputManager::registerKeyCallback(int key, int mods, const InputCallback& c
     return true;
 }
 
-void InputManager::onMousePressed(int button, int action, int mods) {
+void InputController::onMousePressed(int button, int action, int mods) {
     // we can do substantially better, but for now, we just screw modifiers
     if (mods != 0) return;
     // This is done purely for the sake of tracking whether the primary button
@@ -51,12 +51,12 @@ void InputManager::onMousePressed(int button, int action, int mods) {
     Renderer::getInstance().getPhysicsEngine()->clickElement(x, y);
 }
 
-void InputManager::onMouseMoved(double, double) {
+void InputController::onMouseMoved(double, double) {
     // TODO: drag or whatever
     // I guess
 }
 
-void InputManager::tick() {
+void InputController::tick() {
     for (auto& [key, callback] : registeredKeys) {
         auto it = keys.find(key);
         if (it != keys.end()) {

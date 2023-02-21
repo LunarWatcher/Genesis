@@ -1,6 +1,6 @@
 #pragma once
 
-#include "genesis/controls/InputManager.hpp"
+#include "genesis/controls/InputController.hpp"
 #include "genesis/rendering/Constants.hpp"
 #include "genesis/rendering/Shader.hpp"
 #include "genesis/rendering/shaders/DefaultShader.hpp"

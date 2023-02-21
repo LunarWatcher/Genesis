@@ -50,7 +50,7 @@ set (SOURCE_FILES
 
     # }}}
     # Controls {{{
-    genesis/controls/InputManager.cpp
+    genesis/controls/InputController.cpp
     # }}}
     # Game {{{
     genesis/world/EntityController.cpp

@@ -20,35 +20,35 @@ Camera::Camera() {
     auto inputManager = Renderer::getInstance().getInputManager();
     inputManager->registerKeyCallback(GLFW_KEY_W, // Map W
         0, // no modifiers
-        [this](InputManager&, int action) {
+        [this](InputController&, int action) {
             if (action != 0)
                 this->position.y += 10.0 * Renderer::getInstance().getDelta();
             return false;
         });
-    inputManager->registerKeyCallback(GLFW_KEY_A, 0, [this](InputManager&, int action) {
+    inputManager->registerKeyCallback(GLFW_KEY_A, 0, [this](InputController&, int action) {
         if (action != 0)
             this->position.x -= 10.0 * Renderer::getInstance().getDelta();
         return false;
     });
-    inputManager->registerKeyCallback(GLFW_KEY_S, 0, [this](InputManager&, int action) {
+    inputManager->registerKeyCallback(GLFW_KEY_S, 0, [this](InputController&, int action) {
         if (action != 0)
             this->position.y -= 10.0 * Renderer::getInstance().getDelta();
         return false;
     });
-    inputManager->registerKeyCallback(GLFW_KEY_D, 0, [this](InputManager&, int action) {
+    inputManager->registerKeyCallback(GLFW_KEY_D, 0, [this](InputController&, int action) {
         if (action != 0)
             this->position.x += 10.0 * Renderer::getInstance().getDelta();
         return false;
     });
 
-    inputManager->registerKeyCallback(GLFW_KEY_K, 0, [this](InputManager&, int action) {
+    inputManager->registerKeyCallback(GLFW_KEY_K, 0, [this](InputController&, int action) {
         if (action == 1) {
             this->activeYLayer += 1;
             std::cout << this->activeYLayer << std::endl;
         }
         return true;
     });
-    inputManager->registerKeyCallback(GLFW_KEY_J, 0, [this](InputManager&, int action) {
+    inputManager->registerKeyCallback(GLFW_KEY_J, 0, [this](InputController&, int action) {
         if (action == 1) {
             this->activeYLayer -= 1;
         }

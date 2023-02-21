@@ -85,7 +85,7 @@ Renderer::Renderer() {
 }
 
 void Renderer::initGame() {
-    this->inputManager = std::make_shared<InputManager>();
+    this->inputManager = std::make_shared<InputController>();
     this->camera = std::make_shared<Camera>();
 
     this->texturePack = std::make_shared<genesis::TextureAtlas>("images/programmer.png");
@@ -101,13 +101,13 @@ void Renderer::initGame() {
     // Input
     glfwSetWindowUserPointer(window, inputManager.get());
     glfwSetKeyCallback(window, [](GLFWwindow* win, int key, int scanCode, int action, int mods) {
-        ((InputManager*) glfwGetWindowUserPointer(win))->onKeyPressed(key, scanCode, action, mods);
+        ((InputController*) glfwGetWindowUserPointer(win))->onKeyPressed(key, scanCode, action, mods);
     });
     glfwSetMouseButtonCallback(window, [](GLFWwindow* win, int button, int action, int mods) {
-        ((InputManager*) glfwGetWindowUserPointer(win))->onMousePressed(button, action, mods);
+        ((InputController*) glfwGetWindowUserPointer(win))->onMousePressed(button, action, mods);
     });
     glfwSetCursorPosCallback(window, [](GLFWwindow* win, double x, double y) {
-        ((InputManager*) glfwGetWindowUserPointer(win))->onMouseMoved(x, y);
+        ((InputController*) glfwGetWindowUserPointer(win))->onMouseMoved(x, y);
     });
 }
 
