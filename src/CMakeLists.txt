@@ -1,6 +1,7 @@
 add_executable(genesis core/genesis/Main.cpp)
 
 add_subdirectory(core)
+add_subdirectory(data)
 add_subdirectory(math)
 add_subdirectory(render-engine)
 

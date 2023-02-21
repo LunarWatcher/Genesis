@@ -1,6 +1,5 @@
 set (SOURCE_FILES
     # Rendering {{{
-    genesis/rendering/Shader.cpp
     genesis/rendering/Renderer.cpp
     # }}}
     # Scenes {{{
@@ -26,9 +25,7 @@ set (SOURCE_FILES
     # Camera {{{
     genesis/rendering/view/Camera.cpp
     # }}}
-    # Entities  {{{
-    genesis/rendering/Entity.cpp
-    # }}}
+
     # Environment {{{
     genesis/rendering/environment/Chunk.cpp
     genesis/core/game/chunks/Tile.cpp
@@ -41,7 +38,6 @@ set (SOURCE_FILES
     # }}}
     # Core {{{
     genesis/core/game/World.cpp
-    genesis/conf/Settings.cpp
 
     genesis/core/data/DataHelper.cpp
     genesis/core/game/generation/RNGesus.cpp
@@ -87,7 +83,11 @@ set (SOURCE_FILES
 )
 
 add_library(genesis-core STATIC ${SOURCE_FILES})
-target_link_libraries(genesis-core PUBLIC genesis-deps genesis-rendering genesis-math)
+target_link_libraries(genesis-core PUBLIC genesis-deps
+    genesis-rendering
+    genesis-math
+    genesis-data
+)
 
 # Executable dependencies {{{
 target_include_directories(genesis-core PUBLIC ${CONAN_INCLUDE_DIRS})

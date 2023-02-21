@@ -2,7 +2,7 @@
 
 #include "GLFW/glfw3.h"
 
-#include "Shader.hpp"
+#include "genesis/rendering/Shader.hpp"
 #include "genesis/core/game/World.hpp"
 #include "genesis/core/game/generation/WorldGenerator.hpp"
 #include "genesis/rendering/Texture.hpp"

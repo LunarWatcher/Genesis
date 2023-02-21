@@ -1,7 +1,7 @@
 #include "Entity.hpp"
-#include "genesis/rendering/Renderer.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "genesis/math/physics/Collider.hpp"
+#include "genesis/rendering/Shader.hpp"
 
 namespace genesis {
 
