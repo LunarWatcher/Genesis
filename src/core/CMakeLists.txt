@@ -75,9 +75,6 @@ set (SOURCE_FILES
     genesis/logging/Loggers.cpp
     # }}}
 
-    # Meta {{{
-    genesis/meta/Stb.cpp
-    # }}}
 )
 
 add_library(genesis-core STATIC ${SOURCE_FILES})
