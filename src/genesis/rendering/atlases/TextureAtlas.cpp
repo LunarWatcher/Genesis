@@ -16,7 +16,7 @@ TextureAtlas::TextureAtlas(const std::string& sourceFile)
         {0 * 16 + 0, "genesis:grass"},
         {0 * 16 + 1, "genesis:stone"},
 
-        {12 * 16 + 0, "genesis:colonist_a"},
+        {12 * 16 + 0, "genesis:red_fox"},
 
         {14 * 16 + 0, "genesis:caravan"},
     };

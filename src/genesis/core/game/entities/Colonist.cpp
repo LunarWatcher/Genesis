@@ -6,7 +6,7 @@ namespace genesis {
 
 Colonist::Colonist(const ColonistGenes& genes, const std::string& colonistName, const glm::vec3& spawnPosition, size_t age, unsigned int hitpoints, unsigned int armor)
         : Entity(
-            Renderer::getInstance().getTexturePack()->getTextureMetadata("genesis:colonist_a")
+            Renderer::getInstance().getTexturePack()->getTextureMetadata("genesis:red_fox")
                 .model,
             spawnPosition
         ), Inventory(24), colonistName(colonistName),
@@ -20,8 +20,7 @@ Colonist::Colonist(const ColonistGenes& genes, const std::string& colonistName, 
 std::string Colonist::pickTexture() {
     switch (genes.s) {
     case Species::RED_FOX:
-        // TODO: Rename the textures
-        return "genesis:colonist_a";
+        return "genesis:red_fox";
     case Species::ARCTIC_FOX:
         break;
     case Species::SILVER_FOX:
@@ -32,7 +31,7 @@ std::string Colonist::pickTexture() {
         break;
     }
 
-    return "genesis:colonist_a";
+    return "genesis:red_fox";
 }
 
 void Colonist::updateTexture() {
