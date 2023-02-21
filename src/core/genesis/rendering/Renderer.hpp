@@ -15,7 +15,6 @@
 #include "genesis/rendering/ui/Text.hpp"
 #include "genesis/rendering/view/Camera.hpp"
 
-#include "genesis/math/physics/PhysicsWorld.hpp"
 #include "spdlog/logger.h"
 #include "spdlog/spdlog.h"
 
@@ -71,7 +70,6 @@ private:
     std::shared_ptr<TextureAtlas> texturePack;
     std::shared_ptr<FontAtlas> fontAtlas;
 
-    std::shared_ptr<PhysicsWorld> physicsController;
 
     std::shared_ptr<InputController> inputManager;
 
@@ -147,10 +145,6 @@ public:
 
     auto getActiveScene() {
         return activeScene;
-    }
-
-    auto getPhysicsEngine() {
-        return this->physicsController;
     }
 
     auto getTextShader() {

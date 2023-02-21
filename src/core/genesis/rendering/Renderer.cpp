@@ -90,9 +90,6 @@ void Renderer::initGame() {
 
     this->texturePack = std::make_shared<genesis::TextureAtlas>("images/programmer.png");
 
-    this->physicsController = std::make_shared<PhysicsWorld>();
-
-
     this->textureShader = std::make_shared<DefaultShader>();
     this->primitiveShader = std::make_shared<DefaultShader>("primitive");
     this->textShader = std::make_shared<TextShader>();

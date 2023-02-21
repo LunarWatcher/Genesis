@@ -67,7 +67,6 @@ set (SOURCE_FILES
     # Physics {{{
     genesis/math/physics/Rectangle.cpp
     genesis/rendering/objects/Primitive.cpp
-    genesis/math/physics/PhysicsWorld.cpp
     genesis/math/physics/PhysicsController.cpp
 
     genesis/math/physics/Ray.cpp

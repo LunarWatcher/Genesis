@@ -1,6 +1,8 @@
 #include "InputController.hpp"
 #include "GLFW/glfw3.h"
 #include "genesis/rendering/Renderer.hpp"
+#include "genesis/conf/Settings.hpp"
+#include "genesis/math/physics/Ray.hpp"
 #include <iostream>
 #include <stdexcept>
 
@@ -48,7 +50,9 @@ void InputController::onMousePressed(int button, int action, int mods) {
     // I suppose that in a real system, we'd need to detect release?
     // And then check if there's dragging or some shit like that
     // iDunno
-    Renderer::getInstance().getPhysicsEngine()->clickElement(x, y);
+
+    Ray::traceClick({x, Settings::instance->getInt("height") - y},
+        Ray::normalizeScreenCoords(x, y));
 }
 
 void InputController::onMouseMoved(double, double) {
