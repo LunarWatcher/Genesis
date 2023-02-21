@@ -7,6 +7,7 @@
 #include <string>
 
 namespace genesis {
+struct InputSet;
 
 class InputController {
 public:

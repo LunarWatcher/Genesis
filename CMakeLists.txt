@@ -59,6 +59,7 @@ include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup()
 
 add_subdirectory(src)
+add_subdirectory(stc)
 add_subdirectory(tests EXCLUDE_FROM_ALL)
 
 add_custom_target(run

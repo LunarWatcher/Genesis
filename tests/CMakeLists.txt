@@ -16,4 +16,4 @@ FetchContent_MakeAvailable(Catch2)
 target_link_libraries(tests Catch2::Catch2)
 # }}}
 
-target_link_libraries(tests genesissrc)
+target_link_libraries(tests genesis-core)
