@@ -34,6 +34,7 @@ private:
     int lastTileLevel = -9999;
 
     void regenerateVertices();
+    bool dirty = false;
 
 public:
     Chunk(int chunkX, int chunkY);

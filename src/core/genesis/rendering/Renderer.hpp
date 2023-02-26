@@ -54,7 +54,7 @@ inline void GLFWCallback(int code, const char* error) {
 class World;
 
 class Renderer {
-private:
+protected:
     static std::shared_ptr<spdlog::logger> logger;
     static inline Renderer* INSTANCE;
 
@@ -132,10 +132,6 @@ public:
     auto getFontAtlas() {
         return fontAtlas;
     }
-
-    //FT_Library& getFontLibrary() {
-        //return fontLibrary;
-    //}
 
     static Renderer& getInstance() {
         return *INSTANCE;

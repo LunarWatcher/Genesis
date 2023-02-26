@@ -117,7 +117,10 @@ void Chunk::regenerateVertices() {
 void Chunk::render() {
     // This is horribly inefficient
 
-    regenerateVertices();
+    if (dirty) {
+        dirty = false;
+        regenerateVertices();
+    }
     // we actually don't need to do much here for now; all the rendering is handled via the pre-cached mesh
     Entity::render();
 }
@@ -134,6 +137,7 @@ int Chunk::getTopY(int x, int z) {
 }
 
 void Chunk::set(std::shared_ptr<Tile> tile, int x, int z, int y) {
+    dirty = true;
     chunkMap.at(y).at(x).at(z) = tile;
 }
 

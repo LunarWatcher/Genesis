@@ -165,6 +165,8 @@ void Renderer::run() {
     auto targetTime = std::chrono::duration<double, std::milli>(8.3);
 
     auto lastTime = std::chrono::high_resolution_clock::now();
+    auto counter = lastTime;
+    int frames = 0;
     do {
         auto now = std::chrono::high_resolution_clock::now();
         delta = std::chrono::duration<double, std::ratio<1>>(now - lastTime).count();
@@ -184,6 +186,12 @@ void Renderer::run() {
         auto sleepFor = targetTime - (now - end);
         if (sleepFor > std::chrono::milliseconds(0)) {
             std::this_thread::sleep_for(sleepFor);
+        }
+        ++frames;
+        if (std::chrono::high_resolution_clock::now() - counter > std::chrono::seconds(1)) {
+            counter = std::chrono::high_resolution_clock::now();
+            std::cout << frames << "\r" << std::flush;
+            frames = 0;
         }
     } while (glfwWindowShouldClose(window) == 0);
 
