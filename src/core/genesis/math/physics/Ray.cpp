@@ -10,7 +10,7 @@ glm::vec2 Ray::normalizeScreenCoords(double x, double y) {
     };
 }
 
-void Ray::traceClick(const glm::vec2& rawCoords, const glm::vec2& normalizedScreenCoords) {
+bool Ray::traceClick(const glm::vec2& rawCoords, const glm::vec2& normalizedScreenCoords) {
     Renderer& renderer = Renderer::getInstance();
 
     auto& stack = renderer.getActiveSceneStack();
@@ -53,7 +53,7 @@ void Ray::traceClick(const glm::vec2& rawCoords, const glm::vec2& normalizedScre
             for (auto& controller : scene->getEntityControllers()) {
                 if (controller->hasCollision(coords)) {
                     //spdlog::info("Match");
-                    return;
+                    return true;
                 }
             }
 
@@ -64,12 +64,12 @@ void Ray::traceClick(const glm::vec2& rawCoords, const glm::vec2& normalizedScre
             for (auto& controller : scene->getEntityControllers()) {
                 if (controller->hasCollision(rawCoords)) {
                     //spdlog::info("Match");
-                    return;
+                    return true;
                 }
             }
         }
     }
-
+    return false;
 }
 
 }

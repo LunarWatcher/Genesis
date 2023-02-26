@@ -2,10 +2,11 @@
 
 #include "genesis/math/physics/PhysicsController.hpp"
 #include "genesis/world/EntityController.hpp"
+#include "genesis/input/InputProcessor.hpp"
 
 namespace genesis {
 
-class Scene : public PhysicsController {
+class Scene : public PhysicsController, public InputProcessor {
 protected:
     bool _isActive;
     bool _usesOrtho = false;
@@ -37,6 +38,7 @@ public:
     virtual bool usesOrtho() {
         return _usesOrtho;
     }
+
 };
 
 }

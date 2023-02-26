@@ -11,7 +11,7 @@ namespace Ray {
 
 
 extern glm::vec2 normalizeScreenCoords(double x, double y);
-extern void traceClick(const glm::vec2& rawCoords, const glm::vec2& normalizedScreenCoords);
+extern bool traceClick(const glm::vec2& rawCoords, const glm::vec2& normalizedScreenCoords);
 
 }
 

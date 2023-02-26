@@ -1,6 +1,7 @@
 #include "TextureAtlas.hpp"
 #include "genesis/rendering/Constants.hpp"
 #include "spdlog/spdlog.h"
+#include "genesis/rendering/Model.hpp"
 
 namespace genesis {
 

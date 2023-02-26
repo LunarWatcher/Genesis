@@ -83,7 +83,8 @@ Renderer::Renderer() {
 }
 
 void Renderer::initGame() {
-    this->inputManager = std::make_shared<InputController>();
+    using namespace std::placeholders;
+
     this->camera = std::make_shared<Camera>();
 
     this->texturePack = std::make_shared<genesis::TextureAtlas>("images/programmer.png");
@@ -91,18 +92,30 @@ void Renderer::initGame() {
     this->textureShader = std::make_shared<DefaultShader>();
     this->primitiveShader = std::make_shared<DefaultShader>("primitive");
     this->textShader = std::make_shared<TextShader>();
-    this->particleShader = std::make_shared<ParticleShader>();
 
+    glfwSetWindowUserPointer(window, this);
     // Input
-    glfwSetWindowUserPointer(window, inputManager.get());
-    glfwSetKeyCallback(window, [](GLFWwindow* win, int key, int scanCode, int action, int mods) {
-        ((InputController*) glfwGetWindowUserPointer(win))->onKeyPressed(key, scanCode, action, mods);
+    glfwSetKeyCallback(window, [](GLFWwindow* win, int, int scanCode, int mods, int action) {
+        Renderer* r = (Renderer*) glfwGetWindowUserPointer(win);
+
+        if (action == GLFW_REPEAT) return;
+        InputCode code{scanCode, mods};
+        r->keyStates[code] = action;
     });
-    glfwSetMouseButtonCallback(window, [](GLFWwindow* win, int button, int action, int mods) {
-        ((InputController*) glfwGetWindowUserPointer(win))->onMousePressed(button, action, mods);
+    glfwSetMouseButtonCallback(window, [](GLFWwindow* win, int button, int mods, int action) {
+        Renderer* r = (Renderer*) glfwGetWindowUserPointer(win);
+
+        if (action == GLFW_REPEAT) return;
+        InputCode code{button, mods};
+        r->keyStates[code] = action;
     });
     glfwSetCursorPosCallback(window, [](GLFWwindow* win, double x, double y) {
-        ((InputController*) glfwGetWindowUserPointer(win))->onMouseMoved(x, y);
+        Renderer* r = (Renderer*) glfwGetWindowUserPointer(win);
+        for (auto& scene : r->activeSceneStack) {
+            if (scene->onMouseMoved(x, y)) {
+                break;
+            }
+        }
     });
 }
 
@@ -117,6 +130,7 @@ void Renderer::initFonts() {
 
 void Renderer::tick() {
     for (auto& scene : activeSceneStack) {
+        scene->updateInput(keyStates);
         scene->tick();
     }
 }
@@ -139,8 +153,6 @@ void Renderer::render() {
     // Update shader data {{{
     textureShader->apply();
     textureShader->loadViewMatrix(camera->getViewMatrix());
-    particleShader->apply();
-    particleShader->loadViewMatrix(camera->getViewMatrix());
     // we don't need to call stop for each shader.
     // Apply overwrites any other enabled shaders.
     // I think.
@@ -171,13 +183,6 @@ void Renderer::run() {
         auto now = std::chrono::high_resolution_clock::now();
         delta = std::chrono::duration<double, std::ratio<1>>(now - lastTime).count();
 
-        // TODO: figure out how to best design a loop that makes TPS \
-        // and FPS separate (... at least partially)
-        // At least to the point where FPS != TPS by loop definition
-        // Though might never be a problem. A certain degree of async
-        // processing might avoid that being necessesary.
-        inputManager->tick();
-
         tick();
         render();
 
@@ -190,7 +195,6 @@ void Renderer::run() {
         ++frames;
         if (std::chrono::high_resolution_clock::now() - counter > std::chrono::seconds(1)) {
             counter = std::chrono::high_resolution_clock::now();
-            std::cout << frames << "\r" << std::flush;
             frames = 0;
         }
     } while (glfwWindowShouldClose(window) == 0);

@@ -1,6 +1,5 @@
 #pragma once
 
-#include "genesis/controls/InputController.hpp"
 #include "genesis/rendering/environment/Chunk.hpp"
 #include "genesis/world/EntityController.hpp"
 #include "genesis/rendering/flow/Scene.hpp"

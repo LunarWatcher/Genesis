@@ -3,6 +3,13 @@ add_library(genesis-rendering STATIC
     genesis/rendering/Texture.cpp
     genesis/rendering/Shader.cpp
     genesis/rendering/Entity.cpp
+    genesis/rendering/flow/Scene.cpp
+
+    genesis/input/InputProcessor.cpp
+
+    # TODO: refactor
+    genesis/math/physics/PhysicsController.cpp
+    genesis/world/EntityController.cpp
 
     genesis/meta/Stb.cpp
 )

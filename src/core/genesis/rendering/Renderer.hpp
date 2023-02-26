@@ -9,11 +9,10 @@
 #include "genesis/rendering/atlases/FontAtlas.hpp"
 #include "genesis/rendering/atlases/TextureAtlas.hpp"
 #include "genesis/rendering/flow/Scene.hpp"
-#include "genesis/rendering/particles/ParticleEmitter.hpp"
-#include "genesis/rendering/shaders/ParticleShader.hpp"
 #include "genesis/rendering/shaders/TextShader.hpp"
 #include "genesis/rendering/ui/Text.hpp"
 #include "genesis/rendering/view/Camera.hpp"
+#include "genesis/input/InputProcessor.hpp"
 
 #include "spdlog/logger.h"
 #include "spdlog/spdlog.h"
@@ -64,13 +63,9 @@ protected:
     std::shared_ptr<DefaultShader> textureShader;
     std::shared_ptr<DefaultShader> primitiveShader;
     std::shared_ptr<TextShader> textShader;
-    std::shared_ptr<ParticleShader> particleShader;
 
     std::shared_ptr<TextureAtlas> texturePack;
     std::shared_ptr<FontAtlas> fontAtlas;
-
-
-    std::shared_ptr<InputController> inputManager;
 
     /**
      * Vector of active scenes.
@@ -93,6 +88,9 @@ protected:
     // Scene management {{{
     int activeScene = 0;
     // }}}
+    /* Input state management {{{*/
+    std::map<InputCode, int> keyStates;
+    /*}}}*/
 
     void initGame();
     void initFonts();
@@ -119,10 +117,6 @@ public:
 
     auto getTexturePack() {
         return texturePack;
-    }
-
-    auto getInputManager() {
-        return inputManager;
     }
 
     auto getCamera() {
@@ -167,6 +161,7 @@ public:
     void createGame();
 
     void refreshDisplay();
+
 };
 
 } // namespace genesis

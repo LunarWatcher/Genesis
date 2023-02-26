@@ -2,7 +2,6 @@
 
 #include "genesis/math/physics/PhysicsController.hpp"
 #include "genesis/rendering/Entity.hpp"
-#include "genesis/rendering/shaders/DefaultShader.hpp"
 
 #include <map>
 #include <memory>

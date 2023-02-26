@@ -8,15 +8,12 @@ set (SOURCE_FILES
     # Shaders {{{
     genesis/rendering/shaders/DefaultShader.cpp
     genesis/rendering/shaders/TextShader.cpp
-    genesis/rendering/shaders/ParticleShader.cpp
     # }}}
     # Textures {{{
     genesis/rendering/atlases/TextureAtlas.cpp
     genesis/rendering/atlases/FontAtlas.cpp
     # }}}
-    # Effects {{{
-    genesis/rendering/particles/ParticleEmitter.cpp
-    # }}}
+
     # UI {{{
 
     genesis/rendering/ui/Text.cpp
@@ -42,11 +39,7 @@ set (SOURCE_FILES
     genesis/core/game/generation/RNGesus.cpp
 
     # }}}
-    # Controls {{{
-    genesis/controls/InputController.cpp
-    # }}}
     # Game {{{
-    genesis/world/EntityController.cpp
     genesis/world/PlayerCamp.cpp
     # Entities {{{
     genesis/core/game/entities/Colonist.cpp
@@ -65,8 +58,6 @@ set (SOURCE_FILES
     genesis/math/Perlin.cpp
     # Physics {{{
     genesis/rendering/objects/Primitive.cpp
-    genesis/math/physics/PhysicsController.cpp
-
     genesis/math/physics/Ray.cpp
     # }}}
     # }}}
@@ -94,7 +85,6 @@ set (resources
     # Shaders {{{
     shaders/default.frag shaders/default.vert
     shaders/text.frag shaders/text.vert
-    shaders/particle.frag shaders/particle.vert
     shaders/primitive.frag shaders/primitive.vert
     # }}}
     images/programmer.png

@@ -1,6 +1,7 @@
 #include "Menu.hpp"
 #include "genesis/rendering/Renderer.hpp"
 #include "genesis/rendering/ui/Text.hpp"
+#include "genesis/math/physics/Ray.hpp"
 #include "spdlog/spdlog.h"
 
 namespace genesis {
@@ -9,6 +10,21 @@ namespace genesis {
 MenuScene::MenuScene() : Scene(true) {
     auto uiController = std::make_shared<MenuController>();
     this->entityControllers.push_back(uiController);
+
+    registerKey(GLFW_MOUSE_BUTTON_1, 0, [](int action) {
+        // TODO: check action when coc.nvim decides to start working again.
+        // Fucking shit plugin
+        double x = NAN, y = NAN;
+        glfwGetCursorPos(Renderer::getInstance().getWindow(), &x, &y);
+
+        // I suppose that in a real system, we'd need to detect release?
+        // And then check if there's dragging or some shit like that
+        // iDunno
+
+        return Ray::traceClick({x, Settings::instance->getInt("height") - y},
+            Ray::normalizeScreenCoords(x, y));
+
+    });
 }
 
 void MenuScene::render() {

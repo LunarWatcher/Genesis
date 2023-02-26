@@ -1,6 +1,6 @@
 #pragma once
 
-#include "EntityController.hpp"
+#include "genesis/world/EntityController.hpp"
 #include "genesis/math/physics/PhysicsController.hpp"
 #include "genesis/rendering/Entity.hpp"
 

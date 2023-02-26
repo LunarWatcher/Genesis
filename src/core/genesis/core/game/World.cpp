@@ -9,6 +9,7 @@
 #include "genesis/rendering/Texture.hpp"
 #include "genesis/rendering/environment/Chunk.hpp"
 #include "genesis/world/PlayerCamp.hpp"
+#include "genesis/math/physics/Ray.hpp"
 
 #include <chrono>
 #include <memory>
@@ -57,5 +58,43 @@ std::pair<std::pair<int, int>, std::pair<int, int>> World::convertToChunkSpace(i
         }
     };
 }
+
+//bool World::onKeyPressed(int key, int scanCode, int action, int mods) {
+    //switch(key) {
+    //case GLFW_KEY_W:
+        //Renderer::getInstance().getCamera()->incrementPosition(0, 10.0 * Renderer::getInstance().getDelta());
+    
+        //return true;
+    //case GLFW_KEY_A:
+        //Renderer::getInstance().getCamera()->incrementPosition(-10.0 * Renderer::getInstance().getDelta(), 0);
+        //return true;
+    //case GLFW_KEY_S:
+        //Renderer::getInstance().getCamera()->incrementPosition(0, -10.0 * Renderer::getInstance().getDelta());
+        //return true;
+    //case GLFW_KEY_D:
+        //Renderer::getInstance().getCamera()->incrementPosition(10.0 * Renderer::getInstance().getDelta(), 0);
+        //return true;
+    //default:
+        //break;
+    //}
+    //return false;
+//}
+
+//bool World::onMousePressed(int button, int action, int mods) {
+    //if (mods == 0 && button == GLFW_MOUSE_BUTTON_1) {
+        //// TODO: check action when coc.nvim decides to start working again.
+        //// Fucking shit plugin
+        //double x = NAN, y = NAN;
+        //glfwGetCursorPos(Renderer::getInstance().getWindow(), &x, &y);
+
+        //// I suppose that in a real system, we'd need to detect release?
+        //// And then check if there's dragging or some shit like that
+        //// iDunno
+
+        //return Ray::traceClick({x, Settings::instance->getInt("height") - y},
+            //Ray::normalizeScreenCoords(x, y));
+    //}
+    //return false;
+//}
 
 } // namespace genesis

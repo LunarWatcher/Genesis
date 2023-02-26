@@ -1,6 +1,5 @@
 #pragma once
 
-#include "genesis/controls/InputController.hpp"
 #include "genesis/rendering/Constants.hpp"
 #include "genesis/rendering/Shader.hpp"
 #include "genesis/rendering/shaders/DefaultShader.hpp"
@@ -40,6 +39,11 @@ public:
 
     int getActiveY() {
         return activeYLayer;
+    }
+
+    void incrementPosition(float x, float y) {
+        position.x += x;
+        position.y += y;
     }
 
     const glm::vec3& getPosition() {
