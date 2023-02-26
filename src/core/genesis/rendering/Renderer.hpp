@@ -89,7 +89,7 @@ protected:
     int activeScene = 0;
     // }}}
     /* Input state management {{{*/
-    std::map<InputCode, int> keyStates;
+    std::map<std::string, int> keyStates;
     /*}}}*/
 
     void initGame();

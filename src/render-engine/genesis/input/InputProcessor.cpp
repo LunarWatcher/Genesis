@@ -1,10 +1,15 @@
 #include "InputProcessor.hpp"
 
 #include <stdexcept>
+#include <iostream>
 
 namespace genesis {
 
-void InputProcessor::updateInput(const std::map<InputCode, int>& maps) {
+InputProcessor::InputProcessor() {
+
+}
+
+void InputProcessor::updateInput(const std::map<std::string, int>& maps) {
     for (auto& [k, v] : maps) {
         if (v < 0) continue;
         if (registeredKeys.contains(k)) {
@@ -14,13 +19,12 @@ void InputProcessor::updateInput(const std::map<InputCode, int>& maps) {
 }
 
 void InputProcessor::registerKey(int key, int mods, std::function<bool(int action)> callback) {
-    InputCode code{key, mods};
-
-    if (registeredKeys.contains(code)) {
+    std::string keyID = createMapKey(key, mods);
+    if (registeredKeys.contains(keyID)) {
         throw std::runtime_error("Keybind conflict for key " + std::to_string(key) + "[" + std::to_string(mods) + "]");
     }
 
-    registeredKeys[code] = callback;
+    registeredKeys[keyID] = callback;
 }
 
 }

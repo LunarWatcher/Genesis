@@ -20,6 +20,28 @@
 namespace genesis {
 World::World() : generator(std::make_shared<perlin::DumbGenerator>()) {
     World::INSTANCE = this;
+
+    registerKey(GLFW_KEY_W, 0, [](int action) {
+        if (action != GLFW_PRESS) return false;
+        Renderer::getInstance().getCamera()->incrementPosition(0, 10.0 * Renderer::getInstance().getDelta());
+        return true;
+    });
+    registerKey(GLFW_KEY_A, 0, [](int action) {
+        if (action != GLFW_PRESS) return false;
+        Renderer::getInstance().getCamera()->incrementPosition(-10.0 * Renderer::getInstance().getDelta(), 0);
+        return true;
+    });
+    registerKey(GLFW_KEY_S, 0, [](int action) {
+        if (action != GLFW_PRESS) return false;
+        Renderer::getInstance().getCamera()->incrementPosition(0, -10.0 * Renderer::getInstance().getDelta());
+        return true;
+    });
+    registerKey(GLFW_KEY_D, 0, [](int action) {
+        if (action != GLFW_PRESS) return false;
+        Renderer::getInstance().getCamera()->incrementPosition(10.0 * Renderer::getInstance().getDelta(), 0);
+        return true;
+    });
+
 }
 
 void World::tick() {
@@ -50,51 +72,13 @@ std::pair<std::pair<int, int>, std::pair<int, int>> World::convertToChunkSpace(i
     return {
         {
             std::floor(tileX / Constants::Chunks::CHUNK_SIZE),
-            std::floor(tileZ / Constants::Chunks::CHUNK_SIZE),
+                std::floor(tileZ / Constants::Chunks::CHUNK_SIZE),
         },
-        {
-            tileX % Constants::Chunks::CHUNK_SIZE,
-            tileZ % Constants::Chunks::CHUNK_SIZE
-        }
+            {
+                tileX % Constants::Chunks::CHUNK_SIZE,
+                tileZ % Constants::Chunks::CHUNK_SIZE
+            }
     };
 }
-
-//bool World::onKeyPressed(int key, int scanCode, int action, int mods) {
-    //switch(key) {
-    //case GLFW_KEY_W:
-        //Renderer::getInstance().getCamera()->incrementPosition(0, 10.0 * Renderer::getInstance().getDelta());
-    
-        //return true;
-    //case GLFW_KEY_A:
-        //Renderer::getInstance().getCamera()->incrementPosition(-10.0 * Renderer::getInstance().getDelta(), 0);
-        //return true;
-    //case GLFW_KEY_S:
-        //Renderer::getInstance().getCamera()->incrementPosition(0, -10.0 * Renderer::getInstance().getDelta());
-        //return true;
-    //case GLFW_KEY_D:
-        //Renderer::getInstance().getCamera()->incrementPosition(10.0 * Renderer::getInstance().getDelta(), 0);
-        //return true;
-    //default:
-        //break;
-    //}
-    //return false;
-//}
-
-//bool World::onMousePressed(int button, int action, int mods) {
-    //if (mods == 0 && button == GLFW_MOUSE_BUTTON_1) {
-        //// TODO: check action when coc.nvim decides to start working again.
-        //// Fucking shit plugin
-        //double x = NAN, y = NAN;
-        //glfwGetCursorPos(Renderer::getInstance().getWindow(), &x, &y);
-
-        //// I suppose that in a real system, we'd need to detect release?
-        //// And then check if there's dragging or some shit like that
-        //// iDunno
-
-        //return Ray::traceClick({x, Settings::instance->getInt("height") - y},
-            //Ray::normalizeScreenCoords(x, y));
-    //}
-    //return false;
-//}
 
 } // namespace genesis
