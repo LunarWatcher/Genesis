@@ -6,7 +6,10 @@ namespace genesis {
 
 void InputProcessor::updateInput(const std::map<InputCode, int>& maps) {
     for (auto& [k, v] : maps) {
-        registeredKeys[k](v);
+        if (v < 0) continue;
+        if (registeredKeys.contains(k)) {
+            registeredKeys[k](v);
+        }
     }
 }
 

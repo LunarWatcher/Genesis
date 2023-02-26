@@ -133,6 +133,12 @@ void Renderer::tick() {
         scene->updateInput(keyStates);
         scene->tick();
     }
+
+    for (auto& [k, v] : keyStates) {
+        if (v == GLFW_RELEASE) {
+            v = -1;
+        }
+    }
 }
 
 void Renderer::render() {
