@@ -11,7 +11,6 @@
 #include "genesis/conf/Settings.hpp"
 
 #include "genesis/core/menu/Menu.hpp"
-#include "genesis/rendering/debug/DebugScene.hpp"
 
 #include <chrono>
 #include <codecvt>
@@ -74,7 +73,6 @@ Renderer::Renderer() {
     glEnable(GL_DEPTH_TEST);
     //glEnable(GL_CULL_FACE);
 
-    debugScene = std::make_shared<DebugScene>();
     initGame();
     initFonts();
 
@@ -200,7 +198,6 @@ void Renderer::transition(const std::shared_ptr<Scene>& scene) {
     activeSceneStack.clear();
     activeSceneStack.push_back(scene);
 
-    activeSceneStack.push_back(debugScene);
 }
 
 void Renderer::add(const std::shared_ptr<Scene>& scene) {

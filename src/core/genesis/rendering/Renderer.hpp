@@ -52,7 +52,6 @@ inline void GLFWCallback(int code, const char* error) {
 }
 
 class World;
-class DebugScene;
 
 class Renderer {
 private:
@@ -86,7 +85,6 @@ private:
      * Essentially, suspended scenes are still considered active
      */
     std::vector<std::shared_ptr<Scene>> activeSceneStack;
-    std::shared_ptr<DebugScene> debugScene;
 
     double delta;
 
@@ -153,10 +151,6 @@ public:
 
     auto getPrimitiveShader() { 
         return primitiveShader;
-    }
-
-    auto getDebugScene() {
-        return debugScene;
     }
 
     template <typename T>

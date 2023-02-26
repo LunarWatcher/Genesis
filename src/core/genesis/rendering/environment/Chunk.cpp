@@ -9,7 +9,6 @@
 #include <algorithm>
 
 #include "genesis/math/physics/Rectangle.hpp"
-#include "genesis/rendering/debug/DebugScene.hpp"
 
 namespace genesis {
 

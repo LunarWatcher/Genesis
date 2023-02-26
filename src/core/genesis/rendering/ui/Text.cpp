@@ -1,10 +1,7 @@
 #include "Text.hpp"
-#include "genesis/math/physics/Ray.hpp"
 #include "genesis/math/physics/Rectangle.hpp"
 #include "genesis/rendering/Renderer.hpp"
 #include "genesis/conf/Settings.hpp"
-
-#include "genesis/rendering/debug/DebugScene.hpp"
 
 #include "spdlog/spdlog.h"
 
