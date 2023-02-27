@@ -18,6 +18,7 @@ public:
     virtual void updateInput(const std::map<std::string, int>& maps);
 
     void registerKey(int key, int mods, std::function<bool(int action)> callback);
+    void deregister(int key, int mods);
 
     /* Event receivers {{{ */
     virtual bool onMouseMoved(double /* x */, double /* y */) { return false; }

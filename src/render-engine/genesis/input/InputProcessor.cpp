@@ -27,4 +27,11 @@ void InputProcessor::registerKey(int key, int mods, std::function<bool(int actio
     registeredKeys[keyID] = callback;
 }
 
+void InputProcessor::deregister(int key, int mods) {
+    std::string keyID = createMapKey(key, mods);
+    if (auto it = registeredKeys.find(keyID); it != registeredKeys.end()) {
+        registeredKeys.erase(it);
+    }
+}
+
 }
