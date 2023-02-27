@@ -16,5 +16,28 @@ enum class Species {
 
 typedef struct {
     Species s;
+
+    int strength;
+    int intelligence;
+    int stamina;
+    int agility;
 } ColonistGenes;
+
+typedef struct {
+    /* Survival {{{*/
+    int mining;
+    int cooking;
+    int hunting;
+    int fighting;
+    /*}}}*/
+    /* Civilisation {{{*/
+    int building;
+    /*}}}*/
+    /* Progress {{{*/
+    int crafting;
+    int brewing;
+    int research;
+    /*}}}*/
+} ColonistSkills;
+
 }
