@@ -14,6 +14,12 @@ inline const std::vector<GLfloat> square = {
 };
 
 inline const std::vector<GLint> squareIndices = {0, 1, 3, 3, 1, 2};
+inline std::vector<GLfloat> fullImageUVCoords = {
+    0.0f, 1.0f,
+    0.0f, 0.0f,
+    1.0f, 0.0f,
+    1.0f, 1.0f
+};
 
 /**
  * As much as I wish this was simpler... it's not doable.

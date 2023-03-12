@@ -10,6 +10,7 @@
 #include "genesis/rendering/atlases/TextureAtlas.hpp"
 #include "genesis/rendering/flow/Scene.hpp"
 #include "genesis/rendering/shaders/TextShader.hpp"
+#include "genesis/rendering/shaders/UIShader.hpp"
 #include "genesis/rendering/ui/Text.hpp"
 #include "genesis/rendering/view/Camera.hpp"
 #include "genesis/input/InputProcessor.hpp"
@@ -63,6 +64,7 @@ protected:
     std::shared_ptr<DefaultShader> textureShader;
     std::shared_ptr<DefaultShader> primitiveShader;
     std::shared_ptr<TextShader> textShader;
+    std::shared_ptr<UIShader> uiShader;
 
     std::shared_ptr<TextureAtlas> texturePack;
     std::shared_ptr<FontAtlas> fontAtlas;
@@ -137,6 +139,10 @@ public:
 
     auto getTextShader() {
         return textShader;
+    }
+
+    auto getUIShader() {
+        return uiShader;
     }
 
     auto getPrimitiveShader() { 

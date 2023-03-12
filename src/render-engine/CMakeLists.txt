@@ -4,6 +4,7 @@ add_library(genesis-rendering STATIC
     genesis/rendering/Shader.cpp
     genesis/rendering/Entity.cpp
     genesis/rendering/flow/Scene.cpp
+    genesis/rendering/gl/Framebuffer.cpp
 
     genesis/input/InputProcessor.cpp
 

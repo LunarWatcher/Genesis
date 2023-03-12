@@ -1,6 +1,7 @@
 #pragma once
 
 #include "genesis/rendering/environment/Chunk.hpp"
+#include "genesis/rendering/gl/Framebuffer.hpp"
 #include "genesis/world/EntityController.hpp"
 #include "genesis/rendering/flow/Scene.hpp"
 
@@ -16,6 +17,7 @@ private:
     static inline World* INSTANCE = nullptr;
 
     std::shared_ptr<perlin::NoiseGenerator> generator;
+    std::shared_ptr<Framebuffer> frame;
 
     // Game state
     std::string civilisationName;

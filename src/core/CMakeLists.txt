@@ -8,6 +8,7 @@ set (SOURCE_FILES
     # Shaders {{{
     genesis/rendering/shaders/DefaultShader.cpp
     genesis/rendering/shaders/TextShader.cpp
+    genesis/rendering/shaders/UIShader.cpp
     # }}}
     # Textures {{{
     genesis/rendering/atlases/TextureAtlas.cpp

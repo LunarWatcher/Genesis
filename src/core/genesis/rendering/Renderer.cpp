@@ -7,6 +7,7 @@
 #include "genesis/core/game/generation/WorldGenerator.hpp"
 #include "genesis/rendering/Texture.hpp"
 #include "genesis/rendering/atlases/FontAtlas.hpp"
+#include "genesis/rendering/shaders/UIShader.hpp"
 #include "shaders/DefaultShader.hpp"
 #include "genesis/conf/Settings.hpp"
 
@@ -92,6 +93,7 @@ void Renderer::initGame() {
     this->textureShader = std::make_shared<DefaultShader>();
     this->primitiveShader = std::make_shared<DefaultShader>("primitive");
     this->textShader = std::make_shared<TextShader>();
+    this->uiShader = std::make_shared<UIShader>();
 
     glfwSetWindowUserPointer(window, this);
     // Input

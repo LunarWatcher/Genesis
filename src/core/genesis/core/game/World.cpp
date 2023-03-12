@@ -8,6 +8,7 @@
 #include "genesis/rendering/Renderer.hpp"
 #include "genesis/rendering/Texture.hpp"
 #include "genesis/rendering/environment/Chunk.hpp"
+#include "genesis/rendering/gl/Framebuffer.hpp"
 #include "genesis/world/PlayerCamp.hpp"
 #include "genesis/math/physics/Ray.hpp"
 
@@ -41,6 +42,7 @@ World::World() : generator(std::make_shared<perlin::DumbGenerator>()) {
         Renderer::getInstance().getCamera()->incrementPosition(10.0 * Renderer::getInstance().getDelta(), 0);
         return true;
     });
+    frame = std::make_shared<Framebuffer>(40, 40, Settings::instance->getInt("width") - 80, Settings::instance->getInt("height") - 80);
 
 }
 
@@ -50,6 +52,10 @@ void World::tick() {
 }
 
 void World::render() {
+    //frame->bind();
+    //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    //glEnable(GL_DEPTH_TEST);
+
     Renderer& inst = Renderer::getInstance();
     inst.getTextureShader()->apply();
     inst.getTexturePack()->bind();
@@ -62,6 +68,12 @@ void World::render() {
 
     inst.getTexturePack()->unbind();
     inst.getTextureShader()->stop();
+    //frame->unbind();
+    //auto shader = inst.getUIShader();
+    //shader->apply();
+    //frame->render();
+    //shader->stop();
+
 }
 
 const std::vector<std::shared_ptr<EntityController>>& World::getEntityControllers() {

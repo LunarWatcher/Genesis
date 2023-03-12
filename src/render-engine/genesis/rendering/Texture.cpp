@@ -5,15 +5,17 @@
 
 namespace genesis {
 
+Texture::Texture(int width, int height) : width(width), height(height) {
+    genTexture();
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
+    glBindTexture(GL_TEXTURE_2D, 0);
+}
+
 Texture::Texture(const std::string& file, int atlasWidth, int atlasHeight) {
     unsigned char* source = stbi_load(file.c_str(), &width, &height, &comp, STBI_rgb_alpha);
 
-    glGenTextures(1, &this->textureId);
-    glBindTexture(GL_TEXTURE_2D, textureId);
-
+    genTexture();
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, source);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
     stbi_image_free(source);
 
@@ -25,6 +27,15 @@ Texture::Texture(const std::string& file, int atlasWidth, int atlasHeight) {
 
 Texture::~Texture() {
     glDeleteTextures(1, &textureId);
+}
+
+void Texture::genTexture() {
+    glGenTextures(1, &this->textureId);
+    glBindTexture(GL_TEXTURE_2D, textureId);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
 }
 
 void Texture::bind() {
