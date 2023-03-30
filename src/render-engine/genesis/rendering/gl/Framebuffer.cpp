@@ -33,10 +33,10 @@ Framebuffer::Framebuffer(int x, int y, int width, int height) {
 
     std::vector<GLfloat> positions{
 
-            x, y + height,
-            x, y,
-            x + width, y,
-            x + width, y + height,
+            (GLfloat) x, (GLfloat) y + (GLfloat) height,
+            (GLfloat) x, (GLfloat) y,
+            (GLfloat) x + (GLfloat) width, (GLfloat) y,
+            (GLfloat) x + (GLfloat) width, (GLfloat) y + (GLfloat) height,
     };
     model = std::make_unique<Model>(
         positions,

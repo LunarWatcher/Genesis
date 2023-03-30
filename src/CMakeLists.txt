@@ -7,7 +7,7 @@ add_subdirectory(render-engine)
 
 # Meta libraries {{{
 add_library(genesis-deps INTERFACE)
-target_link_libraries(genesis-deps INTERFACE stc)
+target_link_libraries(genesis-deps INTERFACE stc spdlog::spdlog)
 target_include_directories(genesis-deps INTERFACE ${CMAKE_SOURCE_DIR}/stb/ ${CONAN_INCLUDE_DIRS})
 
 # }}}

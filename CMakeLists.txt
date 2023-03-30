@@ -50,7 +50,6 @@ endif()
 conan_cmake_configure (REQUIRES nlohmann_json/3.11.2 glfw/3.3.8 glew/2.2.0
                         openal/1.22.2 glm/cci.20220420
                         #freetype/2.11.1
-                        spdlog/1.10.0
                         GENERATORS cmake)
 conan_cmake_autodetect (settings)
 conan_cmake_install (PATH_OR_REFERENCE . BUILD missing SETTINGS ${settings})
@@ -58,8 +57,21 @@ conan_cmake_install (PATH_OR_REFERENCE . BUILD missing SETTINGS ${settings})
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup()
 
+set(SPDLOG_FMT_EXTERNAL ON CACHE STRING "" FORCE)
+
+include(FetchContent)
+FetchContent_Declare(fmt GIT_REPOSITORY https://github.com/fmtlib/fmt.git
+    GIT_TAG 9.1.0)
+FetchContent_MakeAvailable(fmt)
+
+FetchContent_Declare(spdlog GIT_REPOSITORY https://github.com/gabime/spdlog
+    GIT_TAG v1.11.0)
+FetchContent_MakeAvailable(spdlog)
+
+FetchContent_Declare(stc GIT_REPOSITORY https://github.com/LunarWatcher/stc)
+FetchContent_MakeAvailable(stc)
+
 add_subdirectory(src)
-add_subdirectory(stc)
 add_subdirectory(tests EXCLUDE_FROM_ALL)
 
 add_custom_target(run
