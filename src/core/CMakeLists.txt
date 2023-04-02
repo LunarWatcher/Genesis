@@ -25,6 +25,8 @@ set (SOURCE_FILES
 
     # Environment {{{
     genesis/rendering/environment/Chunk.cpp
+    genesis/core/game/chunks/ZLayer.cpp
+    genesis/core/game/chunks/MapArea.cpp
     genesis/core/game/chunks/Tile.cpp
 
     genesis/core/game/chunks/TileGenerator.cpp

@@ -2,10 +2,11 @@
 
 namespace genesis {
 
-TerrainTileGenerator::TerrainTileGenerator(const std::string& tileID,
-                                           int lightEmission, 
-                                           int blastResistance,
-                                           int miningResistance) 
+TerrainTileGenerator::TerrainTileGenerator(
+    const std::string& tileID,
+    int lightEmission, 
+    int blastResistance,
+    int miningResistance)
     : TileGenerator(tileID, true, true,
                     lightEmission,
                     blastResistance,
