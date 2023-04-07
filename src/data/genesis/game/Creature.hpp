@@ -25,7 +25,7 @@ struct BreedingInfo {
     bool agender = true;
 };
 
-struct SkillInfo {
+struct AttributeInfo {
     int stealth;
     int agility;
     int intelligence;
@@ -53,7 +53,7 @@ struct CreatureInfo {
     std::string adjective;
 
     BreedingInfo breedingInfo;
-    SkillInfo biologicalSkillBias;
+    AttributeInfo biologicalAttribBias;
     AIInfo aiDetails;
     GraphicsInfo graphics;
 };
@@ -61,7 +61,7 @@ struct CreatureInfo {
 extern void from_json(const nlohmann::json& j, CreatureInfo& r);
 extern void from_json(const nlohmann::json& j, ReproductionType& r);
 extern void from_json(const nlohmann::json& j, BreedingInfo& r);
-extern void from_json(const nlohmann::json& j, SkillInfo& r);
+extern void from_json(const nlohmann::json& j, AttributeInfo& r);
 extern void from_json(const nlohmann::json& j, AIInfo& r);
 extern void from_json(const nlohmann::json& j, GraphicsInfo& r);
 

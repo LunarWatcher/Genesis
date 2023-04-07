@@ -10,7 +10,7 @@ void from_json(const nlohmann::json& j, CreatureInfo& r) {
     j.at("graphics").get_to(r.graphics);
     j.at("ai").get_to(r.aiDetails);
     j.at("breeding").get_to(r.breedingInfo);
-    j.at("attributes").get_to(r.biologicalSkillBias);
+    j.at("attributes").get_to(r.biologicalAttribBias);
 }
 
 void from_json(const nlohmann::json& j, ReproductionType& r) {
@@ -43,7 +43,7 @@ void from_json(const nlohmann::json& j, GraphicsInfo& r) {
     }
 }
 
-void from_json(const nlohmann::json& j, SkillInfo& r) {
+void from_json(const nlohmann::json& j, AttributeInfo& r) {
     // TODO: figure out if 0 as the default value makes sense
     r.stealth = j.value("stealth", 0);
     r.intelligence = j.value("intelligence", 0);

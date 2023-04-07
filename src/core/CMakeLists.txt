@@ -48,6 +48,7 @@ set (SOURCE_FILES
     # Game {{{
     genesis/world/PlayerCamp.cpp
     # Entities {{{
+    genesis/core/game/entities/GameEntity.cpp
     # }}}
     # World generation {{{
     genesis/core/game/generation/WorldGenerator.cpp
