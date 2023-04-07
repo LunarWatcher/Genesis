@@ -25,7 +25,7 @@ private:
 
     /**
      * Loads the info and stores its description in currLoading.
-     *
+     * 
      * This will be used for more in the future, but for now, its use is
      * limited because adding use for it is wayyy into the future.
      */

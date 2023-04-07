@@ -8,6 +8,40 @@
 
 namespace genesis {
 
+enum class Gender {
+    /**
+     * Primarily intended for gender-less species
+     */
+    NONE,
+
+    // Currently unused {{{
+    // Classic binary {{{
+    FEMALE,
+    MALE,
+    // }}}
+    
+    TRANS_MASC,
+    TRANS_FEM,
+
+    NON_BINARY,
+    INTERSEX,
+    // There are more categories that could be added,
+    // but it heavily depends on how deep down the rabbit hole of mood I go.
+    // (DF calls it emotions, and (strange) mood is exclusively the thing used for generating artefacts,
+    // but that's kinda dumb). Not sure how I wanna do artefact generation yet though. Future me problem
+    // Might just leave it to RNGesus
+    // ---
+    //
+    // Could potentially incorporate a mechanic to get rid of reproductive complications,
+    // which would indeed make mood the only affected component.
+    // Might just treat them biologically as the correct gender to simplify stuff. Something something
+    // magic world?
+    //
+    // There's already sentient canines, it isn't that much of a stretch.
+    // 
+    // }}}
+};
+
 enum class ReproductionType {
     MAMMALIAN,
 };
@@ -47,6 +81,9 @@ struct GraphicsInfo {
     bool isStatic;
 };
 
+/**
+ * Key structure for defining a class of species.
+ */
 struct CreatureInfo {
     std::string name;
     std::string plural;
