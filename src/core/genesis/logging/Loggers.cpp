@@ -1,3 +1,4 @@
+#include "genesis/core/data/DataLoader.hpp"
 #include "genesis/rendering/Renderer.hpp"
 #include "genesis/core/game/chunks/MapArea.hpp"
 
@@ -28,5 +29,6 @@ static std::vector<spdlog::sink_ptr> sinks = {
 
 std::shared_ptr<spdlog::logger> Renderer::logger = std::make_shared<spdlog::logger>("renderer", sinks.begin(), sinks.end());
 std::shared_ptr<spdlog::logger> MapArea::logger = std::make_shared<spdlog::logger>("map", sinks.begin(), sinks.end());
+std::shared_ptr<spdlog::logger> DataLoader::logger = std::make_shared<spdlog::logger>("DataLoader", sinks.begin(), sinks.end());
 
 }

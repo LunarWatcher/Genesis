@@ -1,0 +1,14 @@
+{
+    "canines": {
+        "name": "canine",
+        "plural": "canines",
+        "adjective": "canine",
+        "species": {
+            "red_fox",
+            "silver_fox",
+            "arctic_fox",
+            "grey_wolf",
+            "arctic_wolf"
+        }
+    }
+}

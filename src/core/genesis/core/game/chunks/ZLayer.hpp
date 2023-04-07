@@ -37,7 +37,7 @@ private:
 public:
     const int zLevel;
     
-    ZLayer(int zLevel);
+    ZLayer(int zLevel, int width, int height);
 
     void render() override;
 

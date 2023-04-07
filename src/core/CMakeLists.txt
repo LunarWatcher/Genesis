@@ -14,6 +14,9 @@ set (SOURCE_FILES
     genesis/rendering/atlases/TextureAtlas.cpp
     genesis/rendering/atlases/FontAtlas.cpp
     # }}}
+    # Data {{{
+    genesis/core/data/DataLoader.cpp
+    # }}}
 
     # UI {{{
 
@@ -45,7 +48,6 @@ set (SOURCE_FILES
     # Game {{{
     genesis/world/PlayerCamp.cpp
     # Entities {{{
-    genesis/core/game/entities/Colonist.cpp
     # }}}
     # World generation {{{
     genesis/core/game/generation/WorldGenerator.cpp

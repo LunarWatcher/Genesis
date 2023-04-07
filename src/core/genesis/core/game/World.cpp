@@ -1,7 +1,6 @@
 #include "World.hpp"
 
 #include "genesis/core/game/generation/WorldGenerator.hpp"
-#include "genesis/core/game/entities/Colonist.hpp"
 #include "genesis/rendering/Constants.hpp"
 #include "genesis/rendering/Entity.hpp"
 #include "genesis/rendering/Model.hpp"

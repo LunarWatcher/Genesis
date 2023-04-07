@@ -1,0 +1,132 @@
+{
+    "red_fox": {
+        "name": "red fox",
+        "plural": "red foxes",
+        "adjective": "red fox",
+        "ai": {
+            "intelligent": true,
+            "aggressive": false
+        },
+        "breeding": {
+            "compatibleWith": {
+                "grey_wolf",
+                "arctic_wolf",
+
+                "silver_fox",
+                "arctic_fox"
+            }
+        },
+        "attributes": {
+            "stealth": 9,
+            "agility": 7,
+            "intelligence": 7
+        },
+        "graphics": {
+            "static": "genesis:red_fox"
+        }
+    },
+    "silver_fox": {
+        "name": "silver fox",
+        "plural": "silver foxes",
+        "adjective": "silver fox",
+        "ai": {
+            "intelligent": true,
+            "aggressive": false
+        },
+        "breeding": {
+            "compatibleWith": {
+                "grey_wolf",
+                "arctic_wolf",
+
+                "red_fox",
+                "arctic_fox"
+            }
+        },
+        "attributes": {
+            "stealth": 9,
+            "agility": 7,
+            "intelligence": 7
+        },
+        "graphics": {
+            "static": "genesis:red_fox"
+        }
+    },
+    "arctic_fox": {
+        "name": "arctic fox",
+        "plural": "arctic foxes",
+        "adjective": "arctic fox",
+        "ai": {
+            "intelligent": true,
+            "aggressive": false
+        },
+        "breeding": {
+            "compatibleWith": {
+                "grey_wolf",
+                "arctic_wolf",
+
+                "red_fox",
+                "silver_fox"
+            }
+        },
+        "attributes": {
+            "stealth": 9,
+            "agility": 7,
+            "intelligence": 7
+        },
+        "graphics": {
+            "static": "genesis:red_fox"
+        }
+    },
+    "grey_wolf": {
+        "name": "grey wolf",
+        "plural": "grey wolves",
+        "adjective": "grey wolf",
+        "ai": {
+            "intelligent": true,
+            "aggressive": false
+        },
+        "breeding": {
+            "compatibleWith": {
+                "arctic_wolf",
+
+                "red_fox",
+                "silver_fox",
+                "arctic_fox"
+            }
+        },
+        "attributes": {
+            "stealth": 9,
+            "agility": 7,
+            "intelligence": 7
+        },
+        "graphics": {
+            "static": "genesis:red_fox"
+        }
+    },
+    "arctic_wolf": {
+        "name": "arctic wolf",
+        "plural": "arctic wolves",
+        "adjective": "arctic wolf",
+        "ai": {
+            "intelligent": true,
+            "aggressive": false
+        },
+        "breeding": {
+            "compatibleWith": {
+                "grey_wolf",
+
+                "red_fox",
+                "silver_fox",
+                "arctic_fox"
+            }
+        },
+        "attributes": {
+            "stealth": 9,
+            "agility": 7,
+            "intelligence": 7
+        },
+        "graphics": {
+            "static": "genesis:red_fox"
+        }
+    }
+}

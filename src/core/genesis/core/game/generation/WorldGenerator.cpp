@@ -5,7 +5,6 @@
 #include "genesis/core/data/DataHelper.hpp"
 #include "genesis/rendering/Renderer.hpp"
 #include "genesis/world/PlayerCamp.hpp"
-#include "genesis/core/game/entities/Colonist.hpp"
 
 namespace genesis {
 
@@ -19,9 +18,6 @@ std::shared_ptr<World> WorldGenerator::newWorld(int xChunks, int yChunks, const 
     world->entityControllers.push_back(std::make_shared<PlayerCamp>());
 
     auto& controller = world->entityControllers.back();
-    controller->addEntity(
-        RNGesus::generateColonist(world, {1, 0, 1})
-    );
 
     // TODO: add a ChunkController as well. This is deeper down the world management rabbit hole
     for (long long x = -xChunks / 2; x <= xChunks / 2; ++x) {
