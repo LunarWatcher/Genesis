@@ -5,6 +5,7 @@
 #include <filesystem>
 #include <future>
 #include <stc/FS.hpp>
+#include <stdexcept>
 
 namespace genesis {
 
@@ -60,18 +61,15 @@ void DataLoader::loadSpecies(const fs::path& root) {
     nlohmann::json data = nlohmann::json::parse(f);
 
     for (auto& [speciesID, speciesInfo] : data.items()) {
+        if (this->creatures.contains(speciesID)) {
+            throw std::runtime_error("Species ID " + speciesID + " already exists.");
+        }
         auto obj = CreatureInfo{};
-        obj.name = speciesInfo.at("name");
-        obj.plural = speciesInfo.at("plural");
-        obj.adjective = speciesInfo.value("adjective", obj.name);
+        speciesInfo.get_to(obj);
+        obj._id = speciesID;
 
-        auto ai = speciesInfo.at("ai");
-        auto breeding = speciesInfo.at("breeding");
-        auto attribs = speciesInfo.at("attributes");
-        auto graphics = speciesInfo.at("graphics");
-
-        obj.aiDetails.isAggressive = ai.value("aggressive", false);
-        obj.aiDetails.isIntelligent = ai.value("intelligent", false);
+        // insert saves an unnecessary allocation
+        creatures.insert({speciesID, obj});
     }
 }
 

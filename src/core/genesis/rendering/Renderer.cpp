@@ -77,10 +77,8 @@ Renderer::Renderer() {
     initGame();
     initFonts();
 
-    auto menu = std::make_shared<MenuScene>();
 
-    transition(menu);
-    logger->info("Initialized menu");
+    logger->info("Renderer initialised");
 }
 
 void Renderer::initGame() {

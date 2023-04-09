@@ -44,6 +44,9 @@ public:
 
     void loadDirectory(const fs::path& directory);
     bool isLoading() { return runner.wait_for(std::chrono::milliseconds(0)) != std::future_status::ready; }
+    std::string_view getDescription() {
+        return currLoading.load();
+    }
 };
 
 }

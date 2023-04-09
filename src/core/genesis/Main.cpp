@@ -6,6 +6,7 @@
 #include "spdlog/cfg/helpers.h"
 
 #include <iostream>
+#include "genesis/core/splash/Splash.hpp"
 
 const bool genesis::Constants::isTest = false;
 
@@ -22,6 +23,7 @@ int main() {
     try {
 #endif
     genesis::Renderer renderer;
+    renderer.transition(std::make_shared<genesis::SplashScene>());
     renderer.run();
 #ifdef _WIN32
     } catch (const std::exception& e) {
@@ -30,6 +32,8 @@ int main() {
         std::cerr << "Char exception caught: " << e << std::endl;
     } catch (const std::string& e) {
         std::cerr << "String exception caught: " << e << std::endl;
+    } catch (...) {
+        std::cerr << "Unknown exception type thrown" << std::endl;
     }
 #endif
 }

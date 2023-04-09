@@ -4,6 +4,7 @@ set (SOURCE_FILES
     # }}}
     # Scenes {{{
     genesis/core/menu/Menu.cpp
+    genesis/core/splash/Splash.cpp
     # }}}
     # Shaders {{{
     genesis/rendering/shaders/DefaultShader.cpp

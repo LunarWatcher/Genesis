@@ -48,7 +48,12 @@ private:
     Gender gender = Gender::NONE;
 
 public:
-    GameEntity(CreatureInfo& speciesBase);
+    GameEntity(
+        CreatureInfo& speciesBase,
+        std::string name,
+        std::string title,
+        unsigned int startingAge
+    );
 
 
 };

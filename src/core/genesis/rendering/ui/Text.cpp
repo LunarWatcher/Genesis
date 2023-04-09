@@ -9,7 +9,7 @@
 
 namespace genesis {
 
-TextEntity::TextEntity(const std::string& text, float x, float y, float scale, const glm::vec4& color)
+TextEntity::TextEntity(const std::string_view& text, float x, float y, float scale, const glm::vec4& color)
         : color(color), pos(x, y), scale(scale) {
     model = std::make_shared<Model>();
     initializeCollider(std::make_shared<Rectangle>(0, 0, 0, 0, 0));
@@ -20,7 +20,7 @@ TextEntity::TextEntity(const std::string& text, float x, float y, float scale, c
     glBindVertexArray(0);
 }
 
-void TextEntity::regenerateVertices(const std::string& text, float x, float y, float scale) {
+void TextEntity::regenerateVertices(const std::string_view& text, float x, float y, float scale) {
     glBindVertexArray(model->vaoID);
     // Cache variable to store the leftmost x for newline operations
     const float sourceX = x;
@@ -32,14 +32,13 @@ void TextEntity::regenerateVertices(const std::string& text, float x, float y, f
     // Convert the string. Utility for dealing with unicode
     // Purely future-compatible at this time, however. While unicode is supported
     // on paper, the entirety of unicode isn't loaded into memory.
-    std::wstring wide = converter.from_bytes(text);
 
     // Raw data
     VertexArray points, uv;
 
     const auto& font = Renderer::getInstance().getFontAtlas()->getFont();
 
-    for (auto& character : wide) {
+    for (auto& character : text) {
         // Special handling: newlines
         // This is the only character to modify y and reset x atm.
         // That is gonna change when text wrapping is implemented
@@ -108,6 +107,10 @@ void TextEntity::render() {
 }
 
 void TextEntity::setText(const std::string& newText) {
+    regenerateVertices(newText, pos.x, pos.y, scale);
+}
+
+void TextEntity::setText(const std::string_view& newText) {
     regenerateVertices(newText, pos.x, pos.y, scale);
 }
 

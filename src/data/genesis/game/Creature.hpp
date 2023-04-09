@@ -85,6 +85,17 @@ struct GraphicsInfo {
  * Key structure for defining a class of species.
  */
 struct CreatureInfo {
+    /**
+     * Backreference to the species ID. This isn't provided as part of the object itself, but is sourced
+     * from the species key.
+     *
+     * This ID is primarily used for internal management.
+     * This ID cannot be overridden in the JSON itself. It is always set to the key.
+     * This detail will lead to conflicts on species with the same ID, but the solution to that is fairly simple:
+     * prefix the ID with a namespace if it's outside the vanilla namespace.
+     */
+    std::string _id;
+
     std::string name;
     std::string plural;
     std::string adjective;
