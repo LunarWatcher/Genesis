@@ -1,6 +1,7 @@
 #include "WorldGenerator.hpp"
 
 #include "genesis/core/game/generation/RNGesus.hpp"
+#include "genesis/Context.hpp"
 
 #include "genesis/core/data/DataHelper.hpp"
 #include "genesis/rendering/Renderer.hpp"
@@ -40,7 +41,7 @@ std::shared_ptr<World> WorldGenerator::newWorld(int xChunks, int yChunks, const 
             auto targetY = chunk->getTopY(0, 0) + 1;
             
             chunk->set(
-                DataHelper::getInstance()->getTileGenerator("genesis:caravan")->generateTile(),
+                Context::getInstance().dataHelper.getTileGenerator("genesis:caravan")->generateTile(),
                 0, 0,
                 targetY
             );

@@ -17,6 +17,7 @@
 #include <codecvt>
 #include <iostream>
 #include <locale>
+#include <stdexcept>
 #include <thread>
 
 namespace genesis {
@@ -207,6 +208,9 @@ void Renderer::run() {
 
 // Scene management {{{
 void Renderer::transition(const std::shared_ptr<Scene>& scene) {
+    if (scene == nullptr) {
+        throw std::runtime_error("Cannot transition to a null scene");
+    }
     for (auto& stg : activeSceneStack) {
         stg->onDestroy();
     }
@@ -216,6 +220,9 @@ void Renderer::transition(const std::shared_ptr<Scene>& scene) {
 }
 
 void Renderer::add(const std::shared_ptr<Scene>& scene) {
+    if (scene == nullptr) {
+        throw std::runtime_error("Cannot add a null scene");
+    }
     activeSceneStack.push_back(scene);
 }
 

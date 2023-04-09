@@ -1,5 +1,5 @@
 #include "Splash.hpp"
-#include "genesis/context/Context.hpp"
+#include "genesis/Context.hpp"
 #include "genesis/rendering/Renderer.hpp"
 
 #include "genesis/core/menu/Menu.hpp"
@@ -18,11 +18,11 @@ void SplashScene::render() {
 }
 
 void SplashScene::tick() {
-    if (GlobalCtx.loader.isLoading()) {
-        text.setText(GlobalCtx.loader.getDescription());
+    if (Context::getInstance().dataLoader.isLoading()) {
+        text.setText(Context::getInstance().dataLoader.getDescription());
     } else {
         Renderer::getInstance().transition(
-            std::shared_ptr<MenuScene>()
+            std::make_shared<MenuScene>()
         );
     }
 }

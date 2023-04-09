@@ -1,3 +1,4 @@
+#include "genesis/Context.hpp"
 #include "genesis/rendering/Renderer.hpp"
 
 #include "stc/Environment.hpp"
@@ -22,9 +23,9 @@ int main() {
 #ifdef _WIN32
     try {
 #endif
-    genesis::Renderer renderer;
-    renderer.transition(std::make_shared<genesis::SplashScene>());
-    renderer.run();
+    auto& ctx = genesis::Context::getInstance();
+    ctx.renderer.transition(std::make_shared<genesis::SplashScene>());
+    ctx.renderer.run();
 #ifdef _WIN32
     } catch (const std::exception& e) {
         std::cerr << "Exception caught: " << e.what() << std::endl;

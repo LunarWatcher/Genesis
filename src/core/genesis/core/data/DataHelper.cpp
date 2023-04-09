@@ -30,12 +30,4 @@ void DataHelper::registerTileGenerator(const std::string &tileID, std::shared_pt
     tileGenerators[tileID] = generator;
 }
 
-DataHelper* DataHelper::getInstance() {
-    if (instance == nullptr) {
-        instance = new DataHelper();
-    }
-
-    return instance;
-}
-
 }

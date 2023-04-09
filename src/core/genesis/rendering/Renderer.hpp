@@ -62,6 +62,7 @@ protected:
     std::shared_ptr<Camera> camera;
 
     std::shared_ptr<DefaultShader> textureShader;
+    // WTF?
     std::shared_ptr<DefaultShader> primitiveShader;
     std::shared_ptr<TextShader> textShader;
     std::shared_ptr<UIShader> uiShader;

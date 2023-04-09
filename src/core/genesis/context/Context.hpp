@@ -5,9 +5,8 @@
 
 namespace genesis {
 
-static inline struct Context {
-    DataLoader loader;
-    DataHelper* generator = DataHelper::getInstance();
-} GlobalCtx;
+struct Context {
+};
+inline static Context* GlobalContext = nullptr;
 
 }
