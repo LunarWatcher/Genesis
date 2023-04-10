@@ -1,4 +1,5 @@
 #include "UIShader.hpp"
+#include "genesis/Context.hpp"
 #include "genesis/rendering/Renderer.hpp"
 #include "glm/gtc/type_ptr.hpp"
 #include <iostream>
@@ -9,7 +10,7 @@ UIShader::UIShader() : Shader("ui") {
     orthoMatrix = this->getUniformLocation("orthoMatrix");
 
     apply();
-    loadOrthoMatrix(Renderer::getInstance().getCamera()->getOrthoMatrix());
+    loadOrthoMatrix(Context::getInstance().camera->getOrthoMatrix());
     stop();
 }
 

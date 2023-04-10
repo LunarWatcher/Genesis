@@ -2,6 +2,7 @@
 
 #include "GL/glew.h"
 
+#include "genesis/Context.hpp"
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
@@ -20,7 +21,7 @@ DefaultShader::DefaultShader(const std::string& shader) : Shader(shader) {
 
     apply();
     // we only need to load the projection matrix once
-    loadProjectionMatrix(Renderer::getInstance().getCamera()->getPerspectiveMatrix());
+    loadProjectionMatrix(Context::getInstance().camera->getPerspectiveMatrix());
     stop();
 }
 

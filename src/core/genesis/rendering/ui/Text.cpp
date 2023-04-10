@@ -2,6 +2,7 @@
 #include "genesis/math/physics/Rectangle.hpp"
 #include "genesis/rendering/Renderer.hpp"
 #include "genesis/conf/Settings.hpp"
+#include "genesis/Context.hpp"
 
 #include "spdlog/spdlog.h"
 
@@ -36,7 +37,7 @@ void TextEntity::regenerateVertices(const std::string_view& text, float x, float
     // Raw data
     VertexArray points, uv;
 
-    const auto& font = Renderer::getInstance().getFontAtlas()->getFont();
+    const auto& font = Context::getInstance().fontAtlas->getFont();
 
     for (auto& character : text) {
         // Special handling: newlines
@@ -49,7 +50,7 @@ void TextEntity::regenerateVertices(const std::string_view& text, float x, float
         }
 
         // Look for a character
-        auto characterData = Renderer::getInstance().getFontAtlas()->getCharacter(character);
+        auto characterData = Context::getInstance().fontAtlas->getCharacter(character);
 
         if (!characterData) {
             continue;

@@ -1,4 +1,5 @@
 #include "TextShader.hpp"
+#include "genesis/Context.hpp"
 #include "genesis/rendering/Renderer.hpp"
 #include "glm/gtc/type_ptr.hpp"
 #include <iostream>
@@ -11,7 +12,7 @@ TextShader::TextShader() : Shader("text") {
 
     apply();
     loadTextColor({0.0, 0.0, 0.0, 1.0});
-    loadOrthoMatrix(Renderer::getInstance().getCamera()->getOrthoMatrix());
+    loadOrthoMatrix(Context::getInstance().camera->getOrthoMatrix());
     stop();
 }
 

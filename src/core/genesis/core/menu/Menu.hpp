@@ -6,7 +6,7 @@
 
 namespace genesis {
 
-
+// This is stupid design. Fix
 class MenuController : public EntityController {
 public:
     static constexpr long long BTN_PLAY = 0;

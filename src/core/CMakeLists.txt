@@ -1,4 +1,7 @@
 set (SOURCE_FILES
+    # Core {{{
+    genesis/Context.cpp
+    # }}}
     # Rendering {{{
     genesis/rendering/Renderer.cpp
     # }}}

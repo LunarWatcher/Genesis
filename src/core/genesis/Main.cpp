@@ -24,6 +24,8 @@ int main() {
     try {
 #endif
     auto& ctx = genesis::Context::getInstance();
+    ctx.initRendererDeps();
+
     ctx.renderer.transition(std::make_shared<genesis::SplashScene>());
     ctx.renderer.run();
 #ifdef _WIN32

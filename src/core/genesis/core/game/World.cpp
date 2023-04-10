@@ -1,5 +1,6 @@
 #include "World.hpp"
 
+#include "genesis/Context.hpp"
 #include "genesis/core/game/generation/WorldGenerator.hpp"
 #include "genesis/rendering/Constants.hpp"
 #include "genesis/rendering/Entity.hpp"
@@ -23,22 +24,27 @@ World::World() : generator(std::make_shared<perlin::DumbGenerator>()) {
 
     registerKey(GLFW_KEY_W, 0, [](int action) {
         if (action != GLFW_PRESS) return false;
-        Renderer::getInstance().getCamera()->incrementPosition(0, 10.0 * Renderer::getInstance().getDelta());
+        Context::getInstance().camera->incrementPosition(0, 10.0 * Context::getInstance().renderer.getDelta());
         return true;
     });
     registerKey(GLFW_KEY_A, 0, [](int action) {
         if (action != GLFW_PRESS) return false;
-        Renderer::getInstance().getCamera()->incrementPosition(-10.0 * Renderer::getInstance().getDelta(), 0);
+        Context::getInstance().camera->incrementPosition(-10.0 * Context::getInstance().renderer.getDelta(), 0);
         return true;
     });
     registerKey(GLFW_KEY_S, 0, [](int action) {
         if (action != GLFW_PRESS) return false;
-        Renderer::getInstance().getCamera()->incrementPosition(0, -10.0 * Renderer::getInstance().getDelta());
+        Context::getInstance().camera->incrementPosition(
+            0,
+            10.0 * Context::getInstance().renderer.getDelta()
+        );
         return true;
     });
     registerKey(GLFW_KEY_D, 0, [](int action) {
         if (action != GLFW_PRESS) return false;
-        Renderer::getInstance().getCamera()->incrementPosition(10.0 * Renderer::getInstance().getDelta(), 0);
+        Context::getInstance().camera->incrementPosition(
+            10.0 * Context::getInstance().renderer.getDelta(), 
+            0);
         return true;
     });
     frame = std::make_shared<Framebuffer>(40, 40, Settings::instance->getInt("width") - 80, Settings::instance->getInt("height") - 80);
@@ -55,9 +61,9 @@ void World::render() {
     //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     //glEnable(GL_DEPTH_TEST);
 
-    Renderer& inst = Renderer::getInstance();
-    inst.getTextureShader()->apply();
-    inst.getTexturePack()->bind();
+    auto& inst = Context::getInstance();
+    inst.textureShader->apply();
+    inst.texturePack->bind();
 
     for (auto& chunk : this->chunks)
         chunk->render();
@@ -65,8 +71,8 @@ void World::render() {
     for (auto& controller : this->entityControllers)
         controller->render();
 
-    inst.getTexturePack()->unbind();
-    inst.getTextureShader()->stop();
+    inst.texturePack->unbind();
+    inst.textureShader->stop();
     //frame->unbind();
     //auto shader = inst.getUIShader();
     //shader->apply();

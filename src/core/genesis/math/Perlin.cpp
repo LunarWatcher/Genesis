@@ -83,7 +83,7 @@ int Perlin2DNoiseGenerator::clampPerlin(double perlinInput) {
 void Perlin2DNoiseGenerator::generateChunk(genesis::ChunkMap& ref, int chunkX, int chunkY) {
     constexpr double STEP_DISTANCE = 1.0 / genesis::Constants::Chunks::CHUNK_SIZE;
 
-    auto rawObject = genesis::Renderer::getInstance().getTexturePack()->getTextureMetadata("genesis:grass").model;
+    auto rawObject = genesis::Context::getInstance().texturePack->getTextureMetadata("genesis:grass").model;
 
     for (size_t y = 0; y < genesis::Constants::MAX_OVERWORLD_HEIGHT; ++y) {
         auto& cLevel = ref[y];

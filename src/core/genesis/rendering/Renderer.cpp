@@ -2,6 +2,7 @@
 
 #include "GLFW/glfw3.h"
 
+#include "genesis/Context.hpp"
 #include "genesis/rendering/Shader.hpp"
 #include "genesis/core/game/World.hpp"
 #include "genesis/core/game/generation/WorldGenerator.hpp"
@@ -23,8 +24,6 @@
 namespace genesis {
 
 Renderer::Renderer() {
-    INSTANCE = this;
-
     glfwSetErrorCallback(GLFWDebug::GLFWCallback);
 
     glewExperimental = true;
@@ -36,6 +35,7 @@ Renderer::Renderer() {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
     glfwWindowHint(GLFW_RESIZABLE, false);
 #if defined __APPLE__ || defined __OSX__
+    // WTF is this for anyway? Does crapple really need to explicitly force 4.6?
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -76,23 +76,15 @@ Renderer::Renderer() {
     //glEnable(GL_CULL_FACE);
 
     initGame();
-    initFonts();
 
 
     logger->info("Renderer initialised");
 }
 
 void Renderer::initGame() {
+    // TODO: rename
     using namespace std::placeholders;
 
-    this->camera = std::make_shared<Camera>();
-
-    this->texturePack = std::make_shared<genesis::TextureAtlas>("images/programmer.png");
-
-    this->textureShader = std::make_shared<DefaultShader>();
-    this->primitiveShader = std::make_shared<DefaultShader>("primitive");
-    this->textShader = std::make_shared<TextShader>();
-    this->uiShader = std::make_shared<UIShader>();
 
     glfwSetWindowUserPointer(window, this);
     // Input
@@ -117,15 +109,6 @@ void Renderer::initGame() {
     });
 }
 
-void Renderer::initFonts() {
-    //if (FT_Init_FreeType(&this->fontLibrary)) {
-        //std::cerr << "Failed to initialize freetype" << std::endl;
-        //throw std::runtime_error("Freetype died");
-    //}
-    this->fontAtlas = std::make_shared<FontAtlas>();
-
-}
-
 void Renderer::tick() {
     for (auto& scene : activeSceneStack) {
         scene->updateInput(keyStates);
@@ -140,7 +123,8 @@ void Renderer::tick() {
 }
 
 void Renderer::render() {
-    camera->regenerateCameraMatrix();
+    // Why??
+    Context::getInstance().camera->regenerateCameraMatrix();
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glClearColor(0.529, 0.8078, 0.922, 1);
@@ -155,13 +139,9 @@ void Renderer::render() {
     //
     // Just use some common sense though.
     // Update shader data {{{
+    auto& textureShader = Context::getInstance().textureShader;
     textureShader->apply();
-    textureShader->loadViewMatrix(camera->getViewMatrix());
-    // we don't need to call stop for each shader.
-    // Apply overwrites any other enabled shaders.
-    // I think.
-    // At least for a single type.
-    textShader->stop();
+    textureShader->loadViewMatrix(Context::getInstance().camera->getViewMatrix());
     // }}}
 
     for (auto& scene : activeSceneStack) {
@@ -236,6 +216,7 @@ void Renderer::pop(const std::shared_ptr<Scene>& scene) {
 }
 
 void Renderer::createGame() {
+    // TODO: get rid of this function
     logger->info("Creating game.");
     WorldGenerator::newWorld(3, 3, "The Great Roman Empire");
 }
@@ -243,6 +224,7 @@ void Renderer::createGame() {
 // }}}
 
 void Renderer::refreshDisplay() {
+    // WHY?!?!
     bool fullscreen = Settings::instance->getBool("fullscreen");
 
     // TODO: toggle fullscreen

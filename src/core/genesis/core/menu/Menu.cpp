@@ -1,4 +1,5 @@
 #include "Menu.hpp"
+#include "genesis/Context.hpp"
 #include "genesis/rendering/Renderer.hpp"
 #include "genesis/rendering/ui/Text.hpp"
 #include "genesis/math/physics/Ray.hpp"
@@ -15,7 +16,7 @@ MenuScene::MenuScene() : Scene(true) {
         // TODO: check action when coc.nvim decides to start working again.
         // Fucking shit plugin
         double x = NAN, y = NAN;
-        glfwGetCursorPos(Renderer::getInstance().getWindow(), &x, &y);
+        glfwGetCursorPos(Context::getInstance().renderer.getWindow(), &x, &y);
 
         // I suppose that in a real system, we'd need to detect release?
         // And then check if there's dragging or some shit like that
@@ -28,10 +29,8 @@ MenuScene::MenuScene() : Scene(true) {
 }
 
 void MenuScene::render() {
-    Renderer& inst = Renderer::getInstance();
-
-    auto ts = inst.getTextShader();
-    auto fa = inst.getFontAtlas();
+    auto ts = Context::getInstance().textShader;
+    auto fa = Context::getInstance().fontAtlas;
 
     ts->apply();
     fa->bind();
@@ -72,7 +71,7 @@ bool MenuController::hasCollision(const std::shared_ptr<Rectangle> &collider) {
     for (auto& entity : entities) {
         if (entity->getCollider() != nullptr && entity->getCollider()->collidesWith(*collider, true)) {
             if (entity->ID == BTN_PLAY) {
-                Renderer::getInstance().createGame();
+                Context::getInstance().renderer.createGame();
             }
             return true;
         }

@@ -15,6 +15,7 @@ DataLoader::DataLoader() {
     runner = std::async(std::launch::async, [&]() {
         loadDirectory("data");
     });
+    logger->info("DataLoader thread started.");
 }
 
 
@@ -31,7 +32,6 @@ void DataLoader::load(const fs::path& subdir, std::function<void(DataLoader*, co
         return;
     }
     logger->info("Loading {}...", subdir.string());
-
     for (auto& file : fs::directory_iterator(subdir)) {
         // This stuff is case-sensitive. It's fine for now, but isn't bullet proof
         // if this type of mod is eventually supported, 
@@ -41,9 +41,11 @@ void DataLoader::load(const fs::path& subdir, std::function<void(DataLoader*, co
         } else if (file.path().extension() != ".json") {
             continue;
         }
+        logger->info("{}", file.path().string());
 
         callback(this, file.path());
     }
+    logger->info("Done.");
 }
 
 void DataLoader::checkInfoOrThrow(const fs::path& subdir) {

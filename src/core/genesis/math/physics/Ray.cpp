@@ -1,4 +1,5 @@
 #include "Ray.hpp"
+#include "genesis/Context.hpp"
 
 namespace genesis {
 
@@ -11,16 +12,16 @@ glm::vec2 Ray::normalizeScreenCoords(double x, double y) {
 }
 
 bool Ray::traceClick(const glm::vec2& rawCoords, const glm::vec2& normalizedScreenCoords) {
-    Renderer& renderer = Renderer::getInstance();
+    auto cam = Context::getInstance().camera;
 
-    auto& stack = renderer.getActiveSceneStack();
+    auto& stack = Context::getInstance().renderer.getActiveSceneStack();
 
     for (auto& scene : stack) {
         if (!scene->usesOrtho()) {
-            auto& viewMatrix = renderer.getCamera()->getViewMatrix();
+            auto& viewMatrix = cam->getViewMatrix();
 
             glm::vec4 rayClip(normalizedScreenCoords, -1.0, 1.0);
-            glm::vec4 eyeRay = glm::inverse(renderer.getCamera()->getPerspectiveMatrix()) * rayClip;
+            glm::vec4 eyeRay = glm::inverse(cam->getPerspectiveMatrix()) * rayClip;
             
             eyeRay.z = -1.0;
             eyeRay.w = 0.0;
@@ -46,9 +47,9 @@ bool Ray::traceClick(const glm::vec2& rawCoords, const glm::vec2& normalizedScre
             // for that ranges from trivial elementary school math to shit there's several papers about.
             //
             // Mind the minus, though! Dropping it breaks the math.
-            double dist = -renderer.getCamera()->getPosition().z / worldRay.z;
+            double dist = -cam->getPosition().z / worldRay.z;
 
-            glm::vec3 coords = renderer.getCamera()->getPosition() + ((float) dist) * worldRay;
+            glm::vec3 coords = cam->getPosition() + ((float) dist) * worldRay;
 
             for (auto& controller : scene->getEntityControllers()) {
                 if (controller->hasCollision(coords)) {

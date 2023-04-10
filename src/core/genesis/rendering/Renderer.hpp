@@ -56,19 +56,8 @@ class World;
 class Renderer {
 protected:
     static std::shared_ptr<spdlog::logger> logger;
-    static inline Renderer* INSTANCE;
 
     GLFWwindow* window;
-    std::shared_ptr<Camera> camera;
-
-    std::shared_ptr<DefaultShader> textureShader;
-    // WTF?
-    std::shared_ptr<DefaultShader> primitiveShader;
-    std::shared_ptr<TextShader> textShader;
-    std::shared_ptr<UIShader> uiShader;
-
-    std::shared_ptr<TextureAtlas> texturePack;
-    std::shared_ptr<FontAtlas> fontAtlas;
 
     /**
      * Vector of active scenes.
@@ -96,7 +85,6 @@ protected:
     /*}}}*/
 
     void initGame();
-    void initFonts();
 
 public:
     Renderer();
@@ -114,40 +102,8 @@ public:
         return delta;
     }
 
-    auto getTextureShader() {
-        return textureShader;
-    }
-
-    auto getTexturePack() {
-        return texturePack;
-    }
-
-    auto getCamera() {
-        return camera;
-    }
-
-    auto getFontAtlas() {
-        return fontAtlas;
-    }
-
-    static Renderer& getInstance() {
-        return *INSTANCE;
-    }
-
     auto getActiveScene() {
         return activeScene;
-    }
-
-    auto getTextShader() {
-        return textShader;
-    }
-
-    auto getUIShader() {
-        return uiShader;
-    }
-
-    auto getPrimitiveShader() { 
-        return primitiveShader;
     }
 
     template <typename T>
@@ -166,6 +122,7 @@ public:
     void pop(const std::shared_ptr<Scene>& scene);
 
     void createGame();
+
 
     void refreshDisplay();
 

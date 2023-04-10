@@ -1,4 +1,5 @@
 #include "Chunk.hpp"
+#include "genesis/Context.hpp"
 #include "genesis/core/data/DataHelper.hpp"
 #include "genesis/core/game/World.hpp"
 #include "genesis/math/Perlin.hpp"
@@ -13,7 +14,7 @@
 namespace genesis {
 
 Chunk::Chunk(int chunkX, int chunkY) : Entity(std::make_shared<Model>(), glm::vec3{chunkX * Constants::Chunks::CHUNK_SIZE, chunkY * Constants::Chunks::CHUNK_SIZE, 0}), chunkX(chunkX), chunkY(chunkY) {
-    Renderer::getInstance().getSceneByType<World>()->getNoiseGenerator()->generateChunk(this->chunkMap, chunkX, chunkY);
+    Context::getInstance().renderer.getSceneByType<World>()->getNoiseGenerator()->generateChunk(this->chunkMap, chunkX, chunkY);
     model->mode = GL_DYNAMIC_DRAW;
     model->createVAO();
     // when we create the VBO, we want to allocate the entire thing in VRAM.
@@ -56,7 +57,7 @@ void Chunk::regenerateVertices() {
     // What the fuck
     int m = *std::max_element(Constants::squareIndices.begin(), Constants::squareIndices.end());
 
-    int baseLevel = Renderer::getInstance().getCamera()->getActiveY();
+    int baseLevel = Context::getInstance().camera->getActiveY();
     auto& baseTiles = chunkMap.at(baseLevel);
     auto& floorTiles = chunkMap.at(baseLevel - 1);
 
@@ -74,12 +75,12 @@ void Chunk::regenerateVertices() {
             // First sweep; floor.
             if (baseTile == nullptr || !baseTile->isTextureSolid) {
                 auto floorTile = floorTiles.at(y).at(x);
-                auto uvSource = Renderer::getInstance().getTexturePack()->getTextureMetadata(floorTile->tileID).uvCoordinates;
+                auto uvSource = Context::getInstance().texturePack->getTextureMetadata(floorTile->tileID).uvCoordinates;
                 uvs.push_back({0, uvSource});
             }
             // Check floor tiles first to exploit ordering for indexing
             if (baseTile != nullptr) {
-                auto uvSource = Renderer::getInstance().getTexturePack()->getTextureMetadata(baseTile->tileID).uvCoordinates;
+                auto uvSource = Context::getInstance().texturePack->getTextureMetadata(baseTile->tileID).uvCoordinates;
                 uvs.push_back({1, uvSource});
             }
 
