@@ -129,7 +129,7 @@ void DumbGenerator::generateChunk(genesis::ChunkMap& ref, int, int) {
     // "noise"
     for (int x = 0; x < genesis::Constants::Chunks::CHUNK_SIZE; ++x) {
         for (int y = 0; y < genesis::Constants::Chunks::CHUNK_SIZE; ++y) {
-            ref.at(genesis::Constants::Chunks::CHUNK_SEA_LEVEL).at(y).at(x) = genesis::Context::getInstance().dataHelper.getTileGenerator("genesis:grass")
+            ref.at(genesis::Constants::Chunks::CHUNK_SEA_LEVEL).at(y).at(x) = genesis::Context::getInstance().dataHelper->getTileGenerator("genesis:grass")
                 ->generateTile();
         }
     }

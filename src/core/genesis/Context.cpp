@@ -19,6 +19,8 @@ void Context::initRendererDeps() {
     this->textShader = std::make_shared<TextShader>();
     this->uiShader = std::make_shared<UIShader>();
     this->fontAtlas = std::make_shared<FontAtlas>();
+
+    this->dataHelper = std::make_shared<DataHelper>();
 }
 
 }

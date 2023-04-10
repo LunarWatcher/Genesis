@@ -14,7 +14,7 @@ public:
     Renderer renderer;
     DataLoader dataLoader;
     // Maybe init this using the dataloader later? Idfk, more refactoring is required
-    DataHelper dataHelper;
+    std::shared_ptr<DataHelper> dataHelper;
 
     std::shared_ptr<Camera> camera;
     std::shared_ptr<DefaultShader> textureShader;
