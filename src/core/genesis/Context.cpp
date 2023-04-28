@@ -1,8 +1,9 @@
 #include "Context.hpp"
+#include "genesis/rendering/impl/Renderer.hpp"
 
 namespace genesis {
 
-Context::Context() {
+Context::Context() : renderer(std::make_shared<GameRenderer>()){
 
 }
 

@@ -21,7 +21,7 @@ void SplashScene::tick() {
     if (Context::getInstance().dataLoader.isLoading()) {
         text.setText(Context::getInstance().dataLoader.getDescription());
     } else {
-        Context::getInstance().renderer.transition(
+        Context::getInstance().renderer->transition(
             std::make_shared<MenuScene>()
         );
     }

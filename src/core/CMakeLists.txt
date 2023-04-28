@@ -1,9 +1,7 @@
 set (SOURCE_FILES
     # Core {{{
     genesis/Context.cpp
-    # }}}
-    # Rendering {{{
-    genesis/rendering/Renderer.cpp
+    genesis/rendering/impl/Renderer.cpp
     # }}}
     # Scenes {{{
     genesis/core/menu/Menu.cpp

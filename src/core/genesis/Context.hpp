@@ -3,6 +3,15 @@
 #include "genesis/core/data/DataHelper.hpp"
 #include "genesis/core/data/DataLoader.hpp"
 #include "genesis/rendering/Renderer.hpp"
+
+#include "genesis/rendering/atlases/FontAtlas.hpp"
+#include "genesis/rendering/atlases/TextureAtlas.hpp"
+#include "genesis/rendering/impl/Renderer.hpp"
+#include "genesis/rendering/shaders/DefaultShader.hpp"
+#include "genesis/rendering/shaders/TextShader.hpp"
+#include "genesis/rendering/shaders/UIShader.hpp"
+#include "genesis/rendering/view/Camera.hpp"
+
 #include <memory>
 
 namespace genesis {
@@ -11,7 +20,7 @@ class Context {
 private:
     Context();
 public:
-    Renderer renderer;
+    std::shared_ptr<Renderer> renderer;
     DataLoader dataLoader;
     // Maybe init this using the dataloader later? Idfk, more refactoring is required
     std::shared_ptr<DataHelper> dataHelper;

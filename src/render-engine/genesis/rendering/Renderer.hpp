@@ -6,13 +6,7 @@
 #include "genesis/rendering/Model.hpp"
 #include "genesis/rendering/Renderable.hpp"
 
-#include "genesis/rendering/atlases/FontAtlas.hpp"
-#include "genesis/rendering/atlases/TextureAtlas.hpp"
 #include "genesis/rendering/flow/Scene.hpp"
-#include "genesis/rendering/shaders/TextShader.hpp"
-#include "genesis/rendering/shaders/UIShader.hpp"
-#include "genesis/rendering/ui/Text.hpp"
-#include "genesis/rendering/view/Camera.hpp"
 #include "genesis/input/InputProcessor.hpp"
 
 #include "spdlog/logger.h"
@@ -88,9 +82,10 @@ protected:
 
 public:
     Renderer();
+    virtual ~Renderer() = default;
 
-    void tick();
-    void render();
+    virtual void tick();
+    virtual void render();
 
     void run();
 
@@ -120,9 +115,6 @@ public:
     void transition(const std::shared_ptr<Scene>& scene);
     void add(const std::shared_ptr<Scene>& scene);
     void pop(const std::shared_ptr<Scene>& scene);
-
-    void createGame();
-
 
     void refreshDisplay();
 

@@ -24,26 +24,26 @@ World::World() : generator(std::make_shared<perlin::DumbGenerator>()) {
 
     registerKey(GLFW_KEY_W, 0, [](int action) {
         if (action != GLFW_PRESS) return false;
-        Context::getInstance().camera->incrementPosition(0, 10.0 * Context::getInstance().renderer.getDelta());
+        Context::getInstance().camera->incrementPosition(0, 10.0 * Context::getInstance().renderer->getDelta());
         return true;
     });
     registerKey(GLFW_KEY_A, 0, [](int action) {
         if (action != GLFW_PRESS) return false;
-        Context::getInstance().camera->incrementPosition(-10.0 * Context::getInstance().renderer.getDelta(), 0);
+        Context::getInstance().camera->incrementPosition(-10.0 * Context::getInstance().renderer->getDelta(), 0);
         return true;
     });
     registerKey(GLFW_KEY_S, 0, [](int action) {
         if (action != GLFW_PRESS) return false;
         Context::getInstance().camera->incrementPosition(
             0,
-            10.0 * Context::getInstance().renderer.getDelta()
+            -10.0 * Context::getInstance().renderer->getDelta()
         );
         return true;
     });
     registerKey(GLFW_KEY_D, 0, [](int action) {
         if (action != GLFW_PRESS) return false;
         Context::getInstance().camera->incrementPosition(
-            10.0 * Context::getInstance().renderer.getDelta(), 
+            10.0 * Context::getInstance().renderer->getDelta(), 
             0);
         return true;
     });

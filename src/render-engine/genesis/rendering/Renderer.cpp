@@ -2,17 +2,9 @@
 
 #include "GLFW/glfw3.h"
 
-#include "genesis/Context.hpp"
 #include "genesis/rendering/Shader.hpp"
-#include "genesis/core/game/World.hpp"
-#include "genesis/core/game/generation/WorldGenerator.hpp"
 #include "genesis/rendering/Texture.hpp"
-#include "genesis/rendering/atlases/FontAtlas.hpp"
-#include "genesis/rendering/shaders/UIShader.hpp"
-#include "shaders/DefaultShader.hpp"
 #include "genesis/conf/Settings.hpp"
-
-#include "genesis/core/menu/Menu.hpp"
 
 #include <chrono>
 #include <codecvt>
@@ -45,7 +37,8 @@ Renderer::Renderer() {
     this->window = glfwCreateWindow(Settings::instance->getInt("width"),
         Settings::instance->getInt("height"),
         "Genesis",
-        nullptr, nullptr);
+        nullptr,
+        nullptr);
 
     if (!window) {
         glfwTerminate();
@@ -82,7 +75,7 @@ Renderer::Renderer() {
 }
 
 void Renderer::initGame() {
-    // TODO: rename
+    // TODO: rename function
     using namespace std::placeholders;
 
 
@@ -123,26 +116,10 @@ void Renderer::tick() {
 }
 
 void Renderer::render() {
-    // Why??
-    Context::getInstance().camera->regenerateCameraMatrix();
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glClearColor(0.529, 0.8078, 0.922, 1);
 
-    // TODO: set up a system to allow scenes to define these.
-    // Though I'm not entirely sure if that's even necessary.
-    // A few bits are tied to the camera class, but I'm not
-    // sure if that's used elsewhere.
-    // if it is, we may need to hook up a system that exposes
-    // the currently rendered scene in a pointer or something.
-    // It's already a pointer, so it's a fairly cheap operation.
-    //
-    // Just use some common sense though.
-    // Update shader data {{{
-    auto& textureShader = Context::getInstance().textureShader;
-    textureShader->apply();
-    textureShader->loadViewMatrix(Context::getInstance().camera->getViewMatrix());
-    // }}}
 
     for (auto& scene : activeSceneStack) {
         if (scene == nullptr) {
@@ -158,7 +135,7 @@ void Renderer::render() {
 }
 
 void Renderer::run() {
-    auto targetTime = std::chrono::duration<double, std::milli>(8.3);
+    auto targetTime = std::chrono::duration<double, std::milli>(1000.0 / 120.0);
 
     auto lastTime = std::chrono::high_resolution_clock::now();
     auto counter = lastTime;
@@ -213,12 +190,6 @@ void Renderer::pop(const std::shared_ptr<Scene>& scene) {
         return;
     }
     throw std::runtime_error("Tried to pop a non-existent item");
-}
-
-void Renderer::createGame() {
-    // TODO: get rid of this function
-    logger->info("Creating game.");
-    WorldGenerator::newWorld(3, 3, "The Great Roman Empire");
 }
 
 // }}}

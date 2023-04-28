@@ -14,7 +14,7 @@
 namespace genesis {
 
 Chunk::Chunk(int chunkX, int chunkY) : Entity(std::make_shared<Model>(), glm::vec3{chunkX * Constants::Chunks::CHUNK_SIZE, chunkY * Constants::Chunks::CHUNK_SIZE, 0}), chunkX(chunkX), chunkY(chunkY) {
-    Context::getInstance().renderer.getSceneByType<World>()->getNoiseGenerator()->generateChunk(this->chunkMap, chunkX, chunkY);
+    Context::getInstance().renderer->getSceneByType<World>()->getNoiseGenerator()->generateChunk(this->chunkMap, chunkX, chunkY);
     model->mode = GL_DYNAMIC_DRAW;
     model->createVAO();
     // when we create the VBO, we want to allocate the entire thing in VRAM.

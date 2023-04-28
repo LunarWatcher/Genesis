@@ -14,7 +14,7 @@ glm::vec2 Ray::normalizeScreenCoords(double x, double y) {
 bool Ray::traceClick(const glm::vec2& rawCoords, const glm::vec2& normalizedScreenCoords) {
     auto cam = Context::getInstance().camera;
 
-    auto& stack = Context::getInstance().renderer.getActiveSceneStack();
+    auto& stack = Context::getInstance().renderer->getActiveSceneStack();
 
     for (auto& scene : stack) {
         if (!scene->usesOrtho()) {

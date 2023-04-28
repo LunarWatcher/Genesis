@@ -12,7 +12,7 @@ namespace genesis {
 
 std::shared_ptr<World> WorldGenerator::newWorld(int xChunks, int yChunks, const std::string& civName) {
     std::shared_ptr<World> world = std::make_shared<World>();
-    Context::getInstance().renderer.transition(world);
+    Context::getInstance().renderer->transition(world);
 
     world->civilisationName = civName;
     

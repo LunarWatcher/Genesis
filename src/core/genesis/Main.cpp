@@ -26,8 +26,8 @@ int main() {
     auto& ctx = genesis::Context::getInstance();
     ctx.initRendererDeps();
 
-    ctx.renderer.transition(std::make_shared<genesis::SplashScene>());
-    ctx.renderer.run();
+    ctx.renderer->transition(std::make_shared<genesis::SplashScene>());
+    ctx.renderer->run();
 #ifdef _WIN32
     } catch (const std::exception& e) {
         std::cerr << "Exception caught: " << e.what() << std::endl;
