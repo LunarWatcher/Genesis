@@ -20,13 +20,18 @@ class TextEntity : public Entity {
 private:
     static inline std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
     glm::vec4 color;
-    glm::vec2 pos;
-    float scale;
 
     void regenerateVertices(const std::string_view& text, float x, float y, float scale);
 
 public:
-    TextEntity(const std::string_view& text, float x, float y, float scale = 1, const glm::vec4& color = {1, 0, 0, 1});
+    TextEntity(
+        const std::string_view& text,
+        float x,
+        float y,
+        float scale = 1,
+        const glm::vec4& color = {1, 0, 0, 1},
+        decltype(ID) id = -1
+    );
 
     void render() override;
 

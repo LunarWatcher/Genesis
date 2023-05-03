@@ -34,15 +34,14 @@ protected:
     void regenerateTransMatrix();
 
     Entity() = default;
-
 public:
     long long ID = -1;
 
-    Entity(const std::shared_ptr<Model>& model, glm::vec3 position, glm::vec3 rotation, float scale)
-            : model(model), position(position), rotation(rotation), scale(scale) {
+    Entity(const std::shared_ptr<Model>& model, glm::vec3 position, glm::vec3 rotation, float scale, long long id = -1)
+            : model(model), position(position), rotation(rotation), scale(scale), ID(id) {
         regenerateTransMatrix();
     }
-    Entity(const std::shared_ptr<Model>& model, glm::vec3 position) : Entity(model, position, glm::vec3{0, 0, 0}, 0) {}
+    Entity(const std::shared_ptr<Model>& model, glm::vec3 position, long long id = -1) : Entity(model, position, glm::vec3{0, 0, 0}, 0, id) {}
 
     virtual void tick();
     void render() override;

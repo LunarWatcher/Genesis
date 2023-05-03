@@ -1,6 +1,7 @@
 #pragma once
 
 #include "genesis/math/physics/Collider.hpp"
+#include "glm/fwd.hpp"
 
 namespace genesis {
 
@@ -11,6 +12,7 @@ private:
 public:
     Rectangle(double x, double y, double width, double height) : x(x), y(y), z(0), width(width), height(height) {}
     Rectangle(double x, double y, double z, double width, double height) : x(x), y(y), z(z), width(width), height(height) {}
+    Rectangle(const glm::vec2& pos, const glm::vec2& dims) : x(pos.x), y(pos.y), z(0), width(dims.x), height(dims.y) {}
 
     bool collidesWith(const Rectangle& other, bool anyZ = false) override;
 

@@ -5,7 +5,6 @@
 
 #include "genesis/core/data/DataHelper.hpp"
 #include "genesis/rendering/Renderer.hpp"
-#include "genesis/world/PlayerCamp.hpp"
 
 namespace genesis {
 
@@ -16,10 +15,6 @@ std::shared_ptr<World> WorldGenerator::newWorld(int xChunks, int yChunks, const 
 
     world->civilisationName = civName;
     
-    world->entityControllers.push_back(std::make_shared<PlayerCamp>());
-
-    auto& controller = world->entityControllers.back();
-
     // TODO: add a ChunkController as well. This is deeper down the world management rabbit hole
     for (long long x = -xChunks / 2; x <= xChunks / 2; ++x) {
         for (long long y = -yChunks / 2; y <= yChunks; ++y) {

@@ -9,7 +9,6 @@
 #include "genesis/rendering/Texture.hpp"
 #include "genesis/rendering/environment/Chunk.hpp"
 #include "genesis/rendering/gl/Framebuffer.hpp"
-#include "genesis/world/PlayerCamp.hpp"
 #include "genesis/math/physics/Ray.hpp"
 
 #include <chrono>
@@ -47,13 +46,13 @@ World::World() : generator(std::make_shared<perlin::DumbGenerator>()) {
             0);
         return true;
     });
-    frame = std::make_shared<Framebuffer>(40, 40, Settings::instance->getInt("width") - 80, Settings::instance->getInt("height") - 80);
+    //frame = std::make_shared<Framebuffer>(40, 40, Settings::instance->getInt("width") - 80, Settings::instance->getInt("height") - 80);
 
 }
 
 void World::tick() {
-    for (auto& controller : this->entityControllers)
-        controller->tick();
+    for (auto& entity : this->gameEntities)
+        entity->tick();
 }
 
 void World::render() {
@@ -68,8 +67,8 @@ void World::render() {
     for (auto& chunk : this->chunks)
         chunk->render();
 
-    for (auto& controller : this->entityControllers)
-        controller->render();
+    for (auto& entity : this->gameEntities)
+        entity->render();
 
     inst.texturePack->unbind();
     inst.textureShader->stop();
@@ -79,10 +78,6 @@ void World::render() {
     //frame->render();
     //shader->stop();
 
-}
-
-const std::vector<std::shared_ptr<EntityController>>& World::getEntityControllers() {
-    return entityControllers;
 }
 
 std::pair<std::pair<int, int>, std::pair<int, int>> World::convertToChunkSpace(int tileX, int tileZ) {

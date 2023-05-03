@@ -6,29 +6,18 @@
 
 namespace genesis {
 
-// This is stupid design. Fix
-class MenuController : public EntityController {
-public:
+class MenuScene : public Scene {
+private:
     static constexpr long long BTN_PLAY = 0;
 
-    MenuController();
-    void tick() override;
-
-    bool hasCollision(const std::shared_ptr<Rectangle>& collider) override;
-};
-
-class MenuScene : public Scene, public EntityController {
-private:
-    int selectedPosition = 0;
-
-    std::vector<std::shared_ptr<EntityController>> entityControllers;
+    std::vector<std::shared_ptr<Entity>> uiEntities;
 public:
     MenuScene();
 
     void render() override;
     void tick() override;
 
-    const std::vector<std::shared_ptr<EntityController>>& getEntityControllers() override;
+    bool checkMouseCollision(const glm::vec2& rawCoords, const glm::vec3& /*projectedCoords*/) override;
 
 };
 

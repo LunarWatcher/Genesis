@@ -3,6 +3,7 @@
 #include "genesis/math/physics/PhysicsController.hpp"
 #include "genesis/world/EntityController.hpp"
 #include "genesis/input/InputProcessor.hpp"
+#include "glm/fwd.hpp"
 
 namespace genesis {
 
@@ -19,15 +20,12 @@ public:
 
     virtual void render() = 0;
 
-    virtual const std::vector<std::shared_ptr<EntityController>>& getEntityControllers() {
-        static std::vector<std::shared_ptr<EntityController>> ref = {};
-        return ref;
-    }
-
     // Lifecycle
     virtual void onPause() {}
     virtual void onDestroy() {}
     virtual void onResume() {}
+
+    virtual bool checkMouseCollision(const glm::vec2& /* rawCoords */, const glm::vec3& /* projectedCoords */) { return false; };
 
     bool isActive() const { return _isActive; }
     void setActive(bool active) { _isActive = active; }

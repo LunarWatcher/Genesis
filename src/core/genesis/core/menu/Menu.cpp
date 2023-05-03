@@ -9,14 +9,16 @@
 
 namespace genesis {
 
-// MenuScene {{{
 MenuScene::MenuScene() : Scene(true) {
-    auto uiController = std::make_shared<MenuController>();
-    this->entityControllers.push_back(uiController);
+    uiEntities.push_back(
+        std::make_shared<TextEntity>("Play", 200, 200, 1, glm::vec4{ 1.0, 0.0, 1.0, 1.0 }, BTN_PLAY)
+    );
 
     registerKey(GLFW_MOUSE_BUTTON_1, 0, [](int action) {
-        // TODO: check action when coc.nvim decides to start working again.
-        // Fucking shit plugin
+        // TODO: action appears to be borked
+        if (action != GLFW_PRESS) {
+            return false;
+        }
         double x = NAN, y = NAN;
         glfwGetCursorPos(Context::getInstance().renderer->getWindow(), &x, &y);
 
@@ -37,8 +39,8 @@ void MenuScene::render() {
     ts->apply();
     fa->bind();
 
-    for (auto& controller : this->entityControllers) {
-        controller->render();
+    for (auto& uiComponent : uiEntities) {
+        uiComponent->render();
     }
 
     fa->unbind();
@@ -46,32 +48,16 @@ void MenuScene::render() {
 }
 
 void MenuScene::tick() {
-    for (auto& controller : this->entityControllers) {
-        controller->tick();
+    for (auto& uiComponent : uiEntities) {
+        uiComponent->tick();
     }
 }
 
-const std::vector<std::shared_ptr<EntityController>>& MenuScene::getEntityControllers() {
-    return entityControllers;
-}
-// }}}
-// MenuController {{{
-MenuController::MenuController() {
-    auto play = std::make_shared<TextEntity>("Play", 200, 200, 1, glm::vec4{ 1.0, 0.0, 1.0, 1.0 });
-    play->ID = BTN_PLAY;
+bool MenuScene::checkMouseCollision(const glm::vec2& rawCoords, const glm::vec3&) {
+    auto collider = Rectangle{rawCoords, glm::vec2(1.f, 1.f)};
+    for (auto& entity : uiEntities) {
+        if (entity->getCollider() != nullptr && entity->getCollider()->collidesWith(collider, true)) {
 
-    entities.push_back(play);
-}
-
-void MenuController::tick() {
-    for (auto& entity : entities) {
-        entity->tick();
-    }
-}
-
-bool MenuController::hasCollision(const std::shared_ptr<Rectangle> &collider) {
-    for (auto& entity : entities) {
-        if (entity->getCollider() != nullptr && entity->getCollider()->collidesWith(*collider, true)) {
             if (entity->ID == BTN_PLAY) {
                 WorldGenerator::newWorld(
                     3,
@@ -82,9 +68,7 @@ bool MenuController::hasCollision(const std::shared_ptr<Rectangle> &collider) {
             return true;
         }
     }
-
     return false;
 }
-// }}}
 
 }

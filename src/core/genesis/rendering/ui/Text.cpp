@@ -10,8 +10,9 @@
 
 namespace genesis {
 
-TextEntity::TextEntity(const std::string_view& text, float x, float y, float scale, const glm::vec4& color)
-        : color(color), pos(x, y), scale(scale) {
+TextEntity::TextEntity(const std::string_view& text, float x, float y, float scale, const glm::vec4& color, long long id)
+        : Entity(nullptr, glm::vec3(x, y, 0), glm::vec3(0, 0, 0), scale, id),
+        color(color) {
     model = std::make_shared<Model>();
     initializeCollider(std::make_shared<Rectangle>(0, 0, 0, 0, 0));
 
@@ -108,11 +109,11 @@ void TextEntity::render() {
 }
 
 void TextEntity::setText(const std::string& newText) {
-    regenerateVertices(newText, pos.x, pos.y, scale);
+    regenerateVertices(newText, position.x, position.y, scale);
 }
 
 void TextEntity::setText(const std::string_view& newText) {
-    regenerateVertices(newText, pos.x, pos.y, scale);
+    regenerateVertices(newText, position.x, position.y, scale);
 }
 
 } // namespace genesis

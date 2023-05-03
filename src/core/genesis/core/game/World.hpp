@@ -1,5 +1,6 @@
 #pragma once
 
+#include "genesis/core/game/entities/GameEntity.hpp"
 #include "genesis/rendering/environment/Chunk.hpp"
 #include "genesis/rendering/gl/Framebuffer.hpp"
 #include "genesis/world/EntityController.hpp"
@@ -17,14 +18,14 @@ private:
     static inline World* INSTANCE = nullptr;
 
     std::shared_ptr<perlin::NoiseGenerator> generator;
-    std::shared_ptr<Framebuffer> frame;
+    //std::shared_ptr<Framebuffer> frame;
 
     // Game state
     std::string civilisationName;
 
     // TODO: replace with a different container. Vectors aren't really a good idea for this.
     std::vector<std::shared_ptr<Chunk>> chunks;
-    std::vector<std::shared_ptr<EntityController>> entityControllers;
+    std::vector<std::shared_ptr<GameEntity>> gameEntities;
 
 public:
     World();
@@ -40,8 +41,6 @@ public:
      * Returns world coordinates as chunk coords, and coords within the chunk
      */
     std::pair<std::pair<int, int>, std::pair<int, int>> convertToChunkSpace(int tileX, int tileZ);
-
-    const std::vector<std::shared_ptr<EntityController>>& getEntityControllers() override;
 
     friend class WorldGenerator;
 };
