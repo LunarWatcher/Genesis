@@ -1,11 +1,11 @@
 #pragma once
 
-#include "genesis/game/Creature.hpp"
+#include "genesis/game/Species.hpp"
 #include "genesis/rendering/Entity.hpp"
 
 namespace genesis {
 
-class GameEntity : public Entity {
+class GameCreature : public Entity {
 private:
     AttributeInfo attribs;
     /**
@@ -18,6 +18,7 @@ private:
     std::string title;
 
     unsigned int age;
+    // Does this even go here? It should probably be a comment in the SpeciesLoader or something
     // TODO: set up gender config on a species level in the files
     // The initial setup is going to just be static, but could probably set up
     // a probability function. Like,
@@ -48,8 +49,8 @@ private:
     Gender gender = Gender::NONE;
 
 public:
-    GameEntity(
-        CreatureInfo& speciesBase,
+    GameCreature(
+        SpeciesInfo& speciesBase,
         std::string name,
         std::string title,
         unsigned int startingAge

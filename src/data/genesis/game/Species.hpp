@@ -1,5 +1,9 @@
 #pragma once
 
+#include "genesis/game/util/Name.hpp"
+#include "Traits.hpp"
+
+#include "nlohmann/detail/macro_scope.hpp"
 #include <map>
 #include <string>
 #include <vector>
@@ -52,13 +56,6 @@ struct AIInfo {
 
 };
 
-struct BreedingInfo {
-    bool infertile;
-    std::vector<std::string> compatibleCreatures;
-
-    bool agender = true;
-};
-
 struct AttributeInfo {
     int stealth;
     int agility;
@@ -79,12 +76,20 @@ struct GraphicsInfo {
      * Specifying just `source` implies `isStatic = false`
      */
     bool isStatic;
+    bool isSpriteSheet = false;
+    std::string rowSelector = "", colSelector = "";
 };
+
+
 
 /**
  * Key structure for defining a class of species.
  */
-struct CreatureInfo {
+// This feels a bit too memory-intensive for subspecies. Not right now, but as the amount of data grows,
+// there's going to be a lot to keep track of, particularly for subspecies that don't override everything.
+// All the data has to be duplicated a few too many times for my taste.
+// On the other hand, I doubt this will ever use so much RAM that it matters. Future me problem
+struct SpeciesInfo {
     /**
      * Backreference to the species ID. This isn't provided as part of the object itself, but is sourced
      * from the species key.
@@ -95,23 +100,39 @@ struct CreatureInfo {
      * prefix the ID with a namespace if it's outside the vanilla namespace.
      */
     std::string _id;
+    /**
+     * Only defined for subspecies; name of the parent species.
+     */
+    std::string _parentId;
 
-    std::string name;
-    std::string plural;
-    std::string adjective;
-
-    BreedingInfo breedingInfo;
-    AttributeInfo biologicalAttribBias;
+    Name name;
     AIInfo aiDetails;
+
+    // May only be defined in subspecies, if relevant.
+    AttributeInfo biologicalAttribBias;
     GraphicsInfo graphics;
+
+    BehaviourTraits behaviourTraits;
+    PhysicalTraits physicalTraits;
+    std::vector<std::shared_ptr<SpeciesInfo>> subspecies;
+
+    void parent(const SpeciesInfo& p) {
+        this->_parentId = p._id;
+        this->aiDetails = p.aiDetails;
+        this->biologicalAttribBias = p.biologicalAttribBias;
+        this->behaviourTraits = p.behaviourTraits;
+        this->physicalTraits = p.physicalTraits;
+    }
+
 };
 
-extern void from_json(const nlohmann::json& j, CreatureInfo& r);
-extern void from_json(const nlohmann::json& j, ReproductionType& r);
-extern void from_json(const nlohmann::json& j, BreedingInfo& r);
+extern void from_json(const nlohmann::json& j, SpeciesInfo& r);
 extern void from_json(const nlohmann::json& j, AttributeInfo& r);
 extern void from_json(const nlohmann::json& j, AIInfo& r);
 extern void from_json(const nlohmann::json& j, GraphicsInfo& r);
 
+NLOHMANN_JSON_SERIALIZE_ENUM(ReproductionType, {
+    {ReproductionType::MAMMALIAN, "mammalian"},
+});
 
 }

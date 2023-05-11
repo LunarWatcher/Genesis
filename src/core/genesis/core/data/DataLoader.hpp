@@ -1,7 +1,6 @@
 #pragma once
 
-#include "genesis/game/Creature.hpp"
-#include "genesis/game/Civilisation.hpp"
+#include "genesis/game/Species.hpp"
 
 #include "nlohmann/json.hpp"
 #include "spdlog/logger.h"
@@ -32,18 +31,23 @@ private:
     void checkInfoOrThrow(const fs::path& subdir);
 
     void loadSpecies(const fs::path& root);
-    void loadCivilisations(const fs::path& root);
 
     void load(const fs::path& root, std::function<void(DataLoader*, const fs::path&)> callback);
 
 public:
-    std::map<std::string, CreatureInfo> creatures;
-    std::map<std::string, Civilisation> civilisations;
+    // Contains the full species tree, including subspecies
+    std::map<std::string, std::shared_ptr<SpeciesInfo>> creatures;
 
     DataLoader();
 
     void loadDirectory(const fs::path& directory);
-    bool isLoading() { return runner.wait_for(std::chrono::milliseconds(0)) != std::future_status::ready; }
+    bool isLoading() {
+        bool v = runner.wait_for(std::chrono::milliseconds(0)) != std::future_status::ready;
+        if (!v) {
+            runner.get();
+        }
+        return v;
+    }
     std::string_view getDescription() {
         return currLoading.load();
     }

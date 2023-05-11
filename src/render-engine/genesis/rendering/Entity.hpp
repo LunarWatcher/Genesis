@@ -57,6 +57,11 @@ public:
         }
     }
 
+    virtual void setPosition(const glm::vec3& pos) {
+        this->position = pos;
+        regenerateTransMatrix();
+    }
+
     glm::vec3& getPosition() {
         return position;
     }

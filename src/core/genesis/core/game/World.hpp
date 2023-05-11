@@ -1,6 +1,6 @@
 #pragma once
 
-#include "genesis/core/game/entities/GameEntity.hpp"
+#include "genesis/core/game/entities/GameCreature.hpp"
 #include "genesis/rendering/environment/Chunk.hpp"
 #include "genesis/rendering/gl/Framebuffer.hpp"
 #include "genesis/world/EntityController.hpp"
@@ -25,7 +25,7 @@ private:
 
     // TODO: replace with a different container. Vectors aren't really a good idea for this.
     std::vector<std::shared_ptr<Chunk>> chunks;
-    std::vector<std::shared_ptr<GameEntity>> gameEntities;
+    std::vector<std::shared_ptr<GameCreature>> gameEntities;
 
 public:
     World();

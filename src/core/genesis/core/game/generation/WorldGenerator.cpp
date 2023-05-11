@@ -15,7 +15,6 @@ std::shared_ptr<World> WorldGenerator::newWorld(int xChunks, int yChunks, const 
 
     world->civilisationName = civName;
     
-    // TODO: add a ChunkController as well. This is deeper down the world management rabbit hole
     for (long long x = -xChunks / 2; x <= xChunks / 2; ++x) {
         for (long long y = -yChunks / 2; y <= yChunks; ++y) {
             auto chunk = std::make_shared<Chunk>(x, y);
@@ -31,6 +30,7 @@ std::shared_ptr<World> WorldGenerator::newWorld(int xChunks, int yChunks, const 
     // The reality though, is that it doesn't matter. The caravan just needs to be somewhere accessible
     // seeing as it's the start site for the colonists.
     // seeing as there currently isn't any world gen, chunk 0 is fine.
+    glm::vec3 caravanPos{0, 0, 0};
     for (auto& chunk : world->chunks) {
         if (chunk->getX() == 0 && chunk->getY() == 0) {
             auto targetY = chunk->getTopY(0, 0) + 1;
@@ -43,7 +43,26 @@ std::shared_ptr<World> WorldGenerator::newWorld(int xChunks, int yChunks, const 
         }
     }
 
+    generateCharacters(caravanPos, world, 4);
+
     return world;
+}
+
+void WorldGenerator::generateCharacters(const glm::vec3& caravanPosition, std::shared_ptr<World> world, int count) {
+    auto pos = caravanPosition;
+    // TODO: this is why I need a proper layer structure. This fucking sucks ass
+    pos.z += 1;
+    for (int i = 0; i < count; ++i) {
+        pos.x += 1;
+        auto entity = RNGesus::genCreature(
+            nullptr,
+            nullptr, 
+            false,
+            Context::getInstance().dataLoader.creatures.at("canine")
+        );
+        entity->setPosition(pos);
+        world->gameEntities.push_back(entity);
+    }
 }
 
 }

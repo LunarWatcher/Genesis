@@ -49,7 +49,7 @@ set (SOURCE_FILES
     # }}}
     # Game {{{
     # Entities {{{
-    genesis/core/game/entities/GameEntity.cpp
+    genesis/core/game/entities/GameCreature.cpp
     # }}}
     # World generation {{{
     genesis/core/game/generation/WorldGenerator.cpp
