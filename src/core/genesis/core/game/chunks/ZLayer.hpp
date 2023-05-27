@@ -9,39 +9,37 @@
 
 namespace genesis {
 
+/**
+ * Primitive object representing a tile at (x, y), defining both the floor and block tile.
+ * To represent an empty floor and/or block, nullptr is used.
+ */
 struct LayerTile {
     std::shared_ptr<Tile> floor;
     std::shared_ptr<Tile> block;
 };
 
-class ZLayer : public Entity {
+class ZLayer {
 public: // typedefs {{{
     /**
      * Outer vector: x
      * Inner vector: y
      *
      */
-    using FloorMap = std::vector<std::vector<LayerTile>>;
+    using BlockMap = std::vector<std::vector<LayerTile>>;
 
     enum TileType {
         FLOOR,
         BLOCK
     };
 // }}}
-private:
-    void regenerateVertices();
-    bool dirty = false;
-
-    FloorMap layer;
-
 public:
+    // Should not be written to externally, but fuuuuck making a getter
+    BlockMap layer;
+
     const int zLevel;
     
-    ZLayer(int zLevel, int width, int height);
+    ZLayer(int zLevel, int worldWidth, int worldHeight);
 
-    void render() override;
-
-    void set(std::shared_ptr<Tile>);
 
     friend class WorldGenerator;
 };

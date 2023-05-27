@@ -7,7 +7,6 @@
 #include "genesis/rendering/Model.hpp"
 #include "genesis/rendering/Renderer.hpp"
 #include "genesis/rendering/Texture.hpp"
-#include "genesis/rendering/environment/Chunk.hpp"
 #include "genesis/rendering/gl/Framebuffer.hpp"
 #include "genesis/math/physics/Ray.hpp"
 
@@ -18,7 +17,7 @@
 #include <thread>
 
 namespace genesis {
-World::World() : generator(std::make_shared<perlin::DumbGenerator>()) {
+World::World(int width, int height) : generator(std::make_shared<perlin::DumbGenerator>()), layers(MapLayers(width, height)) {
     World::INSTANCE = this;
 
     registerKey(GLFW_KEY_W, 0, [](int action) {
@@ -64,8 +63,7 @@ void World::render() {
     inst.textureShader->apply();
     inst.texturePack->bind();
 
-    for (auto& chunk : this->chunks)
-        chunk->render();
+    layers.render();
 
     for (auto& entity : this->gameEntities)
         entity->render();

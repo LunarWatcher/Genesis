@@ -80,60 +80,60 @@ int Perlin2DNoiseGenerator::clampPerlin(double perlinInput) {
     return normalizedPerlin;
 }
 
-void Perlin2DNoiseGenerator::generateChunk(genesis::ChunkMap& ref, int chunkX, int chunkY) {
-    constexpr double STEP_DISTANCE = 1.0 / genesis::Constants::Chunks::CHUNK_SIZE;
+//void Perlin2DNoiseGenerator::generateChunk(genesis::ChunkMap& ref, int chunkX, int chunkY) {
+    //constexpr double STEP_DISTANCE = 1.0 / genesis::Constants::Chunks::CHUNK_SIZE;
 
-    auto rawObject = genesis::Context::getInstance().texturePack->getTextureMetadata("genesis:grass").model;
+    //auto rawObject = genesis::Context::getInstance().texturePack->getTextureMetadata("genesis:grass").model;
 
-    for (size_t y = 0; y < genesis::Constants::MAX_OVERWORLD_HEIGHT; ++y) {
-        auto& cLevel = ref[y];
-        cLevel.resize(genesis::Constants::Chunks::CHUNK_SIZE);
+    //for (size_t y = 0; y < genesis::Constants::MAX_OVERWORLD_HEIGHT; ++y) {
+        //auto& cLevel = ref[y];
+        //cLevel.resize(genesis::Constants::Chunks::CHUNK_SIZE);
 
-        for (size_t z = 0; z < genesis::Constants::Chunks::CHUNK_SIZE; ++z) {
-            auto& vec = cLevel.at(z);
-            for (int x = 0; x < genesis::Constants::Chunks::CHUNK_SIZE; ++x) {
-                vec.resize(genesis::Constants::Chunks::CHUNK_SIZE);
-            }
-        }
-    }
+        //for (size_t z = 0; z < genesis::Constants::Chunks::CHUNK_SIZE; ++z) {
+            //auto& vec = cLevel.at(z);
+            //for (int x = 0; x < genesis::Constants::Chunks::CHUNK_SIZE; ++x) {
+                //vec.resize(genesis::Constants::Chunks::CHUNK_SIZE);
+            //}
+        //}
+    //}
 
-    // Coordinates relative to the chunk border: used for coordinate generation and accessing the map
-    int rx = 0, rz = 0;
-    for (double z = chunkY + STEP_DISTANCE; z <= chunkY + 16 * STEP_DISTANCE; z += STEP_DISTANCE) {
-        for (double x = chunkX + STEP_DISTANCE; x <= chunkX + 16 * STEP_DISTANCE; x += STEP_DISTANCE) {
-            //int y = clampPerlin(perlin(x, z));
+    //// Coordinates relative to the chunk border: used for coordinate generation and accessing the map
+    //int rx = 0, rz = 0;
+    //for (double z = chunkY + STEP_DISTANCE; z <= chunkY + 16 * STEP_DISTANCE; z += STEP_DISTANCE) {
+        //for (double x = chunkX + STEP_DISTANCE; x <= chunkX + 16 * STEP_DISTANCE; x += STEP_DISTANCE) {
+            ////int y = clampPerlin(perlin(x, z));
 
-            //rx++;
-        }
-        rx = 0;
-        rz++;
-    }
-}
-// }}}
-// DumbGenerator {{{
-void DumbGenerator::generateChunk(genesis::ChunkMap& ref, int, int) {
-    // resize y to match the chunk size
-    for (int z = -genesis::Constants::MAX_UNDERGROUND_HEIGHT; z <= genesis::Constants::MAX_OVERWORLD_HEIGHT; ++z) {
-        auto& activeLevel = ref[z];
+            ////rx++;
+        //}
+        //rx = 0;
+        //rz++;
+    //}
+//}
+//// }}}
+//// DumbGenerator {{{
+//void DumbGenerator::generateChunk(genesis::ChunkMap& ref, int, int) {
+    //// resize y to match the chunk size
+    //for (int z = -genesis::Constants::MAX_UNDERGROUND_HEIGHT; z <= genesis::Constants::MAX_OVERWORLD_HEIGHT; ++z) {
+        //auto& activeLevel = ref[z];
 
-        activeLevel.resize(genesis::Constants::Chunks::CHUNK_SIZE);
-        for (int y = 0; y < genesis::Constants::Chunks::CHUNK_SIZE; ++y) {
-            // and resize the x coords for a given y
-            activeLevel[y].resize(genesis::Constants::Chunks::CHUNK_SIZE);
+        //activeLevel.resize(genesis::Constants::Chunks::CHUNK_SIZE);
+        //for (int y = 0; y < genesis::Constants::Chunks::CHUNK_SIZE; ++y) {
+            //// and resize the x coords for a given y
+            //activeLevel[y].resize(genesis::Constants::Chunks::CHUNK_SIZE);
 
-            for (int x = 0; x < genesis::Constants::Chunks::CHUNK_SIZE; ++x) {
-                activeLevel[y][x] = nullptr;
-            }
-        }
-    }
-    // "noise"
-    for (int x = 0; x < genesis::Constants::Chunks::CHUNK_SIZE; ++x) {
-        for (int y = 0; y < genesis::Constants::Chunks::CHUNK_SIZE; ++y) {
-            ref.at(genesis::Constants::Chunks::CHUNK_SEA_LEVEL).at(y).at(x) = genesis::Context::getInstance().dataHelper->getTileGenerator("genesis:grass")
-                ->generateTile();
-        }
-    }
-}
+            //for (int x = 0; x < genesis::Constants::Chunks::CHUNK_SIZE; ++x) {
+                //activeLevel[y][x] = nullptr;
+            //}
+        //}
+    //}
+    //// "noise"
+    //for (int x = 0; x < genesis::Constants::Chunks::CHUNK_SIZE; ++x) {
+        //for (int y = 0; y < genesis::Constants::Chunks::CHUNK_SIZE; ++y) {
+            //ref.at(genesis::Constants::Chunks::CHUNK_SEA_LEVEL).at(y).at(x) = genesis::Context::getInstance().dataHelper->getTileGenerator("genesis:grass")
+                //->generateTile();
+        //}
+    //}
+//}
 // }}}
 
 } // namespace perlin

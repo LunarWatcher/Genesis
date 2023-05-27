@@ -15,11 +15,16 @@ TextureAtlas::TextureAtlas(const std::string& sourceFile)
         // The offsets are unnecessarily verbose for readability.
         // I can and probably should hide this in a method, but that's a job for future me
         {0 * 16 + 0, "genesis:grass"},
+        // TODO: make graphics
+        {0 * 16 + 0, "genesis:dirt"},
+        // TODO: generalise. There's more types than just "stone"
         {0 * 16 + 1, "genesis:stone"},
 
         {12 * 16 + 0, "genesis:red_fox"},
 
         {14 * 16 + 0, "genesis:caravan"},
+
+        {15 * 16 + 16, "genesis:air"},
     };
 
     for (auto& [tilePos, tileIdentifier] : tileIDToString) {

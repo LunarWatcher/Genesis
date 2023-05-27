@@ -13,7 +13,7 @@ private:
 public:
 
     static std::shared_ptr<World> newWorld(
-        int xChunks, int yChunks,
+        int width, int height,
         const std::string& civName
     );
     

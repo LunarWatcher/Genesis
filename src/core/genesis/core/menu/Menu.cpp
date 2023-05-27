@@ -60,8 +60,7 @@ bool MenuScene::checkMouseCollision(const glm::vec2& rawCoords, const glm::vec3&
 
             if (entity->ID == BTN_PLAY) {
                 WorldGenerator::newWorld(
-                    3,
-                    3,
+                    32, 32,
                     "The Great Roman Empire"
                 );
             }

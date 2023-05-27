@@ -9,18 +9,25 @@
 namespace genesis {
 
 
-std::shared_ptr<World> WorldGenerator::newWorld(int xChunks, int yChunks, const std::string& civName) {
-    std::shared_ptr<World> world = std::make_shared<World>();
+std::shared_ptr<World> WorldGenerator::newWorld(int width, int height, const std::string& civName) {
+    std::shared_ptr<World> world = std::make_shared<World>(width, height);
     Context::getInstance().renderer->transition(world);
 
     world->civilisationName = civName;
-    
-    for (long long x = -xChunks / 2; x <= xChunks / 2; ++x) {
-        for (long long y = -yChunks / 2; y <= yChunks; ++y) {
-            auto chunk = std::make_shared<Chunk>(x, y);
-            world->chunks.push_back(chunk);
+
+    auto& layers = world->layers;
+    auto& layerMap = layers.layers;
+
+    layerMap.insert({0, ZLayer{0, width, height}});
+    auto& layer = layerMap.at(0);
+    for (int x = 0; x < width; ++x) {
+        for (int y = 0; y < height; ++y) {
+            layer.layer.at(x).at(y).floor
+                = Context::getInstance().dataHelper->getTileGenerator("genesis:grass")->generateTile();
         }
     }
+
+
 
     // Caravan spawning defines the spawn function. I imagine this has to change when world generation
     // becomes complicated, and possibly expands into full world generation with local picks for the
@@ -31,19 +38,14 @@ std::shared_ptr<World> WorldGenerator::newWorld(int xChunks, int yChunks, const 
     // seeing as it's the start site for the colonists.
     // seeing as there currently isn't any world gen, chunk 0 is fine.
     glm::vec3 caravanPos{0, 0, 0};
-    for (auto& chunk : world->chunks) {
-        if (chunk->getX() == 0 && chunk->getY() == 0) {
-            auto targetY = chunk->getTopY(0, 0) + 1;
-            
-            chunk->set(
-                Context::getInstance().dataHelper->getTileGenerator("genesis:caravan")->generateTile(),
-                0, 0,
-                targetY
-            );
-        }
-    }
+    auto targetY = 0;
+
+    layerMap.at(targetY).layer.at(0).at(0).block
+        = Context::getInstance().dataHelper->getTileGenerator("genesis:caravan")->generateTile();
 
     generateCharacters(caravanPos, world, 4);
+
+    layers.regenerateLayerGraphics();
 
     return world;
 }
@@ -51,7 +53,9 @@ std::shared_ptr<World> WorldGenerator::newWorld(int xChunks, int yChunks, const 
 void WorldGenerator::generateCharacters(const glm::vec3& caravanPosition, std::shared_ptr<World> world, int count) {
     auto pos = caravanPosition;
     // TODO: this is why I need a proper layer structure. This fucking sucks ass
-    pos.z += 1;
+    // Future me here: there is now a layer system, but it doesn't fully account for entities.
+    // This is less shit, but still not great
+    pos.z += 0.01;
     for (int i = 0; i < count; ++i) {
         pos.x += 1;
         auto entity = RNGesus::genCreature(

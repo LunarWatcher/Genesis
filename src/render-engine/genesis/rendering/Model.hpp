@@ -93,6 +93,7 @@ public:
     friend class TextEntity;
     friend class Chunk;
     friend class ZLayer;
+    friend class MapLayers;
 };
 
 } // namespace genesis

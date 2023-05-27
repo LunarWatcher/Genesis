@@ -1,7 +1,7 @@
 #pragma once
 
+#include "genesis/core/game/chunks/MapLayers.hpp"
 #include "genesis/core/game/entities/GameCreature.hpp"
-#include "genesis/rendering/environment/Chunk.hpp"
 #include "genesis/rendering/gl/Framebuffer.hpp"
 #include "genesis/world/EntityController.hpp"
 #include "genesis/rendering/flow/Scene.hpp"
@@ -23,12 +23,11 @@ private:
     // Game state
     std::string civilisationName;
 
-    // TODO: replace with a different container. Vectors aren't really a good idea for this.
-    std::vector<std::shared_ptr<Chunk>> chunks;
+    MapLayers layers;
     std::vector<std::shared_ptr<GameCreature>> gameEntities;
 
 public:
-    World();
+    World(int width, int height);
 
     void render() override;
     void tick() override;

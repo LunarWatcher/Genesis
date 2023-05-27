@@ -1,6 +1,5 @@
 #pragma once
 
-#include "genesis/rendering/environment/Chunk.hpp"
 #include "glm/ext/vector_float2.hpp"
 #include <math.h>
 #include <random>
@@ -25,7 +24,7 @@ public:
 
     virtual ~NoiseGenerator() = default;
 
-    virtual void generateChunk(genesis::ChunkMap& ref, int chunkX, int chunkY) = 0;
+    //virtual void generateChunk(genesis::ChunkMap& ref, int chunkX, int chunkY) = 0;
 
     long getSeed() {
         return seed;
@@ -45,7 +44,7 @@ public:
 class DumbGenerator : public NoiseGenerator {
 public:
     DumbGenerator() : NoiseGenerator(0) {}
-    void generateChunk(genesis::ChunkMap& ref, int chunkX, int chunkY) override;
+    //void generateChunk(genesis::ChunkMap& ref, int chunkX, int chunkY) override;
 };
 
 class Perlin2DNoiseGenerator : public NoiseGenerator {
@@ -60,7 +59,7 @@ public:
     virtual double perlin(double x, double y);
 
     virtual int clampPerlin(double perlinInput);
-    virtual void generateChunk(genesis::ChunkMap& ref, int chunkX, int chunkY) override;
+    //virtual void generateChunk(genesis::ChunkMap& ref, int chunkX, int chunkY) override;
 };
 
 } // namespace perlin
