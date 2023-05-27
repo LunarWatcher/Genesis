@@ -24,13 +24,59 @@
 // Used for debugging OpenGL API calls
 // Super useful for backtracing invalid calls
 inline void GLAPIENTRY MessageCallback(
-    GLenum, GLenum type, GLuint, GLenum severity, GLsizei, const GLchar* message, const void*) {
+    GLenum, GLenum type, GLuint id, GLenum severity, GLsizei, const GLchar* message, const void*) {
     if (std::string(message).find("will use VIDEO memory as the source") != std::string::npos) {
         // Silence verbose video memory warnings
         return;
     }
-    std::cout << "GL CALLBACK: " << std::hex << (type == GL_DEBUG_TYPE_ERROR ? "**GL ERROR**" : "") << " type = 0x"
-              << type << ", severity = 0x" << severity << ", message = " << message << std::endl;
+    switch (id) {
+    // Useless or indecipherable messages
+    case 131218:
+        // Nvidia's "shader will be recompiled based on GL state": only appears once,
+        // no resources on what it means or how to fix it. Should be fine to ignore.
+        // real shame that this is the best answer though: https://stackoverflow.com/a/13201020/6296561
+        // There's allegedly a state change triggering it, but like, where??
+        // Fuck knows, but it's fine. It's a one-time change, won't have much of an impact
+
+        break;
+    default:
+        std::cout << "GL CALLBACK: ";
+        switch(type) {
+        case GL_DEBUG_TYPE_ERROR:
+            std::cout << "ERROR";
+            break;
+        case GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR:
+            std::cout << "DEPRECATED_BEHAVIOR";
+            break;
+        case GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR:
+            std::cout << "UNDEFINED_BEHAVIOR";
+            break;
+        case GL_DEBUG_TYPE_PORTABILITY:
+            std::cout << "PORTABILITY";
+            break;
+        case GL_DEBUG_TYPE_PERFORMANCE:
+            std::cout << "PERFORMANCE";
+            break;
+        case GL_DEBUG_TYPE_OTHER:
+            std::cout << "OTHER";
+            break;
+        }
+        std::cout << " [";
+        switch (severity){
+        case GL_DEBUG_SEVERITY_LOW:
+            std::cout << "LOW";
+            break;
+        case GL_DEBUG_SEVERITY_MEDIUM:
+            std::cout << "MEDIUM";
+            break;
+        case GL_DEBUG_SEVERITY_HIGH:
+            std::cout << "HIGH";
+            break;
+        }
+        std::cout << "] [ID=" << id << "] message = " << message << std::endl;
+        break;
+    }
+
 }
 #endif
 
