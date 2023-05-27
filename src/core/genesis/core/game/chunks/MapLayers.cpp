@@ -66,6 +66,8 @@ void MapLayers::initModel() {
 }
 
 void MapLayers::regenerateLayerGraphics() {
+    glBindVertexArray(model->vaoID);
+    
     auto& layer = layers.at(this->layer);
     auto& textures = Context::getInstance().texturePack;
     auto& air = textures->getTextureMetadata("genesis:air").uvCoordinates;
@@ -110,6 +112,7 @@ void MapLayers::regenerateLayerGraphics() {
     }
 
     model->createOrSubdataVBO(1, 2, uvs);
+    glBindVertexArray(0);
 }
 
 }
