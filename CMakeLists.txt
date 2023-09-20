@@ -12,6 +12,10 @@ endif()
 
 set (CMAKE_CXX_STANDARD 20)
 
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+
 find_package(Git)
 if (EXISTS ${GIT_EXECUTABLE})
     message(STATUS "Checking if Git submodules are initialised...")
@@ -42,12 +46,11 @@ if (NOT WIN32)
 
 int main() {
     std::atomic<std::string_view> x;
-    x.store(\"gjfdio\");
+    x.store(\"I like trains\");
     x.load();
 }
     " HAS_BUILTIN_ATOMIC)
     if (NOT HAS_BUILTIN_ATOMIC)
-        message (STATUS "Explicitly linking -latomic")
         set (CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -latomic")
     endif()
 else()

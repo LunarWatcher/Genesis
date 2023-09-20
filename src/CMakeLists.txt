@@ -8,12 +8,11 @@ add_subdirectory(render-engine)
 # Meta libraries {{{
 add_library(genesis-deps INTERFACE)
 target_link_libraries(genesis-deps INTERFACE stc spdlog::spdlog glm::glm nlohmann_json::nlohmann_json libglew_shared)
-target_include_directories(genesis-deps INTERFACE ${CMAKE_SOURCE_DIR}/stb/ ${CONAN_INCLUDE_DIRS})
+target_include_directories(genesis-deps INTERFACE ${CMAKE_SOURCE_DIR}/stb/)
 
 # }}}
 
 add_library(genesis-bundle INTERFACE)
 target_link_libraries(genesis-bundle INTERFACE genesis-core)
-target_link_libraries(genesis-bundle INTERFACE ${CONAN_LIBS})
 
 target_link_libraries(genesis genesis-bundle)

@@ -83,7 +83,6 @@ target_link_libraries(genesis-core PUBLIC genesis-deps
 )
 
 # Executable dependencies {{{
-target_include_directories(genesis-core PUBLIC ${CONAN_INCLUDE_DIRS})
 target_include_directories(genesis-core PUBLIC ./)
 target_include_directories(genesis-core PUBLIC ../stb/)
 

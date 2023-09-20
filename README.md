@@ -7,7 +7,6 @@ Colony sim, because why not?
 ### Compile requirements
 
 * A compiler that supports C++20
-* Python 3 and Conan
 
 ### Runtime requirements
 
