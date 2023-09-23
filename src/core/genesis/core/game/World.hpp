@@ -1,5 +1,6 @@
 #pragma once
 
+
 #include "genesis/core/game/chunks/MapLayers.hpp"
 #include "genesis/core/game/entities/GameCreature.hpp"
 #include "genesis/rendering/gl/Framebuffer.hpp"
@@ -8,6 +9,8 @@
 
 #include "genesis/math/Perlin.hpp"
 #include <string>
+
+#include "GLFW/glfw3.h"
 
 namespace genesis {
 
@@ -26,6 +29,12 @@ private:
     MapLayers layers;
     std::vector<std::shared_ptr<GameCreature>> gameEntities;
 
+    static double getScrollAcceleratorCoefficient(int mods) {
+        if (mods &= GLFW_MOD_SHIFT) {
+            return 3.0;
+        }
+        return 1.0;
+    }
 public:
     World(int width, int height);
 

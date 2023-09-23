@@ -82,15 +82,30 @@ void Renderer::initGame() {
     glfwSetWindowUserPointer(window, this);
     // Input
     glfwSetKeyCallback(window, [](GLFWwindow* win, int key, int, int action, int mods) {
-        if (action == GLFW_REPEAT) return;
         Renderer* r = (Renderer*) glfwGetWindowUserPointer(win);
-        r->keyStates[InputProcessor::createMapKey(key, mods)] = action;
+        
+        if (action == GLFW_REPEAT) {
+            auto& keyState = r->keyStates[InputProcessor::createMapKey(key)];
+            if (keyState.mods != mods) {
+                keyState.mods = mods;
+            }
+            return;
+        }
+
+        r->keyStates[InputProcessor::createMapKey(key)] = {action, mods};
     });
     glfwSetMouseButtonCallback(window, [](GLFWwindow* win, int button, int action, int mods) {
-        if (action == GLFW_REPEAT) return;
         Renderer* r = (Renderer*) glfwGetWindowUserPointer(win);
 
-        r->keyStates[InputProcessor::createMapKey(button, mods)] = action;
+        if (action == GLFW_REPEAT) {
+            auto& keyState = r->keyStates[InputProcessor::createMapKey(button)];
+            if (keyState.mods != mods) {
+                keyState.mods = mods;
+            }
+            return;
+        }
+
+        r->keyStates[InputProcessor::createMapKey(button)] = {action, mods};
     });
     glfwSetCursorPosCallback(window, [](GLFWwindow* win, double x, double y) {
         Renderer* r = (Renderer*) glfwGetWindowUserPointer(win);
@@ -109,8 +124,8 @@ void Renderer::tick() {
     }
 
     for (auto& [k, v] : keyStates) {
-        if (v == GLFW_RELEASE) {
-            v = -1;
+        if (v.action == GLFW_RELEASE) {
+            v.action = -1;
         }
     }
 }

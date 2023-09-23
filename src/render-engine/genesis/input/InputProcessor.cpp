@@ -9,26 +9,26 @@ InputProcessor::InputProcessor() {
 
 }
 
-void InputProcessor::updateInput(const std::map<std::string, int>& maps) {
-    for (auto& [k, v] : maps) {
-        if (v < 0) continue;
-        if (registeredKeys.contains(k)) {
-            registeredKeys[k](v);
+void InputProcessor::updateInput(const std::map<std::string, KeyPressInfo>& maps) {
+    for (auto& [key, data] : maps) {
+        if (data.action < 0) continue;
+        if (registeredKeys.contains(key)) {
+            registeredKeys[key](data);
         }
     }
 }
 
-void InputProcessor::registerKey(int key, int mods, std::function<bool(int action)> callback) {
-    std::string keyID = createMapKey(key, mods);
+void InputProcessor::registerKey(int key, std::function<bool(const KeyPressInfo&)> callback) {
+    std::string keyID = createMapKey(key);
     if (registeredKeys.contains(keyID)) {
-        throw std::runtime_error("Keybind conflict for key " + std::to_string(key) + "[" + std::to_string(mods) + "]");
+        throw std::runtime_error("Keybind conflict for key " + std::to_string(key));
     }
 
     registeredKeys[keyID] = callback;
 }
 
-void InputProcessor::deregister(int key, int mods) {
-    std::string keyID = createMapKey(key, mods);
+void InputProcessor::deregister(int key) {
+    std::string keyID = createMapKey(key);
     if (auto it = registeredKeys.find(keyID); it != registeredKeys.end()) {
         registeredKeys.erase(it);
     }

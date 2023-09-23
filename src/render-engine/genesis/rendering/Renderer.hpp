@@ -121,7 +121,7 @@ protected:
     int activeScene = 0;
     // }}}
     /* Input state management {{{*/
-    std::map<std::string, int> keyStates;
+    std::map<std::string, KeyPressInfo> keyStates;
     /*}}}*/
 
     void initGame();

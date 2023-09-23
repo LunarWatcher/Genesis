@@ -20,29 +20,36 @@ namespace genesis {
 World::World(int width, int height) : generator(std::make_shared<perlin::DumbGenerator>()), layers(MapLayers(width, height)) {
     World::INSTANCE = this;
 
-    registerKey(GLFW_KEY_W, 0, [](int action) {
-        if (action != GLFW_PRESS) return false;
-        Context::getInstance().camera->incrementPosition(0, 10.0 * Context::getInstance().renderer->getDelta());
-        return true;
-    });
-    registerKey(GLFW_KEY_A, 0, [](int action) {
-        if (action != GLFW_PRESS) return false;
-        Context::getInstance().camera->incrementPosition(-10.0 * Context::getInstance().renderer->getDelta(), 0);
-        return true;
-    });
-    registerKey(GLFW_KEY_S, 0, [](int action) {
-        if (action != GLFW_PRESS) return false;
+    registerKey(GLFW_KEY_W, [](const KeyPressInfo& data) {
+        if (data.action != GLFW_PRESS) return false;
         Context::getInstance().camera->incrementPosition(
             0,
-            -10.0 * Context::getInstance().renderer->getDelta()
+            10.0 * Context::getInstance().renderer->getDelta() * getScrollAcceleratorCoefficient(data.mods)
         );
         return true;
     });
-    registerKey(GLFW_KEY_D, 0, [](int action) {
-        if (action != GLFW_PRESS) return false;
+    registerKey(GLFW_KEY_A, [](const KeyPressInfo& data) {
+        if (data.action != GLFW_PRESS) return false;
         Context::getInstance().camera->incrementPosition(
-            10.0 * Context::getInstance().renderer->getDelta(), 
-            0);
+            -10.0 * Context::getInstance().renderer->getDelta() * getScrollAcceleratorCoefficient(data.mods), 
+            0
+        );
+        return true;
+    });
+    registerKey(GLFW_KEY_S, [](const KeyPressInfo& data) {
+        if (data.action != GLFW_PRESS) return false;
+        Context::getInstance().camera->incrementPosition(
+            0,
+            -10.0 * Context::getInstance().renderer->getDelta() * getScrollAcceleratorCoefficient(data.mods)
+        );
+        return true;
+    });
+    registerKey(GLFW_KEY_D, [](const KeyPressInfo& data) {
+        if (data.action != GLFW_PRESS) return false;
+        Context::getInstance().camera->incrementPosition(
+            10.0 * Context::getInstance().renderer->getDelta() * getScrollAcceleratorCoefficient(data.mods), 
+            0
+        );
         return true;
     });
     //frame = std::make_shared<Framebuffer>(40, 40, Settings::instance->getInt("width") - 80, Settings::instance->getInt("height") - 80);

@@ -1,5 +1,6 @@
 #include "Menu.hpp"
 #include "genesis/Context.hpp"
+#include "genesis/input/InputProcessor.hpp"
 #include "genesis/rendering/Renderer.hpp"
 #include "genesis/rendering/ui/Text.hpp"
 #include "genesis/math/physics/Ray.hpp"
@@ -14,20 +15,18 @@ MenuScene::MenuScene() : Scene(true) {
         std::make_shared<TextEntity>("Play", 200, 200, 1, glm::vec4{ 1.0, 0.0, 1.0, 1.0 }, BTN_PLAY)
     );
 
-    registerKey(GLFW_MOUSE_BUTTON_1, 0, [](int action) {
-        // TODO: action appears to be borked
-        if (action != GLFW_PRESS) {
+    registerKey(GLFW_MOUSE_BUTTON_1, [](const KeyPressInfo& data) {
+
+        if (data.action != GLFW_RELEASE) {
             return false;
         }
         double x = NAN, y = NAN;
         glfwGetCursorPos(Context::getInstance().renderer->getWindow(), &x, &y);
 
-        // I suppose that in a real system, we'd need to detect release?
-        // And then check if there's dragging or some shit like that
-        // iDunno
-
-        return Ray::traceClick({x, Settings::instance->getInt("height") - y},
-            Ray::normalizeScreenCoords(x, y));
+        return Ray::traceClick(
+            {x, Settings::instance->getInt("height") - y},
+            Ray::normalizeScreenCoords(x, y)
+        );
 
     });
 }
