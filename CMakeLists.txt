@@ -65,6 +65,8 @@ set(GLFW_BUILD_DOCS OFF CACHE STRING "" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE STRING "" FORCE)
 set(GLFW_BUILD_EXAMPLES OFF CACHE STRING "" FORCE)
 
+set(STB_TAG "5736b15f7ea0ffb08dd38af21067c314d6a3aae9" CACHE STRING "" FORCE)
+
 include(FetchContent)
 FetchContent_Declare(fmt GIT_REPOSITORY https://github.com/fmtlib/fmt.git
     GIT_TAG 9.1.0)
@@ -81,6 +83,9 @@ FetchContent_Declare(nlohmann
     GIT_REPOSITORY https://github.com/nlohmann/json
     GIT_TAG v3.11.2)
 FetchContent_MakeAvailable(nlohmann)
+
+FetchContent_Declare(stb GIT_REPOSITORY https://github.com/LunarWatcher/stb-cmake)
+FetchContent_MakeAvailable(stb)
 
 FetchContent_Declare(openal
     GIT_REPOSITORY https://github.com/kcat/openal-soft
