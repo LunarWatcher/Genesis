@@ -29,6 +29,18 @@ private:
     MapLayers layers;
     std::vector<std::shared_ptr<GameCreature>> gameEntities;
 
+    /**
+     * Utility method shared by all map movement methods. Returns
+     * a number that's multiplied with the map speed when shift is pressed,
+     * to make the map movement faster.
+     *
+     * Returns 1 if shift isn't pressed.
+     *
+     * This does have some known bugs, but those are input processing-related.
+     * Particularly, shift doesn't apply to existing keys if there's more
+     * than one key pressed, until it's re-pressed, which is a consequence
+     * of new modifiers not applying to already-pressed keys; only the last one.
+     */
     static double getScrollAcceleratorCoefficient(int mods) {
         if (mods &= GLFW_MOD_SHIFT) {
             return 3.0;

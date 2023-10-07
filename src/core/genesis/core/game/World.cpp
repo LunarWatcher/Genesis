@@ -89,12 +89,12 @@ std::pair<std::pair<int, int>, std::pair<int, int>> World::convertToChunkSpace(i
     return {
         {
             std::floor(tileX / Constants::Chunks::CHUNK_SIZE),
-                std::floor(tileZ / Constants::Chunks::CHUNK_SIZE),
+            std::floor(tileZ / Constants::Chunks::CHUNK_SIZE),
         },
-            {
-                tileX % Constants::Chunks::CHUNK_SIZE,
-                tileZ % Constants::Chunks::CHUNK_SIZE
-            }
+        {
+            tileX % Constants::Chunks::CHUNK_SIZE,
+            tileZ % Constants::Chunks::CHUNK_SIZE
+        }
     };
 }
 

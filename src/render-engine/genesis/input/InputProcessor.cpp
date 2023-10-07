@@ -9,7 +9,10 @@ InputProcessor::InputProcessor() {
 
 }
 
-void InputProcessor::updateInput(const std::map<std::string, KeyPressInfo>& maps) {
+void InputProcessor::updateInput(const std::map<int, KeyPressInfo>& maps) {
+    if (disabled) {
+        return;
+    }
     for (auto& [key, data] : maps) {
         if (data.action < 0) continue;
         if (registeredKeys.contains(key)) {
@@ -19,17 +22,15 @@ void InputProcessor::updateInput(const std::map<std::string, KeyPressInfo>& maps
 }
 
 void InputProcessor::registerKey(int key, std::function<bool(const KeyPressInfo&)> callback) {
-    std::string keyID = createMapKey(key);
-    if (registeredKeys.contains(keyID)) {
+    if (registeredKeys.contains(key)) {
         throw std::runtime_error("Keybind conflict for key " + std::to_string(key));
     }
 
-    registeredKeys[keyID] = callback;
+    registeredKeys[key] = callback;
 }
 
 void InputProcessor::deregister(int key) {
-    std::string keyID = createMapKey(key);
-    if (auto it = registeredKeys.find(keyID); it != registeredKeys.end()) {
+    if (auto it = registeredKeys.find(key); it != registeredKeys.end()) {
         registeredKeys.erase(it);
     }
 }

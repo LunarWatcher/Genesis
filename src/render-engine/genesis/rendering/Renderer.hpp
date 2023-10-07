@@ -114,6 +114,7 @@ protected:
     std::vector<std::shared_ptr<Scene>> activeSceneStack;
 
     double delta;
+    int frames;
 
     //FT_Library fontLibrary;
 
@@ -121,7 +122,7 @@ protected:
     int activeScene = 0;
     // }}}
     /* Input state management {{{*/
-    std::map<std::string, KeyPressInfo> keyStates;
+    std::map<int, KeyPressInfo> keyStates;
     /*}}}*/
 
     void initGame();
@@ -141,6 +142,10 @@ public:
 
     double getDelta() {
         return delta;
+    }
+
+    int getFps() {
+        return frames;
     }
 
     auto getActiveScene() {

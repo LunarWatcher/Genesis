@@ -1,5 +1,6 @@
 #pragma once
 
+#include <optional>
 #include <string>
 #include <map>
 #include <unordered_map>
@@ -13,28 +14,25 @@ struct KeyPressInfo {
 };
 
 class InputProcessor {
+public:
+    using KeyCallback = std::function<bool(const KeyPressInfo& data)>;
+    using CharCallback = std::function<bool(int character)>;
 private:
     bool disabled = false;
-    bool input = false;
 public:
-    std::unordered_map<std::string, std::function<bool(const KeyPressInfo& data)> /* callback */> registeredKeys; 
+    std::unordered_map<int,  KeyCallback> registeredKeys; 
 
     InputProcessor();
     virtual ~InputProcessor() = default;
 
-    virtual void updateInput(const std::map<std::string, KeyPressInfo>& maps);
+    virtual void updateInput(const std::map<int, KeyPressInfo>& maps);
 
-    void registerKey(int key, std::function<bool(const KeyPressInfo&)> callback);
+    void registerKey(int key, KeyCallback callback);
     void deregister(int key);
 
     /* Event receivers {{{ */
     virtual bool onMouseMoved(double /* x */, double /* y */) { return false; }
     /* }}} */
-
-    static std::string createMapKey(int scanCode) {
-        return std::to_string(scanCode);
-    }
 };
-
 
 }
