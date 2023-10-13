@@ -7,7 +7,11 @@ add_subdirectory(render-engine)
 
 # Meta libraries {{{
 add_library(genesis-deps INTERFACE)
-target_link_libraries(genesis-deps INTERFACE stc spdlog::spdlog glm::glm nlohmann_json::nlohmann_json libglew_shared stb::stb)
+target_link_libraries(
+    genesis-deps 
+INTERFACE 
+    stc spdlog::spdlog glm::glm nlohmann_json::nlohmann_json libglew_shared stb::stb
+)
 
 # }}}
 
