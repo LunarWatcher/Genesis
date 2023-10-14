@@ -13,11 +13,16 @@ jobs:
     runs-on: ${{matrix.os}}
     steps:
       - uses: actions/checkout@main
+      - name: Install deps (Ubuntu)
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          sudo apt instasll libgl1-mesa-glx
       - name: Run build
         run: |
           mkdir build && cd build
           cmake ..
           cmake --build .
+
       - name: Run test
         run: |
           cd build
