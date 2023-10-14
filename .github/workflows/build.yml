@@ -13,12 +13,12 @@ jobs:
     runs-on: ${{matrix.os}}
     steps:
       - uses: actions/checkout@main
-      - uses: Run build
+      - name: Run build
         run: |
           mkdir build && cd build
           cmake ..
           cmake --build .
-      - uses: Run test
+      - name: Run test
         run: |
           cd build
           cmake --build . --target test
