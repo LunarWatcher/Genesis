@@ -26,9 +26,5 @@ static inline constexpr auto GROUP_RANDOM_STARTIDX = 100;
 
 using RelationMap = std::map<std::pair<groupid_t, groupid_t>, CreatureRelations>;
 
-struct AIClass {
-    int groupId;
-    CreatureRelations colonyRelation;
-};
 
 }
