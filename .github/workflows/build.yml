@@ -16,7 +16,7 @@ jobs:
       - name: Install deps (Ubuntu)
         if: matrix.os == 'ubuntu-latest'
         run: |
-          sudo apt install -y libgl1-mesa-glx mesa-common-dev libgl1-mesa-dev
+          sudo apt install -y libgl1-mesa-glx mesa-common-dev libgl1-mesa-dev xorg-dev 
       - name: Print environment
         run: |
           cmake --version
