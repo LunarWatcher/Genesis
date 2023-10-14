@@ -18,6 +18,8 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 set (CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DAPI_DEBUG")
 
+add_library(genesis-deps INTERFACE)
+
 if (NOT WIN32)
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pedantic -Wall -Wextra -Wno-c++11-narrowing")
     set (CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g -O0 -DGENESIS_DEBUG")
@@ -41,7 +43,8 @@ int main() {
 }
     " HAS_BUILTIN_ATOMIC)
     if (NOT HAS_BUILTIN_ATOMIC)
-        set (CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -latomic")
+        set(CMAKE_REQUIRED_LIBRARIES atomic)
+        target_link_libraries(genesis-deps INTERFACE atomic)
     endif()
 else()
     # As of CMake 3.15, no manual MSVC framework options have to be set
