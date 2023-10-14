@@ -73,7 +73,7 @@ set (SOURCE_FILES
     # TODO: place sanely
     genesis/core/game/chunks/MapLayers.cpp
     # AI {{{
-    genesis/core/game/ai/MapAI.cpp
+    genesis/core/game/ai/CreatureController.cpp
     # }}}
 )
 

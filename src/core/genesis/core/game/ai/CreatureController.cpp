@@ -40,7 +40,7 @@ void CreatureController::render() {
 
 void CreatureController::tick() {
     for (auto& [_, creatureGroup] : groups) {
-        creatureGroup.render();
+        creatureGroup.tick();
     }
 }
 // }}}

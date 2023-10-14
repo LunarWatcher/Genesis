@@ -39,7 +39,7 @@ public:
  */
 class CreatureController {
 private:
-    static std::atomic<groupid_t> CURR_RANDOM_GROUP_ID;
+    static inline std::atomic<groupid_t> CURR_RANDOM_GROUP_ID{GROUP_RANDOM_STARTIDX};
     RelationMap creatureRelations;
 
     groupid_t provisionGroupId();
