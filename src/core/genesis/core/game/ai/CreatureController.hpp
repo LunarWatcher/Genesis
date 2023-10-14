@@ -34,6 +34,8 @@ private:
     groupid_t provisionGroupId();
 public:
     CreatureController();
+
+    CreatureGroup& getCreatureGroup(groupid_t id);
 };
 
 }
