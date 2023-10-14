@@ -1,5 +1,6 @@
 #include "WorldGenerator.hpp"
 
+#include "genesis/core/game/ai/AIStructs.hpp"
 #include "genesis/core/game/generation/RNGesus.hpp"
 #include "genesis/Context.hpp"
 
@@ -65,7 +66,7 @@ void WorldGenerator::generateCharacters(const glm::vec3& caravanPosition, std::s
             Context::getInstance().dataLoader.creatures.at("canine")
         );
         entity->setPosition(pos);
-        world->gameEntities.push_back(entity);
+        world->creatures.groups[GROUP_COLONISTS].pushEntity(entity);
     }
 }
 

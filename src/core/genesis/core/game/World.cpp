@@ -57,8 +57,7 @@ World::World(int width, int height) : generator(std::make_shared<perlin::DumbGen
 }
 
 void World::tick() {
-    for (auto& entity : this->gameEntities)
-        entity->tick();
+    this->creatures.tick();
 }
 
 void World::render() {
@@ -72,8 +71,7 @@ void World::render() {
 
     layers.render();
 
-    for (auto& entity : this->gameEntities)
-        entity->render();
+    this->creatures.render();
 
     inst.texturePack->unbind();
     inst.textureShader->stop();

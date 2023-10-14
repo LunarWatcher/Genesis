@@ -1,6 +1,7 @@
 #pragma once
 
 
+#include "genesis/core/game/ai/CreatureController.hpp"
 #include "genesis/core/game/chunks/MapLayers.hpp"
 #include "genesis/core/game/entities/GameCreature.hpp"
 #include "genesis/rendering/gl/Framebuffer.hpp"
@@ -27,7 +28,7 @@ private:
     std::string civilisationName;
 
     MapLayers layers;
-    std::vector<std::shared_ptr<GameCreature>> gameEntities;
+    //std::vector<std::shared_ptr<GameCreature>> gameEntities;
 
     /**
      * Utility method shared by all map movement methods. Returns
@@ -48,6 +49,8 @@ private:
         return 1.0;
     }
 public:
+    CreatureController creatures;
+
     World(int width, int height);
 
     void render() override;
