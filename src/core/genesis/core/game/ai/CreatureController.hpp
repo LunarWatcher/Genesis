@@ -4,6 +4,7 @@
 #include <mutex>
 #include <string>
 #include <vector>
+#include <atomic>
 
 #include "genesis/core/game/ai/AIStructs.hpp"
 #include "genesis/core/game/entities/GameCreature.hpp"
