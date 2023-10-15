@@ -6,12 +6,14 @@
 #include <vector>
 #include <atomic>
 
+#include "genesis/core/game/ai/AIEngine.hpp"
 #include "genesis/core/game/ai/AIStructs.hpp"
 #include "genesis/core/game/entities/GameCreature.hpp"
 #include "genesis/rendering/Entity.hpp"
 
 namespace genesis {
 
+class World;
 class CreatureGroup {
 private:
     // TODO: add entity IDs and convert to a map
@@ -26,6 +28,7 @@ public:
     void tick();
 
     void pushEntity(std::shared_ptr<GameCreature> creature);
+    auto& getEntities() { return entities; }
     
 };
 
@@ -44,13 +47,19 @@ private:
     RelationMap creatureRelations;
 
     groupid_t provisionGroupId();
+    AIEngine aiEngine;
 public:
-    std::map<groupid_t, CreatureGroup> groups;
+    /**
+     * Represents colony entities. These are part of the actively rendered colony, and
+     * are therefore use the OpenGL-connected entities.
+     */
+    std::map<groupid_t, CreatureGroup> activeColonyEntities;
 
     CreatureController();
 
     void render();
-    void tick();
+    void tick(World& world);
+
 };
 
 }

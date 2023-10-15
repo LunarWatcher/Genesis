@@ -19,8 +19,6 @@ class Chunk;
 
 class World : public Scene {
 private:
-    static inline World* INSTANCE = nullptr;
-
     std::shared_ptr<perlin::NoiseGenerator> generator;
     //std::shared_ptr<Framebuffer> frame;
 

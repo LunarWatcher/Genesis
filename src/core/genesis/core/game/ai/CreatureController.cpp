@@ -1,4 +1,5 @@
 #include "CreatureController.hpp"
+#include "genesis/core/game/World.hpp"
 #include "genesis/core/game/ai/CreatureController.hpp"
 
 namespace genesis {
@@ -33,13 +34,14 @@ groupid_t CreatureController::provisionGroupId() {
 }
 
 void CreatureController::render() {
-    for (auto& [_, creatureGroup] : groups) {
+    for (auto& [_, creatureGroup] : activeColonyEntities) {
         creatureGroup.render();
     }
 }
 
-void CreatureController::tick() {
-    for (auto& [_, creatureGroup] : groups) {
+void CreatureController::tick(World& world) {
+    aiEngine.tick(*this, world);
+    for (auto& [_, creatureGroup] : activeColonyEntities) {
         creatureGroup.tick();
     }
 }

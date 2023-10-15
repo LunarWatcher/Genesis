@@ -74,6 +74,7 @@ set (SOURCE_FILES
     genesis/core/game/chunks/MapLayers.cpp
     # AI {{{
     genesis/core/game/ai/CreatureController.cpp
+    genesis/core/game/ai/AIEngine.cpp
     # }}}
 )
 
