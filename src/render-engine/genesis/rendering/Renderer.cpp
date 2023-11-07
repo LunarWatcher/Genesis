@@ -2,9 +2,9 @@
 
 #include "GLFW/glfw3.h"
 
+#include "genesis/conf/Settings.hpp"
 #include "genesis/rendering/Shader.hpp"
 #include "genesis/rendering/Texture.hpp"
-#include "genesis/conf/Settings.hpp"
 
 #include <chrono>
 #include <codecvt>
@@ -33,12 +33,10 @@ Renderer::Renderer() {
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_SAMPLES, 4);
 
-
-    this->window = glfwCreateWindow(Settings::instance->getInt("width"),
-        Settings::instance->getInt("height"),
-        "Genesis",
-        nullptr,
-        nullptr);
+    this->window = glfwCreateWindow(
+        Settings::instance->getInt("width"), Settings::instance->getInt("height"), "Genesis",
+        nullptr, nullptr
+    );
 
     if (!window) {
         glfwTerminate();
@@ -66,10 +64,9 @@ Renderer::Renderer() {
 #endif
 
     glEnable(GL_DEPTH_TEST);
-    //glEnable(GL_CULL_FACE);
+    // glEnable(GL_CULL_FACE);
 
     initGame();
-
 
     logger->info("Renderer initialised");
 }
@@ -78,7 +75,6 @@ void Renderer::initGame() {
     // TODO: rename function
     using namespace std::placeholders;
 
-
     glfwSetWindowUserPointer(window, this);
     glfwSetCharCallback(window, [](GLFWwindow* /*win*/, unsigned int /*codepoint*/) {
 
@@ -86,8 +82,9 @@ void Renderer::initGame() {
     // Input
     glfwSetKeyCallback(window, [](GLFWwindow* win, int key, int, int action, int mods) {
         Renderer* r = (Renderer*) glfwGetWindowUserPointer(win);
-        
+
         if (action == GLFW_REPEAT) {
+
             auto& keyState = r->keyStates[key];
             if (keyState.mods != mods) {
                 keyState.mods = mods;
@@ -137,7 +134,6 @@ void Renderer::render() {
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glClearColor(0.529, 0.8078, 0.922, 1);
-
 
     for (auto& scene : activeSceneStack) {
         if (scene == nullptr) {
@@ -191,7 +187,6 @@ void Renderer::transition(const std::shared_ptr<Scene>& scene) {
     }
     activeSceneStack.clear();
     activeSceneStack.push_back(scene);
-
 }
 
 void Renderer::add(const std::shared_ptr<Scene>& scene) {
@@ -203,7 +198,7 @@ void Renderer::add(const std::shared_ptr<Scene>& scene) {
 
 void Renderer::pop(const std::shared_ptr<Scene>& scene) {
     if (auto sc = std::find(activeSceneStack.begin(), activeSceneStack.end(), scene);
-            sc != activeSceneStack.end()) {
+        sc != activeSceneStack.end()) {
         activeSceneStack.erase(sc);
         return;
     }
