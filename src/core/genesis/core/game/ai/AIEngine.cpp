@@ -3,6 +3,7 @@
 #include "CreatureController.hpp"
 #include "genesis/Context.hpp"
 #include "genesis/core/game/World.hpp"
+#include "genesis/core/game/generation/RNGesus.hpp"
 
 namespace genesis {
 
@@ -12,7 +13,12 @@ void AIEngine::simulateColony(CreatureController& cc, World& world) {
     for (auto& [groupId, group] : entities) {
         if (groupId == 0) {
             for (auto& entity : group.getEntities()) {
-                entity->getPosition().x += 1;
+                auto newPosition = entity->getPosition();
+                newPosition.x += util::randInt(-1, 1);
+                newPosition.y += util::randInt(-1, 1);
+                if (world.layers.canMove(entity->getPosition(), newPosition)) {
+                    entity->setPosition(newPosition);
+                }
             }
         }
     }

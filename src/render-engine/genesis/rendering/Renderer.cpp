@@ -149,7 +149,7 @@ void Renderer::render() {
 }
 
 void Renderer::run() {
-    auto targetTime = std::chrono::duration<double, std::milli>(1000.0 / 120.0);
+    //auto targetTime = std::chrono::duration<double, std::milli>(1000.0 / 120.0);
 
     auto lastTime = std::chrono::high_resolution_clock::now();
     auto counter = lastTime;
@@ -162,10 +162,10 @@ void Renderer::run() {
 
         auto end = std::chrono::high_resolution_clock::now();
         lastTime = now;
-        auto sleepFor = targetTime - (now - end);
-        if (sleepFor > std::chrono::milliseconds(0)) {
-            std::this_thread::sleep_for(sleepFor);
-        }
+        //auto sleepFor = targetTime - (now - end);
+        //if (sleepFor > std::chrono::milliseconds(0)) {
+            //std::this_thread::sleep_for(sleepFor);
+        //}
         ++frames;
         if (std::chrono::high_resolution_clock::now() - counter > std::chrono::seconds(1)) {
             counter = std::chrono::high_resolution_clock::now();

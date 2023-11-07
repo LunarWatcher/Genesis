@@ -44,6 +44,13 @@ extern std::shared_ptr<GameCreature> genCreature(
     std::shared_ptr<SpeciesInfo> overrideSpecies
 );
 
+}
+
+namespace util {
+// I'm sure this will backfire wonderfully some day, and I look forward to future me roasting me for being stupid :)
+using namespace RNGesus;
+
+extern int randInt(int min, int max);
 
 }
 

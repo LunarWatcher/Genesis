@@ -30,7 +30,6 @@ set (SOURCE_FILES
 
     # Environment {{{
     genesis/core/game/chunks/ZLayer.cpp
-    genesis/core/game/chunks/MapArea.cpp
     genesis/core/game/chunks/Tile.cpp
 
     genesis/core/game/chunks/TileGenerator.cpp

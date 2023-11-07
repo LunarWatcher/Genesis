@@ -31,6 +31,8 @@ public:
     // TODO: this is probably going to have to act as the interface for the contained ZLayers to update specific tiles.
     // glSubData will at least increase the performance of on-layer updates.
 
+    bool canMove(const glm::vec3& from, const glm::vec3& to);
+
     friend class WorldGenerator;
 };
 

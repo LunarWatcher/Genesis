@@ -25,7 +25,6 @@ private:
     // Game state
     std::string civilisationName;
 
-    MapLayers layers;
     //std::vector<std::shared_ptr<GameCreature>> gameEntities;
 
     /**
@@ -48,6 +47,7 @@ private:
     }
 public:
     CreatureController creatures;
+    MapLayers layers;
 
     World(int width, int height);
 

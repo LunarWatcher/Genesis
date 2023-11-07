@@ -56,4 +56,8 @@ std::shared_ptr<GameCreature> RNGesus::genCreature(
     }
 }
 
+int util::randInt(int min, int max) {
+    return std::uniform_int_distribution<>(min, max)(_random::engine);
+}
+
 }

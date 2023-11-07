@@ -115,4 +115,31 @@ void MapLayers::regenerateLayerGraphics() {
     glBindVertexArray(0);
 }
 
+bool MapLayers::canMove(const glm::vec3& from, const glm::vec3& to) {
+    // This function disregards there being multiple z layers for now, as it's convenient to do so
+    // This needs to be addressed when the game has multiple layers
+    
+    // Trivial; if the x or y exceeds the map size, discard
+    if (to.x < 0 || to.x >= width
+        || to.y < 0 || to.y >= height) {
+        return false;
+    }
+
+    // TODO: error checking
+    auto layer = layers.at(from.z);
+
+    auto tile = layer.layer.at(to.x).at(to.y);
+
+    // Again, this is a very primitive check, but I need to do this iteratively if I want to
+    // get anywhere with this game
+    return 
+        // Ensure there isn't a block in the way
+        tile.block == nullptr
+        // and ensure the floor exists. can't jump into a void. Whether or not it's valid to go up
+        // or down a missing floor requires more of the game to be implemented.
+        && tile.floor != nullptr;
+
+
+}
+
 }
