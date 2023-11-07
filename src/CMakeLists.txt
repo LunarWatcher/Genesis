@@ -6,7 +6,6 @@ add_subdirectory(math)
 add_subdirectory(render-engine)
 
 # Meta libraries {{{
-add_library(genesis-deps INTERFACE)
 target_link_libraries(
     genesis-deps 
 INTERFACE 

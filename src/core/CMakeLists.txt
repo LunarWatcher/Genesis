@@ -71,8 +71,11 @@ set (SOURCE_FILES
     genesis/logging/Loggers.cpp
     # }}}
     # TODO: place sanely
-        genesis/core/game/chunks/MapLayers.cpp
-
+    genesis/core/game/chunks/MapLayers.cpp
+    # AI {{{
+    genesis/core/game/ai/CreatureController.cpp
+    genesis/core/game/ai/AIEngine.cpp
+    # }}}
 )
 
 add_library(genesis-core STATIC ${SOURCE_FILES})

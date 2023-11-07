@@ -19,16 +19,12 @@ enum class CivRelations {
     ALLY,
 };
 
-using groupid_t = int;
-static inline constexpr auto GROUP_COLONISTS = 0;
+using groupid_t = long long;
+static inline constexpr groupid_t GROUP_COLONISTS = 0;
 // Groups 0-99 are reserved for static groups
-static inline constexpr auto GROUP_RANDOM_STARTIDX = 100;
+static inline constexpr groupid_t GROUP_RANDOM_STARTIDX = 100;
 
 using RelationMap = std::map<std::pair<groupid_t, groupid_t>, CreatureRelations>;
 
-struct AIClass {
-    int groupId;
-    CreatureRelations colonyRelation;
-};
 
 }

@@ -18,7 +18,6 @@
 
 namespace genesis {
 World::World(int width, int height) : generator(std::make_shared<perlin::DumbGenerator>()), layers(MapLayers(width, height)) {
-    World::INSTANCE = this;
 
     registerKey(GLFW_KEY_W, [](const KeyPressInfo& data) {
         if (data.action != GLFW_PRESS) return false;
@@ -57,8 +56,7 @@ World::World(int width, int height) : generator(std::make_shared<perlin::DumbGen
 }
 
 void World::tick() {
-    for (auto& entity : this->gameEntities)
-        entity->tick();
+    this->creatures.tick(*this);
 }
 
 void World::render() {
@@ -72,8 +70,7 @@ void World::render() {
 
     layers.render();
 
-    for (auto& entity : this->gameEntities)
-        entity->render();
+    this->creatures.render();
 
     inst.texturePack->unbind();
     inst.textureShader->stop();

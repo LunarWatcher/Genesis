@@ -16,17 +16,9 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-find_package(Git)
-if (EXISTS ${GIT_EXECUTABLE})
-    message(STATUS "Checking if Git submodules are initialised...")
-    execute_process(COMMAND ${GIT_EXECUTABLE} submodule update --init --recursive)
-    execute_process(COMMAND ${GIT_EXECUTABLE} submodule update)
-else()
-    message(WARNING "GIT_EXECUTABLE isn't saved. Make sure you have Git on your path")
-endif()
-
-
 set (CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DAPI_DEBUG")
+
+add_library(genesis-deps INTERFACE)
 
 if (NOT WIN32)
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pedantic -Wall -Wextra -Wno-c++11-narrowing")
@@ -51,7 +43,8 @@ int main() {
 }
     " HAS_BUILTIN_ATOMIC)
     if (NOT HAS_BUILTIN_ATOMIC)
-        set (CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -latomic")
+        set(CMAKE_REQUIRED_LIBRARIES atomic)
+        target_link_libraries(genesis-deps INTERFACE atomic)
     endif()
 else()
     # As of CMake 3.15, no manual MSVC framework options have to be set
@@ -64,6 +57,8 @@ set(ALSOFT_UTILS OFF CACHE STRING "" FORCE)
 set(GLFW_BUILD_DOCS OFF CACHE STRING "" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE STRING "" FORCE)
 set(GLFW_BUILD_EXAMPLES OFF CACHE STRING "" FORCE)
+set(glew-cmake_BUILD_SHARED ON CACHE STRING "" FORCE)
+set(ONLY_LIBS ON CACHE STRING "" FORCE)
 
 set(STB_TAG "5736b15f7ea0ffb08dd38af21067c314d6a3aae9" CACHE STRING "" FORCE)
 
@@ -104,6 +99,11 @@ FetchContent_MakeAvailable(_glew)
 FetchContent_MakeAvailable(_glfw)
 FetchContent_MakeAvailable(_glm)
 FetchContent_MakeAvailable(openal)
+
+set_target_properties(libglew_shared PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/bin/
+    RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/bin/
+)
 
 # Has to be set after OpenAL's declaration to make sure it doesn't inherit -fsanitize, as
 # this causes undefined references, because reasons :)

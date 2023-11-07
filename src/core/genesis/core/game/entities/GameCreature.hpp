@@ -5,6 +5,7 @@
 
 namespace genesis {
 
+// TODO: separate out data fields into a separate struct
 class GameCreature : public Entity {
 private:
     AttributeInfo attribs;

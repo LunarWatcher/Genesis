@@ -157,12 +157,11 @@ void Renderer::run() {
     do {
         auto now = std::chrono::high_resolution_clock::now();
         delta = std::chrono::duration<double, std::ratio<1>>(now - lastTime).count();
-
         tick();
         render();
 
         auto end = std::chrono::high_resolution_clock::now();
-        lastTime = end;
+        lastTime = now;
         auto sleepFor = targetTime - (now - end);
         if (sleepFor > std::chrono::milliseconds(0)) {
             std::this_thread::sleep_for(sleepFor);

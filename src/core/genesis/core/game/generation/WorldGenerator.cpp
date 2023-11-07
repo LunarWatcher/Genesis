@@ -1,5 +1,7 @@
 #include "WorldGenerator.hpp"
 
+#include "genesis/core/game/ai/AIStructs.hpp"
+#include "genesis/core/game/ai/CreatureController.hpp"
 #include "genesis/core/game/generation/RNGesus.hpp"
 #include "genesis/Context.hpp"
 
@@ -51,6 +53,7 @@ std::shared_ptr<World> WorldGenerator::newWorld(int width, int height, const std
 }
 
 void WorldGenerator::generateCharacters(const glm::vec3& caravanPosition, std::shared_ptr<World> world, int count) {
+    world->creatures.activeColonyEntities.insert({GROUP_COLONISTS, CreatureGroup {"Colonists", GROUP_COLONISTS}});
     auto pos = caravanPosition;
     // TODO: this is why I need a proper layer structure. This fucking sucks ass
     // Future me here: there is now a layer system, but it doesn't fully account for entities.
@@ -65,7 +68,7 @@ void WorldGenerator::generateCharacters(const glm::vec3& caravanPosition, std::s
             Context::getInstance().dataLoader.creatures.at("canine")
         );
         entity->setPosition(pos);
-        world->gameEntities.push_back(entity);
+        world->creatures.activeColonyEntities.at(GROUP_COLONISTS).pushEntity(entity);
     }
 }
 
