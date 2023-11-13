@@ -1,7 +1,6 @@
 #pragma once
 
 #include "genesis/rendering/Entity.hpp"
-#include "genesis/rendering/Renderable.hpp"
 #include "genesis/math/physics/Collider.hpp"
 
 #include <memory>

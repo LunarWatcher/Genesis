@@ -1,7 +1,6 @@
 #include "genesis/math/physics/PhysicsController.hpp"
 #include "genesis/rendering/flow/Scene.hpp"
 
-#include "genesis/rendering/Renderable.hpp"
 #include "genesis/world/EntityController.hpp"
 
 namespace genesis {

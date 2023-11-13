@@ -8,6 +8,7 @@ namespace genesis {
 
 TextShader::TextShader() : Shader("text") {
     textColor = this->getUniformLocation("textColor");
+    backgroundColour = this->getUniformLocation("backgroundColour");
     orthoMatrix = this->getUniformLocation("orthoMatrix");
 
     apply();
@@ -16,8 +17,13 @@ TextShader::TextShader() : Shader("text") {
     stop();
 }
 
+// This is stupid. This should be simplified
 void TextShader::loadTextColor(const glm::vec4& mVec) {
     glUniform4fv(textColor, 1, &mVec[0]);
+}
+
+void TextShader::loadBackgroundColour(const glm::vec4& mVec) {
+    glUniform4fv(backgroundColour, 1, &mVec[0]);
 }
 
 void TextShader::loadOrthoMatrix(const glm::mat4& matrix) {

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "genesis/rendering/Model.hpp"
-#include "genesis/rendering/Renderable.hpp"
+#include "genesis/rendering/Shader.hpp"
 #include "glm/matrix.hpp"
 #include "glm/vec3.hpp"
 #include <iostream>
@@ -18,7 +18,7 @@ class Collider;
  *
  * May be made abstract in the future
  */
-class Entity : public Renderable {
+class Entity {
 protected:
     std::shared_ptr<Model> model;
 
@@ -44,7 +44,7 @@ public:
     Entity(const std::shared_ptr<Model>& model, glm::vec3 position, long long id = -1) : Entity(model, position, glm::vec3{0, 0, 0}, 0, id) {}
 
     virtual void tick();
-    void render() override;
+    virtual void render();
 
     /**
      * Glorified `with` (python) alternative.

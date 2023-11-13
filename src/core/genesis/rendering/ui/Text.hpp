@@ -12,6 +12,7 @@
 #include <codecvt>
 #include <locale>
 #include <string_view>
+#include <optional>
 
 
 namespace genesis {
@@ -21,9 +22,15 @@ private:
     static inline std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
     glm::vec4 color;
 
+    std::optional<glm::vec4> backgroundColour;
+    std::optional<glm::vec2> padding;
+
     void regenerateVertices(const std::string_view& text, float x, float y, float scale);
 
 public:
+    /**
+     * Regular text constructor.
+     */
     TextEntity(
         const std::string_view& text,
         float x,
@@ -32,6 +39,22 @@ public:
         const glm::vec4& color = {1, 0, 0, 1},
         decltype(ID) id = -1
     );
+
+    /**
+     * Text with background
+     */
+    TextEntity(
+        const std::string_view& text,
+        float x,
+        float y,
+        const glm::vec4& backgroundColour,
+        const glm::vec2& padding,
+        float scale = 1,
+        const glm::vec4& color = {1, 0, 0, 1},
+        decltype(ID) id = -1
+    );
+
+    virtual ~TextEntity() = default;
 
     void render() override;
 

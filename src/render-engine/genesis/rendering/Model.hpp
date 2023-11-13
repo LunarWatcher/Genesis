@@ -2,7 +2,6 @@
 
 #include "GL/glew.h"
 
-#include "Renderable.hpp"
 #include "genesis/rendering/Texture.hpp"
 #include "genesis/math/physics/Collider.hpp"
 
@@ -20,7 +19,7 @@ typedef std::vector<GLint> IndexArray;
 class Model;
 typedef std::function<void (Model*)> AttributeInit;
 
-class Model : public Renderable {
+class Model {
 protected:
     GLenum mode = GL_STATIC_DRAW;
     GLenum renderType = GL_TRIANGLES;
@@ -45,7 +44,7 @@ public:
 
     virtual ~Model();
 
-    virtual void render() override;
+    virtual void render();
 
     virtual void bindIndexBuffer(const IndexArray& indexBuffer);
     /**

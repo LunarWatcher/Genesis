@@ -16,11 +16,11 @@ namespace genesis {
  *
  * This is mostly meant as a substructure that can be used for AIs.
  */
-class EntityController : public Renderable, public PhysicsController {
+class EntityController : public PhysicsController {
 public:
     virtual ~EntityController() = default;
 
-    void render() override;
+    void render();
     void tick() override = 0;
 
     void addEntity(const std::shared_ptr<Entity>& entity);

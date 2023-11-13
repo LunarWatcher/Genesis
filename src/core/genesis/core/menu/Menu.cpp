@@ -12,8 +12,20 @@ namespace genesis {
 
 MenuScene::MenuScene() : Scene(true) {
     uiEntities.push_back(
-        std::make_shared<TextEntity>("Play", 200, 200, 1, glm::vec4{ 1.0, 0.0, 1.0, 1.0 }, BTN_PLAY)
+        std::make_shared<TextEntity>("Play", 100, 200, 1, glm::vec4{ 1.0, 0.0, 1.0, 1.0 }, BTN_PLAY)
     );
+    uiEntities.push_back(
+        std::make_shared<TextEntity>(
+            "Play", 
+            500, 200,
+            glm::vec4{59.0 / 255.0, 1.0, 157.0 / 255.0, 1.0},
+            glm::vec2{10, 5},
+            1,
+            glm::vec4{ 0.0, 0.0, 0.0, 1.0 },
+            BTN_PLAY
+        )
+    );
+
 
     registerKey(GLFW_MOUSE_BUTTON_1, [](const KeyPressInfo& data) {
 

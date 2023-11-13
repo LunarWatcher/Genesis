@@ -4,7 +4,6 @@
 #include "GLFW/glfw3.h"
 
 #include "genesis/rendering/Model.hpp"
-#include "genesis/rendering/Renderable.hpp"
 
 #include "genesis/rendering/flow/Scene.hpp"
 #include "genesis/input/InputProcessor.hpp"
