@@ -49,7 +49,10 @@ int main() {
 else()
     # As of CMake 3.15, no manual MSVC framework options have to be set
     set (CMAKE_CXX_FLAGS_DEBUG "/Zi")
+    add_definitions(-DNOMINMAX=1)
 endif()
+
+
 
 set(SPDLOG_FMT_EXTERNAL ON CACHE STRING "" FORCE)
 set(ALSOFT_EXAMPLES OFF CACHE STRING "" FORCE)
